@@ -55,8 +55,12 @@ export default function CareersPage() {
                       <h4 style={{ fontFamily: 'var(--mono)', fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--ink-soft)', margin: '20px 0 8px' }}>{r.warnLabel}</h4>
                       <div style={{ fontSize: '.95rem', color: 'var(--ink)', background: `${a}12`, borderLeft: `3px solid ${a}`, padding: '12px 16px', borderRadius: '0 4px 4px 0' }}>{r.warn}</div>
                       {r.stipend && <div style={{ fontFamily: 'var(--mono)', fontSize: '.82rem', color: a, marginTop: 16 }}>{r.stipend}</div>}
-                      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 22 }}>
-                        <a className="btn btn-ghost" href={r.jd} target="_blank" rel="noopener">View full JD (PDF)</a>
+                      <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 22, alignItems: 'center' }}>
+                        {r.jd ? (
+                          <a className="btn btn-ghost" href={r.jd} target="_blank" rel="noopener noreferrer">View full JD (PDF)</a>
+                        ) : (
+                          <span style={{ fontFamily: 'var(--mono)', fontSize: '.72rem', color: 'var(--ink-mute)', border: '1px solid var(--rule)', padding: '10px 13px', borderRadius: 4 }}>Approved role brief available on request</span>
+                        )}
                         <button className="btn btn-solid" onClick={() => apply(r.title)}>Apply for this role →</button>
                       </div>
                     </div>
@@ -68,7 +72,6 @@ export default function CareersPage() {
         </div>
       </section>
 
-      {/* Apply */}
       <section className="ink-sec" id="apply">
         <div className="wrap">
           <Reveal><div className="sec-head"><div className="eyebrow">Application</div><h2 className="h2">Apply</h2></div></Reveal>
