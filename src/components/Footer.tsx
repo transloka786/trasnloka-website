@@ -20,7 +20,7 @@ export default function Footer() {
               <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
               <li>{SITE.phone}</li>
               <li>{SITE.location}</li>
-              <li><Link href="/privacy">Privacy & Data Residency</Link></li>
+              <li><Link href="/privacy">Privacy & Data Use</Link></li>
               <li><Link href="/terms">Terms</Link></li>
               <li><Link href="/disclaimer">Disclaimer</Link></li>
             </ul>
