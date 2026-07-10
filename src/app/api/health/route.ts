@@ -6,21 +6,26 @@ export const dynamic = 'force-dynamic';
 
 export function GET() {
   const chatbotConfigured = Boolean(process.env.OPENAI_API_KEY?.trim());
-  const contactReady = emailConfigured;
 
   return NextResponse.json(
     {
-      ok: contactReady,
+      ok: true,
+      productionReady: emailConfigured,
       services: {
-        contactEmail: emailConfigured ? 'configured' : 'missing_configuration',
+        generalContact: emailConfigured ? 'configured' : 'not_configured_yet',
+        careersContact: emailConfigured ? 'configured' : 'not_configured_yet',
         recruitmentStorage: supabaseConfigured ? 'configured' : 'optional_not_configured',
         chatbot: chatbotConfigured ? 'configured' : 'optional_not_configured',
       },
-      contactReady,
+      expectedRecipients: {
+        general: 'hello@hellokritrna.com',
+        careers: 'careers@hellokritrna.com',
+        adminFallback: 'hellokritrna@gmail.com',
+      },
       checkedAt: new Date().toISOString(),
     },
     {
-      status: contactReady ? 200 : 503,
+      status: 200,
       headers: { 'Cache-Control': 'no-store' },
     },
   );
