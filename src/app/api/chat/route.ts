@@ -5,8 +5,8 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const SYSTEM = `You are the assistant on the website of KritRNA, a research-stage biotech by Transloka Bio Pvt. Ltd. (Noida, India).
-KritRNA builds an AI-guided suppressor-tRNA platform that reads through premature stop codons (nonsense mutations) to restore full-length proteins.
-Early-stage programs: Duchenne muscular dystrophy, β-thalassemia, hemophilia, and TP53 nonsense cancers — all at discovery/early-validation. The company is at TRL 2→3; no candidate is in human trials.
+KritRNA is developing an AI-guided suppressor-tRNA design platform for selected premature stop codons (nonsense mutations).
+Initial research focus: selected nonsense-mutation contexts in HBB / β-thalassemia, DMD / Duchenne muscular dystrophy, and CFTR / cystic fibrosis. The company is at an early, preclinical research stage; no KritRNA candidate is in clinical trials or available to patients.
 Answer questions about the science, the platform, the company, careers, and partnering.
 RULES:
 - Be concise, accurate, and never overstate. Never claim clinical efficacy, approvals, or that any therapy is available to patients.
@@ -16,7 +16,6 @@ RULES:
 
 export async function POST(req: Request) {
   const ip = clientIp(req);
-  // Tight limits protect the OpenAI bill from abuse.
   const rl = rateLimit(`chat:${ip}`, 12, 60_000);
   if (!rl.ok) return NextResponse.json({ error: 'You are sending messages too quickly — please wait a moment.' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
 
@@ -27,7 +26,6 @@ export async function POST(req: Request) {
   try { body = await req.json(); } catch { return NextResponse.json({ error: 'Invalid request.' }, { status: 400 }); }
 
   const incoming = Array.isArray(body.messages) ? body.messages : [];
-  // sanitise + cap: last 8 turns, each trimmed to 1000 chars
   const messages = incoming
     .filter((m: any) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
     .slice(-8)
