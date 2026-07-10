@@ -1,6 +1,6 @@
 // ─────────────────────────────────────────────────────────────
-// Single source of truth for site content. Edit here to update
-// the site copy in one place.
+// Single source of truth for public website content.
+// Keep public claims aligned with CLAIMS.md before publishing.
 // ─────────────────────────────────────────────────────────────
 
 export const SITE = {
@@ -11,7 +11,7 @@ export const SITE = {
   email: 'hellokritrna@gmail.com',
   phone: '+91 85958 98238',
   location: 'Noida, Uttar Pradesh, India',
-  url: 'https://kritrna.com',
+  url: 'https://www.hellokritrna.com',
 };
 
 export const NAV = [
@@ -23,81 +23,80 @@ export const NAV = [
   { href: '/contact', label: 'Contact' },
 ];
 
-// ── Pipeline programs (all early/discovery phase) ──
+// ── Initial research programs ──
+// Stages are descriptive milestones, not percentages or clinical-development claims.
 export const PROGRAMS = [
   {
-    name: 'Duchenne MD',
-    area: 'Neuromuscular',
-    goal: 'Restore full-length dystrophin silenced by a premature stop codon.',
-    accent: 'var(--magenta)',
-    progress: 30,
-  },
-  {
     name: 'β-Thalassemia',
+    gene: 'HBB',
     area: 'Hematology · India-priority',
-    goal: 'Read through nonsense mutations in β-globin (HBB) to restore synthesis.',
+    goal: 'Design suppressor-tRNA candidates for selected HBB nonsense-mutation contexts.',
+    stage: 'Program definition',
+    next: 'Candidate design and in-vitro assay specification',
     accent: 'var(--cyan)',
-    progress: 26,
   },
   {
-    name: 'Hemophilia',
-    area: 'Hematology',
-    goal: 'Read through nonsense mutations in clotting-factor genes (F8 / F9).',
-    accent: 'var(--forest)',
-    progress: 22,
+    name: 'Duchenne muscular dystrophy',
+    gene: 'DMD',
+    area: 'Neuromuscular',
+    goal: 'Design suppressor-tRNA candidates for selected DMD premature-stop contexts.',
+    stage: 'Program definition',
+    next: 'Candidate design and reporter-assay specification',
+    accent: 'var(--magenta)',
   },
   {
-    name: 'TP53 nonsense cancers',
-    area: 'Precision oncology',
-    goal: 'Restore tumour-suppressor function in the nonsense-mutant TP53 subset.',
+    name: 'Cystic fibrosis',
+    gene: 'CFTR',
+    area: 'Pulmonary / epithelial',
+    goal: 'Design suppressor-tRNA candidates for selected CFTR nonsense variants.',
+    stage: 'Program definition',
+    next: 'Candidate design and functional-assay planning',
     accent: 'var(--violet)',
-    progress: 18,
   },
 ];
 
-// ── Platform reach (indication classes) ──
+// ── Broader research scope; these are not active pipeline programs ──
 export const REACH = [
-  { area: 'Neuromuscular', ex: 'DMD · Becker MD · select dystrophies', c: 'var(--magenta)' },
-  { area: 'Hematology', ex: 'Hemophilia A/B · β-thalassemia', c: 'var(--cyan)' },
-  { area: 'Pulmonary / epithelial', ex: 'Cystic fibrosis · CFTR nonsense', c: 'var(--violet)' },
-  { area: 'Precision oncology', ex: 'TP53 · APC · BRCA1/2 · ATM contexts', c: 'var(--magenta)' },
-  { area: 'Metabolic / enzyme', ex: 'Lysosomal storage & loss-of-function enzymes', c: 'var(--forest)' },
-  { area: 'Ophthalmology', ex: 'Select inherited retinal diseases', c: 'var(--ochre)' },
+  { area: 'Neuromuscular', ex: 'DMD and selected inherited muscular dystrophies', c: 'var(--magenta)' },
+  { area: 'Hematology', ex: 'HBB and selected clotting-factor nonsense variants', c: 'var(--cyan)' },
+  { area: 'Pulmonary / epithelial', ex: 'CFTR nonsense variants', c: 'var(--violet)' },
+  { area: 'Metabolic / enzyme', ex: 'Selected loss-of-function enzyme disorders', c: 'var(--forest)' },
+  { area: 'Ophthalmology', ex: 'Selected inherited retinal disease contexts', c: 'var(--ochre)' },
+  { area: 'Additional research contexts', ex: 'Evaluated only after sequence, delivery and safety review', c: 'var(--magenta)' },
 ];
 
-// ── Team (public framing, per investor brief) ──
+// ── Co-founders ──
 export const TEAM = {
   lead: {
     name: 'Dr. Nikhil Bharti',
-    role: 'Founder & Scientific Lead',
-    bio: 'Translation & tRNA biologist. Scientific strategy, platform design, and validation planning. First-author work on translation velocity and suppressor-tRNA efficacy (Nature Communications, 2024).',
+    role: 'Co-Founder & Director · Chief Scientific & Technology Officer',
+    bio: 'Molecular biologist focused on translation regulation and tRNA biology. Leads scientific strategy, platform architecture and experimental-validation planning. Co-author of a 2023 Nature study on engineered suppressor tRNAs.',
     photo: '/team/nikhil.png',
   },
   outreach: {
     name: 'Pragati Bhaisora',
-    role: 'Director — Outreach & Awareness Strategy',
-    bio: 'Builds the patient-community and stakeholder networks that support diagnosis, validation and access. Rare-disease patients are often undiagnosed and underserved — awareness is how they are found.',
+    role: 'Co-Founder & Director · Outreach & Awareness Strategist',
+    bio: 'Leads rare-disease outreach, awareness, stakeholder communication and patient-community engagement, with equal co-founder responsibility for building KritRNA.',
     photo: '/team/pragati.png',
   },
-  build: [
-    { name: 'Daniel Köster', note: 'Germany · supporting AI/ML development in a helping capacity.' },
-    { name: 'Additional AI/ML developer', note: 'Currently under discussion.' },
-  ],
-  advisory: [
-    { name: 'Sandeep M. Eswarappa', note: 'Scientific Advisor — paperwork underway.' },
-    { name: 'Additional advisors', note: 'Approached; onboarding & announcements pending.' },
-    { name: 'LNJP Hospital — Genetics Dept.', note: 'Approached; two clinicians expected after formal confirmation.' },
-  ],
 };
 
-// ── Publications ──
+// ── Verified selected publication ──
 export const PUBS = [
-  { year: '2024', venue: 'Nature Communications', topic: 'Translation velocity & suppressor-tRNA efficacy.', role: 'First author', c: 'var(--magenta)' },
-  { year: '2023', venue: 'Nature', topic: 'Engineered tRNAs.', role: 'Co-author', c: 'var(--violet)' },
-  { year: '2023', venue: 'Journal of Biological Chemistry', topic: 'tRNA biology & translation regulation.', role: 'Author', c: 'var(--cyan)' },
+  {
+    year: '2023',
+    venue: 'Nature',
+    title: 'Engineered tRNAs suppress nonsense mutations in cells and in vivo',
+    topic: 'Peer-reviewed study of engineered suppressor tRNAs in cellular and in-vivo models.',
+    role: 'Co-author',
+    doi: 'https://doi.org/10.1038/s41586-023-06133-1',
+    pubmed: 'https://pubmed.ncbi.nlm.nih.gov/37258671/',
+    c: 'var(--violet)',
+  },
 ];
 
 // ── Careers roles ──
+// JD links remain disabled until final, approved PDFs are supplied.
 export const ROLES = [
   {
     code: 'Engine 01 — Founding ML Engineer',
@@ -112,7 +111,7 @@ export const ROLES = [
     ],
     warnLabel: 'You will not enjoy this role if',
     warn: 'you need a settled codebase, clean labelled data, and someone else to define the problem. Here you define it.',
-    jd: '/jd/founding-ml-engineer.pdf',
+    jd: null as string | null,
   },
   {
     code: 'Corpus 01 — TB-INT-2026-01',
@@ -128,7 +127,7 @@ export const ROLES = [
     warnLabel: 'You will not enjoy this role if',
     warn: 'you need someone to tell you which paper matters, or you can’t defend a data point when it’s challenged. We do not care about degrees — we care about whether your data can be trusted.',
     stipend: '₹20,000/mo → ₹25,000/mo post-review · paid trial task ₹1,500',
-    jd: '/jd/research-data-curation-intern.pdf',
+    jd: null as string | null,
   },
   {
     code: 'Ledger 02 — TB-INT-2026-02',
@@ -144,7 +143,7 @@ export const ROLES = [
     warnLabel: 'You will be good at this if',
     warn: 'your numbers reconcile, and you sleep better when they do. We do not care about degrees — we care about whether your books hold up.',
     stipend: '₹12,000/mo → ₹15,000/mo post-review · paid trial task ₹750',
-    jd: '/jd/operations-accounts-intern.pdf',
+    jd: null as string | null,
   },
   {
     code: 'Signal 03 — Social Media Intern',
@@ -159,7 +158,7 @@ export const ROLES = [
     ],
     warnLabel: 'You will not enjoy this role if',
     warn: 'you would cut a scientific corner for engagement. The trial is the three-part Readthrough Test — accuracy is graded first.',
-    jd: '/jd/social-media-intern.pdf',
+    jd: null as string | null,
   },
 ];
 
@@ -167,42 +166,42 @@ export const ROLES = [
 export const FAQ = [
   {
     q: 'What is KritRNA?',
-    a: 'KritRNA is an AI-guided suppressor-tRNA therapeutics platform built by Transloka Bio Pvt. Ltd. It engineers transfer RNAs (tRNAs) that read through premature stop codons — the errors behind nonsense-mutation genetic diseases — so the cell can finish making a full-length, functional protein.',
+    a: 'KritRNA is a research-stage, AI-guided suppressor-tRNA platform being developed by Transloka Bio Pvt. Ltd. The aim is to design transfer RNAs that can read through selected premature stop codons so a ribosome can continue protein synthesis. Every candidate requires experimental validation.',
   },
   {
-    q: 'What is a premature termination codon (nonsense mutation)?',
-    a: 'A nonsense mutation creates a premature stop codon (UAA, UAG or UGA) in the middle of a gene’s message. The ribosome stops translating too early and produces a short, non-functional protein. Around 10–12% of genetic disease cases are associated with these mutations.',
+    q: 'What is a premature termination codon or nonsense mutation?',
+    a: 'A nonsense mutation changes a protein-coding sequence into an early stop codon — UAA, UAG or UGA in mRNA. Translation can therefore terminate before the full protein has been produced, and the transcript may also be reduced by nonsense-mediated mRNA decay.',
   },
   {
     q: 'How does a suppressor tRNA work?',
-    a: 'An engineered suppressor tRNA recognises the premature stop codon and inserts an amino acid instead of terminating translation. The ribosome reads through the stop and continues, restoring the full-length protein the mutation would otherwise have prevented.',
+    a: 'A suppressor tRNA is designed to recognise a selected stop codon and deliver an amino acid during translation. In experimental systems this can permit readthrough and production of a longer or full-length protein, but activity, amino-acid identity, normal-stop effects, delivery and safety must be tested for every design.',
   },
   {
-    q: 'Which diseases is KritRNA working on?',
-    a: 'Four early-stage programs on one platform: Duchenne muscular dystrophy (dystrophin restoration), β-thalassemia (β-globin restoration, an India-priority indication), hemophilia (clotting-factor readthrough), and TP53 nonsense cancers (tumour-suppressor restoration). All are at discovery / early-validation stage. The platform is programmable across many nonsense-mutation indications.',
+    q: 'Which diseases is KritRNA initially focusing on?',
+    a: 'The initial research focus is β-thalassemia caused by selected HBB nonsense variants, Duchenne muscular dystrophy caused by selected DMD nonsense variants, and cystic fibrosis caused by selected CFTR nonsense variants. These are research programs, not available treatments.',
   },
   {
     q: 'What stage is the company at?',
-    a: 'KritRNA is honestly positioned at TRL 2 → TRL 3. The therapeutic concept is established, the suppressor-tRNA design AI is roughly two years in development and near completion, and candidate sequences are being generated and ranked. The next critical gate is CRO / wet-lab validation of lead candidates. No candidate is in human trials.',
+    a: 'KritRNA is at an early, preclinical research stage. The computational platform is under active development and the next major gate is experimental validation of selected candidates through appropriate wet-lab and CRO collaborations. No KritRNA candidate is in clinical trials.',
   },
   {
     q: 'Is KritRNA’s technology clinically proven?',
-    a: 'Not yet. KritRNA is a preclinical, research-stage company. Nothing on this site should be read as a medical claim, a treatment offer, or evidence of clinical efficacy. Wet-lab readthrough validation is the next milestone.',
+    a: 'No. KritRNA is a research-stage company. Nothing on this website is evidence of clinical efficacy, regulatory approval or an available therapy.',
   },
   {
     q: 'Where is KritRNA based?',
-    a: 'Transloka Bio Pvt. Ltd. is incorporated in Noida, Uttar Pradesh, India, and is recognised under DPIIT Startup India. KritRNA is an India-first platform targeting high-burden rare diseases.',
+    a: 'KritRNA is the operating brand of Transloka Bio Pvt. Ltd., based in Noida, Uttar Pradesh, India.',
   },
   {
-    q: 'How does KritRNA handle Indian patient data?',
-    a: 'Any clinical or patient data is held on in-house infrastructure located in India and is never replicated to servers in other countries for foreign access. This website itself does not collect patient or clinical data — only contact and recruitment information that you choose to submit. See our Privacy & Data Residency page for detail.',
+    q: 'Does this website collect patient or clinical data?',
+    a: 'No. The public website is not a patient registry and should not be used to submit medical records, genetic reports or health information. It processes only the contact, recruitment and chatbot information a visitor chooses to provide.',
   },
   {
     q: 'How can I partner with or invest in KritRNA?',
-    a: 'Reach out at hellokritrna@gmail.com. KritRNA is following a de-risked funding sequence: non-dilutive grants first, then CRO / wet-lab validation, then a priced round after experimental proof.',
+    a: 'Email hellokritrna@gmail.com or use the contact form. Please identify whether your enquiry concerns scientific validation, CRO work, rare-disease outreach, investment or another partnership area.',
   },
   {
     q: 'Is KritRNA hiring?',
-    a: 'Yes. Open roles include a Founding ML Engineer and internships in Research & Data Curation, Operations & Accounts, and Social Media. All roles are degree-agnostic and include a paid trial task. See the Careers page.',
+    a: 'Current opportunities are listed on the Careers page. Detailed role briefs are shared after the final versions are approved; the website does not link to placeholder or missing PDFs.',
   },
 ];
