@@ -1,9 +1,7 @@
-Drop your four JD PDFs in THIS folder with these EXACT filenames so the
-"View full JD" buttons on /careers work:
+Approved JD PDFs have not yet been supplied, so the public website intentionally
+hides the PDF buttons instead of linking to missing files.
 
-  founding-ml-engineer.pdf
-  research-data-curation-intern.pdf
-  operations-accounts-intern.pdf
-  social-media-intern.pdf
-
-(These are the canonical JD PDFs you already built on the house design system.)
+To enable a role PDF later:
+1. Add the approved PDF to this folder.
+2. Set that role's `jd` value in src/lib/content.ts to its /jd/<filename>.pdf path.
+3. Run npm run build before merging.
