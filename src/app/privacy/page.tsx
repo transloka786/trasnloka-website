@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { SITE } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Privacy & Data Residency',
-  description: 'How KritRNA / Transloka Bio handles data. Clinical and patient data is held on in-house infrastructure in India and never replicated abroad. This website collects only contact and recruitment data.',
+  title: 'Privacy & Data Use',
+  description: 'How KritRNA / Transloka Bio handles website contact, recruitment and chatbot information. This public website is not a patient registry and must not be used to submit medical records.',
 };
 
 export default function PrivacyPage() {
@@ -12,55 +12,43 @@ export default function PrivacyPage() {
     <section style={{ borderTop: 'none' }}>
       <div className="wrap" style={{ maxWidth: 780 }}>
         <div className="eyebrow" style={{ marginBottom: 20 }}>Legal</div>
-        <h1 className="h1" style={{ fontSize: 'clamp(2rem,5vw,3.4rem)' }}>Privacy & Data Residency</h1>
+        <h1 className="h1" style={{ fontSize: 'clamp(2rem,5vw,3.4rem)' }}>Privacy & Data Use</h1>
         <p style={{ fontFamily: 'var(--mono)', fontSize: '.78rem', color: 'var(--ink-mute)', marginTop: 14 }}>Last updated: {updated} · {SITE.legal} · CIN {SITE.cin}</p>
 
         <div className="prose" style={{ marginTop: 34 }}>
           <div className="callout">
-            <strong>Our data-residency commitment.</strong> Any clinical or patient data associated with KritRNA’s
-            research is stored on in-house infrastructure located in India. It is <strong>not</strong> stored online for
-            access by any other country, and is never replicated to servers outside India. This public website does
-            <strong> not</strong> collect clinical or patient data — it collects only the contact and recruitment
-            information you choose to submit below.
+            <strong>This website is not a patient registry.</strong> Do not submit medical records, diagnostic reports, genetic data or other health information through the contact form, careers form or chatbot. The public website processes only the contact, recruitment and chatbot information a visitor chooses to provide.
           </div>
 
           <h2>1. Who we are</h2>
-          <p>This website is operated by {SITE.legal} (“Transloka Bio”, “KritRNA”, “we”), a company incorporated in Noida, Uttar Pradesh, India (CIN {SITE.cin}). For any privacy question, contact <a href={`mailto:${SITE.email}`} style={{ color: 'var(--magenta)' }}>{SITE.email}</a>.</p>
+          <p>This website is operated by {SITE.legal} (“Transloka Bio”, “KritRNA”, “we”), a company incorporated in Noida, Uttar Pradesh, India (CIN {SITE.cin}). For privacy questions, contact <a href={`mailto:${SITE.email}`} style={{ color: 'var(--magenta)' }}>{SITE.email}</a>.</p>
 
-          <h2>2. What this website collects</h2>
-          <p>We only process the information you actively provide:</p>
+          <h2>2. What this website processes</h2>
           <ul>
-            <li><strong>Contact form:</strong> your name, email, organisation and message.</li>
-            <li><strong>Careers / application form:</strong> your name, email, phone, links, your written answer and, if you upload one, your résumé (PDF).</li>
-            <li><strong>Assistant (chatbot):</strong> the questions you type. We do not ask for personal or health information, and you should not enter any.</li>
-            <li><strong>Basic technical logs:</strong> a truncated, partially-masked IP address is used only for rate-limiting and abuse prevention, not for tracking.</li>
+            <li><strong>Contact form:</strong> name, email, organisation and message. The form is routed to our designated company inbox.</li>
+            <li><strong>Careers form:</strong> name, email, phone, links, written answers and, if supplied, a résumé in PDF format.</li>
+            <li><strong>Assistant:</strong> questions entered into the chatbot. Visitors should not enter personal or health information.</li>
+            <li><strong>Security logs:</strong> limited technical information used for abuse prevention and rate limiting.</li>
           </ul>
-          <p>We do <strong>not</strong> use advertising cookies or third-party marketing trackers on this site.</p>
+          <p>We do not use advertising cookies or third-party behavioural advertising trackers on this website.</p>
 
-          <h2>3. Clinical & patient data — held in India, in-house</h2>
-          <p>KritRNA is a research-stage company. Any clinical, genetic or patient data that arises from our research or collaborations is handled <strong>separately from this website</strong>, on in-house infrastructure physically located in India. That data is not uploaded to this website, is not stored on foreign servers, and is not made accessible to other countries. This commitment is designed to align with the intent of India’s <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>.</p>
+          <h2>3. Clinical and patient data</h2>
+          <p>The public website does not collect clinical or patient data. Any future research collaboration involving clinical, genetic or patient information would require separate governance, contracts, ethics and consent processes, security controls and compliance with applicable law. Such information must not be submitted through this website.</p>
 
-          <h2>4. Service providers for this website</h2>
-          <p>To run this website and respond to you, we use a small number of processors. These handle only the website contact/recruitment data described in Section 2 — never clinical or patient data:</p>
-          <ul>
-            <li><strong>Hosting / delivery</strong> (e.g. Vercel) — serves the website.</li>
-            <li><strong>Form storage</strong> (e.g. a managed database / object storage) — stores your submitted messages and résumés so we can respond.</li>
-            <li><strong>Email delivery</strong> (e.g. Resend) — routes your enquiry to our inbox.</li>
-            <li><strong>Assistant</strong> (e.g. OpenAI API) — generates answers to questions typed into the on-site assistant. Only the message text is sent; we instruct you not to include personal or health data.</li>
-          </ul>
-          <p>Some of these providers may process data outside India. We keep the data they see to the minimum needed to reply to you, and — to repeat — clinical and patient data never touches these services.</p>
+          <h2>4. Website service providers</h2>
+          <p>We may use service providers to host the website, deliver email, store recruitment submissions and operate the chatbot. These providers process only the minimum website information required for those functions. Their processing locations and retention practices may differ from ours.</p>
 
-          <h2>5. Why we process it, and for how long</h2>
-          <p>We use your information solely to respond to your enquiry, evaluate applications, and keep the site secure. We retain contact and application data only as long as needed for those purposes, after which it is deleted or anonymised.</p>
+          <h2>5. Purpose and retention</h2>
+          <p>We use submitted information to respond to enquiries, evaluate applications, operate the website and prevent abuse. We retain it only for as long as reasonably needed for those purposes, legal obligations or dispute resolution.</p>
 
-          <h2>6. Your rights</h2>
-          <p>You may ask us to access, correct or delete the personal data you have submitted through this site. Email <a href={`mailto:${SITE.email}`} style={{ color: 'var(--magenta)' }}>{SITE.email}</a> and we will act on reasonable requests.</p>
+          <h2>6. Your requests</h2>
+          <p>You may request access, correction or deletion of information you submitted through this website by emailing <a href={`mailto:${SITE.email}`} style={{ color: 'var(--magenta)' }}>{SITE.email}</a>. We will assess requests under applicable law and any legitimate retention requirements.</p>
 
           <h2>7. Children</h2>
-          <p>This website is not directed at children and we do not knowingly collect their data.</p>
+          <p>This website is not directed at children and we do not knowingly request information from them.</p>
 
           <h2>8. Changes</h2>
-          <p>We may update this policy as the company and its systems evolve. Material changes will be reflected by the “last updated” date above.</p>
+          <p>We may update this policy as the company, website and service providers evolve. Material changes will be reflected in the date above.</p>
         </div>
       </div>
     </section>
