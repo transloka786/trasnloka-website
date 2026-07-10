@@ -16,9 +16,9 @@ export async function POST(req: Request) {
   }
 
   if (!emailConfigured) {
-    console.error('Contact form unavailable: RESEND_API_KEY, CONTACT_TO or CONTACT_FROM is missing.');
+    console.error('Contact form unavailable: RESEND_API_KEY or CONTACT_FROM is missing.');
     return NextResponse.json(
-      { error: 'The contact form is temporarily unavailable. Please email hellokritrna@gmail.com directly.' },
+      { error: 'The contact form is not connected yet. Please email hello@hellokritrna.com directly.' },
       { status: 503 },
     );
   }
@@ -45,21 +45,19 @@ export async function POST(req: Request) {
   }
 
   try {
-    const delivery = await sendEmail(
-      `[KritRNA] Contact from ${name}`,
-      `Name: ${name}\nEmail: ${email}\nOrganisation: ${organization || 'Not provided'}\n\n${message}`,
-      email,
-    );
+    const delivery = await sendEmail({
+      channel: 'general',
+      subject: `[KritRNA] Contact from ${name}`,
+      text: `Name: ${name}\nEmail: ${email}\nOrganisation: ${organization || 'Not provided'}\n\n${message}`,
+      replyTo: email,
+    });
 
-    if (!('ok' in delivery)) {
-      throw new Error('Email delivery was skipped despite configuration check.');
-    }
-
+    if (!('ok' in delivery)) throw new Error('Email delivery was skipped despite configuration check.');
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('Contact email delivery failed:', error);
     return NextResponse.json(
-      { error: 'Your message could not be delivered. Please email hellokritrna@gmail.com directly.' },
+      { error: 'Your message could not be delivered. Please email hello@hellokritrna.com directly.' },
       { status: 502 },
     );
   }
