@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const CORE = [['/problem','Problem'],['/science','Science'],['/platform','Platform'],['/pipeline','Programs'],['/india','India']];
-const COMPANY = [['/about','About'],['/team','Team'],['/impact','Impact'],['/updates','Updates']];
+const COMPANY = [['/about','About'],['/team','Team'],['/how-we-work','How we work'],['/impact','Impact'],['/updates','Updates']];
 const CONNECT = [['/partners','Partners'],['/community','Communities'],['/investors','Investors'],['/careers','Careers'],['/contact','Contact']];
 const LEARN = [['/resources','Public resources'],['/explorer','Disease explorer'],['/glossary','Glossary'],['/faq','FAQ']];
 
