@@ -51,7 +51,7 @@ export default function SciencePage() {
               </Reveal>
             ))}
           </div>
-          <Reveal delay={0.12}><blockquote style={{ marginTop: 32, maxWidth: '34ch', fontFamily: 'var(--serif)', fontSize: 'clamp(1.45rem,3vw,2.2rem)', lineHeight: 1.25, color: 'var(--cream)' }}>Hundreds of mutations can be viewed as variations of the same translation-level silence.</blockquote></Reveal>
+          <Reveal delay={0.12}><blockquote style={{ marginTop: 32, maxWidth: '34ch', fontFamily: 'var(--serif)', fontSize: 'clamp(1.45rem,3vw,2.2rem)', lineHeight: 1.25, color: 'var(--cream)' }}>Many mutations can be viewed as variations of the same translation-level silence.</blockquote></Reveal>
         </div>
       </section>
 
