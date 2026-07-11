@@ -1,13 +1,16 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { NAV } from '@/lib/content';
 
 const LINKS = [
   { href: '/science', label: 'Science' },
   { href: '/platform', label: 'Platform' },
-  { href: '/small-world', label: 'Small-world' },
-  ...NAV.filter((item) => item.href !== '/platform'),
+  { href: '/pipeline', label: 'Pipeline' },
+  { href: '/india', label: 'India' },
+  { href: '/team', label: 'Team' },
+  { href: '/investors', label: 'Investors' },
+  { href: '/careers', label: 'Careers' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Nav() {
@@ -20,13 +23,14 @@ export default function Nav() {
           <span>Krit<span className="rna">RNA</span></span>
         </Link>
         <div className="nav-links">
-          {LINKS.map((n) => <Link key={n.href} href={n.href}>{n.label}</Link>)}
+          {LINKS.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}
           <Link href="/careers#apply" className="nav-cta">Apply →</Link>
         </div>
         <button className="burger" aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen(!open)}>≡</button>
       </div>
       <div className={`mobile-menu${open ? ' open' : ''}`}>
-        {LINKS.map((n) => <Link key={n.href} href={n.href} onClick={() => setOpen(false)}>{n.label}</Link>)}
+        <Link href="/small-world" onClick={() => setOpen(false)}>Small-world engine</Link>
+        {LINKS.map((item) => <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</Link>)}
         <Link href="/careers#apply" onClick={() => setOpen(false)}>Apply →</Link>
       </div>
     </nav>
