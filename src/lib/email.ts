@@ -1,16 +1,32 @@
 import nodemailer from 'nodemailer';
 
 const SMTP_HOST = process.env.SMTP_HOST?.trim() || 'smtp.gmail.com';
-const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
-const SMTP_SECURE = (process.env.SMTP_SECURE || 'true').toLowerCase() === 'true';
-const SMTP_USER = process.env.SMTP_USER?.trim();
-const SMTP_APP_PASSWORD = process.env.SMTP_APP_PASSWORD?.replace(/\s+/g, '');
-const FROM = process.env.CONTACT_FROM?.trim();
+const SMTP_PORT = Number(process.env.SMTP_PORT?.trim() || '465');
+const SMTP_SECURE = (process.env.SMTP_SECURE?.trim() || (SMTP_PORT === 465 ? 'true' : 'false')).toLowerCase() === 'true';
+const SMTP_USER = (
+  process.env.SMTP_USER ||
+  process.env.GMAIL_USER ||
+  process.env.GOOGLE_EMAIL ||
+  ''
+).trim();
+const SMTP_APP_PASSWORD = (
+  process.env.SMTP_APP_PASSWORD ||
+  process.env.GMAIL_APP_PASSWORD ||
+  process.env.GOOGLE_APP_PASSWORD ||
+  process.env.SMTP_PASSWORD ||
+  ''
+).replace(/\s+/g, '');
+const FROM = process.env.CONTACT_FROM?.trim() || (SMTP_USER ? `KritRNA Website <${SMTP_USER}>` : '');
 const GENERAL_TO = process.env.CONTACT_TO?.trim() || 'hello@hellokritrna.com';
 const CAREERS_TO = process.env.CAREERS_TO?.trim() || 'careers@hellokritrna.com';
 const ADMIN_BCC = process.env.ADMIN_BCC?.trim() || 'hellokritrna@gmail.com';
 
-export const emailConfigured = Boolean(SMTP_USER && SMTP_APP_PASSWORD && FROM);
+export const missingEmailVariables = [
+  !SMTP_USER ? 'SMTP_USER' : '',
+  !SMTP_APP_PASSWORD ? 'SMTP_APP_PASSWORD' : '',
+].filter(Boolean);
+
+export const emailConfigured = missingEmailVariables.length === 0;
 export type EmailChannel = 'general' | 'careers' | 'direct';
 export type EmailAttachment = { filename: string; content: string };
 export type EmailDeliveryResult = { ok: true; id?: string } | { skipped: true; reason: 'email_not_configured' };
@@ -60,8 +76,9 @@ export async function sendEmail({ channel, subject, text, replyTo, to, attachmen
     attachments: attachments?.map((attachment) => ({
       filename: attachment.filename,
       content: Buffer.from(attachment.content, 'base64'),
+      contentType: 'application/pdf',
     })),
   });
 
-  return { ok: true, id: result.messageId };
+  return { ok: true, id: result.messageId || undefined };
 }
