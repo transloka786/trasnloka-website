@@ -4,7 +4,7 @@ import { PROGRAMS, REACH } from '@/lib/content';
 
 export const metadata: Metadata = {
   title: 'Research Programs',
-  description: 'KritRNA’s initial research focus: selected nonsense-mutation contexts in HBB, DMD and CFTR, displayed through evidence-gated research stages.',
+  description: 'KritRNA’s initial research focus: selected premature-stop contexts in HBB, DMD and TP53, displayed through evidence-gated research stages.',
 };
 
 const STAGES = [
@@ -21,7 +21,7 @@ export default function PipelinePage() {
         <div className="wrap">
           <Reveal><div className="eyebrow" style={{ marginBottom: 22 }}>Research programs</div></Reveal>
           <Reveal delay={0.05}><h1 className="h1" style={{ fontSize: 'clamp(2.2rem,5.5vw,4rem)' }}>Three initial programs<br />on one platform thesis.</h1></Reveal>
-          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 24 }}>KritRNA’s initial focus is selected nonsense-mutation contexts in <strong>HBB, DMD and CFTR</strong>. The Kanban view below shows evidence gates, not percentage completion. All three programs remain in discovery and no KritRNA candidate is in human trials.</p></Reveal>
+          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 24 }}>KritRNA’s initial focus is selected premature-stop contexts in <strong>HBB, DMD and TP53</strong>. Together, they test the platform across hematology, neuromuscular disease and cancer biology.</p></Reveal>
         </div>
       </section>
 
@@ -59,7 +59,7 @@ export default function PipelinePage() {
                         </article>
                       )) : (
                         <div style={{ margin: 5, border: '1px dashed var(--rule)', borderRadius: 7, padding: '24px 16px', color: 'var(--ink-mute)', fontFamily: 'var(--mono)', fontSize: '.72rem', lineHeight: 1.6 }}>
-                          No KritRNA program has entered this evidence stage.
+                          Programmes enter this stage only after the preceding evidence gate is met.
                         </div>
                       )}
                     </div>
@@ -68,14 +68,13 @@ export default function PipelinePage() {
               ))}
             </div>
           </div>
-          <Reveal><p style={{ marginTop: 14, fontFamily: 'var(--mono)', fontSize: '.78rem', color: 'var(--ink-mute)' }}>A card moves only when the required experimental evidence exists. Position does not represent probability of success, regulatory status or an available therapy.</p></Reveal>
         </div>
       </section>
 
       <section>
         <div className="wrap">
-          <Reveal><div className="sec-head"><div className="eyebrow">Broader research scope</div><h2 className="h2">Programmable does not mean automatically transferable</h2>
-            <p>The same molecular concept may be relevant across multiple disease classes, but every indication requires its own sequence context, amino-acid identity, delivery strategy, safety analysis and experimental validation. The areas below are research scope, not active pipeline programs.</p></div></Reveal>
+          <Reveal><div className="sec-head"><div className="eyebrow">Broader opportunity</div><h2 className="h2">One platform, multiple disease classes</h2>
+            <p>The same translation-level strategy may be applied across different genes and disease areas. Each programme still requires its own sequence design, amino-acid choice, delivery strategy, safety analysis and experimental model.</p></div></Reveal>
           <div className="grid cols-3">
             {REACH.map((area, i) => (
               <Reveal key={area.area} delay={i * 0.05}>
