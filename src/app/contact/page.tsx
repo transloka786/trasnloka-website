@@ -22,20 +22,29 @@ export default function ContactPage() {
     finally { setBusy(false); }
   }
 
+  const direct = [
+    ['General enquiries', SITE.email, `mailto:${SITE.email}`],
+    ['Careers', SITE.careersEmail, `mailto:${SITE.careersEmail}`],
+    ['Phone', SITE.phone, `tel:${SITE.phone.replace(/\s/g, '')}`],
+    ['Entity', SITE.legal, ''],
+    ['CIN', SITE.cin, ''],
+    ['Location', SITE.location, ''],
+  ];
+
   return (
     <section style={{ borderTop: 'none', minHeight: '70vh' }}>
       <div className="wrap" style={{ maxWidth: 900 }}>
         <div className="eyebrow" style={{ marginBottom: 22 }}>Contact</div>
         <h1 className="h1" style={{ fontSize: 'clamp(2.2rem,5.5vw,4rem)' }}>Let’s talk.</h1>
-        <p className="lead" style={{ marginTop: 20 }}>Partnerships, investment, CRO collaboration, press, or a question about the science — reach out. We read everything.</p>
+        <p className="lead" style={{ marginTop: 20 }}>Partnerships, investment, CRO collaboration, press, careers, or a question about the science — use the relevant address below.</p>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 44, marginTop: 40 }} className="split-2">
           <div>
             <h3 style={{ fontSize: '1.1rem', marginBottom: 14 }}>Direct</h3>
-            {[['Email', SITE.email, `mailto:${SITE.email}`], ['Phone', SITE.phone, `tel:${SITE.phone.replace(/\s/g, '')}`], ['Entity', SITE.legal, ''], ['CIN', SITE.cin, ''], ['Location', SITE.location, '']].map(([k, v, href]) => (
-              <div key={k} style={{ padding: '12px 0', borderTop: '1px solid var(--rule)' }}>
-                <div style={{ fontFamily: 'var(--mono)', fontSize: '.66rem', letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>{k}</div>
-                {href ? <a href={href as string} style={{ color: 'var(--magenta)' }}>{v}</a> : <div>{v}</div>}
+            {direct.map(([label, value, href]) => (
+              <div key={label} style={{ padding: '12px 0', borderTop: '1px solid var(--rule)' }}>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: '.66rem', letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>{label}</div>
+                {href ? <a href={href} style={{ color: 'var(--magenta)' }}>{value}</a> : <div>{value}</div>}
               </div>
             ))}
           </div>
