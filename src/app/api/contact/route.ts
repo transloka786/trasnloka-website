@@ -1,35 +1,3 @@
-import { NextResponse } from 'next/server';
-import { rateLimit, clientIp } from '@/lib/rateLimit';
-import { insertRow } from '@/lib/supabase';
-import { sendEmail } from '@/lib/email';
-
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-
-export async function POST(req: Request) {
-  const ip = clientIp(req);
-  const rl = rateLimit(`contact:${ip}`, 5, 60_000);
-  if (!rl.ok) return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
-
-  let body: any;
-  try { body = await req.json(); } catch { return NextResponse.json({ error: 'Invalid request.' }, { status: 400 }); }
-
-  const name = String(body.name || '').trim();
-  const email = String(body.email || '').trim();
-  const organization = String(body.organization || '').trim();
-  const message = String(body.message || '').trim();
-  const honeypot = String(body.website || '');
-
-  if (honeypot) return NextResponse.json({ ok: true }); // bot
-  if (name.length < 2 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || message.length < 10)
-    return NextResponse.json({ error: 'Please fill in your name, a valid email, and a message.' }, { status: 400 });
-
-  const ipHash = ip.replace(/\d+$/, '***');
-  try { await insertRow('contact_submissions', { name, email, organization, message, ip_hash: ipHash }); } catch (e) { console.error(e); }
-  try {
-    await sendEmail(`[KritRNA] Contact from ${name}`,
-      `Name: ${name}\nEmail: ${email}\nOrg: ${organization}\n\n${message}`, email);
-  } catch (e) { console.error(e); }
-
-  return NextResponse.json({ ok: true });
-}
+import { NextResponse } from 'next/server'; import { rateLimit,clientIp } from '@/lib/rateLimit'; import { emailConfigured,sendEmail } from '@/lib/email'; import { insertRow } from '@/lib/supabase';
+export const runtime='nodejs';export const dynamic='force-dynamic';
+export async function POST(req:Request){const ip=clientIp(req);const rl=rateLimit(`contact:${ip}`,5,60_000);if(!rl.ok)return NextResponse.json({error:'Too many requests.'},{status:429});if(!emailConfigured)return NextResponse.json({error:'The form is not connected yet. Email hello@hellokritrna.com.'},{status:503});let body:Record<string,unknown>;try{body=await req.json()}catch{return NextResponse.json({error:'Invalid request.'},{status:400})}const name=String(body.name||'').trim(),email=String(body.email||'').trim(),organization=String(body.organization||'').trim(),message=String(body.message||'').trim(),type=String(body.enquiryType||'General').trim();if(String(body.website||''))return NextResponse.json({ok:true});if(name.length<2||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)||message.length<10)return NextResponse.json({error:'Complete your name, valid email and message.'},{status:400});try{const delivery=await sendEmail({channel:'general',subject:`[KritRNA:${type}] ${name}`,text:`Type: ${type}\nName: ${name}\nEmail: ${email}\nOrganisation: ${organization||'Not provided'}\nStage: ${String(body.stage||'')}\nCheque range: ${String(body.checkRange||'')}\n\n${message}`,replyTo:email});if(!('ok'in delivery))throw new Error('Delivery skipped');try{await insertRow('contact_submissions',{name,email,organization,message,enquiry_type:type,delivery_id:delivery.id||null,status:'delivered'})}catch(error){console.error('contact log',error)}return NextResponse.json({ok:true,deliveryId:delivery.id})}catch(error){console.error('contact delivery',error);return NextResponse.json({error:'Message delivery failed. Email hello@hellokritrna.com directly.'},{status:502})}}

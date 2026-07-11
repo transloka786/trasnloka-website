@@ -3,63 +3,86 @@ import Reveal from '@/components/Reveal';
 import { PROGRAMS, REACH } from '@/lib/content';
 
 export const metadata: Metadata = {
-  title: 'Pipeline',
-  description: 'KritRNA’s early-stage programs — Duchenne MD, hemophilia, and TP53 nonsense cancers — plus the broader reach of one programmable suppressor-tRNA platform.',
+  title: 'Research Programs',
+  description: 'KritRNA’s initial research focus: selected nonsense-mutation contexts in HBB, DMD and CFTR, displayed through evidence-gated research stages.',
 };
 
-const STAGES = ['Discovery', 'Lead optimisation', 'Preclinical', 'IND-enabling'];
+const STAGES = [
+  { name: 'Discovery', note: 'Target context, candidate design and assay definition' },
+  { name: 'Lead optimisation', note: 'Iterative sequence, activity and selectivity refinement' },
+  { name: 'Preclinical', note: 'Disease-model efficacy, delivery and safety evidence' },
+  { name: 'IND-enabling', note: 'Regulatory-grade development package' },
+];
 
 export default function PipelinePage() {
   return (
     <>
       <section style={{ borderTop: 'none' }}>
         <div className="wrap">
-          <Reveal><div className="eyebrow" style={{ marginBottom: 22 }}>Pipeline</div></Reveal>
-          <Reveal delay={0.05}><h1 className="h1" style={{ fontSize: 'clamp(2.2rem,5.5vw,4rem)' }}>Four programs<br />on one platform.</h1></Reveal>
-          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 24 }}>Each program targets a nonsense-mutation disease where a restored protein could change the course of the condition. <strong>All programs are at discovery / early-validation stage today. No candidate is in human trials.</strong></p></Reveal>
+          <Reveal><div className="eyebrow" style={{ marginBottom: 22 }}>Research programs</div></Reveal>
+          <Reveal delay={0.05}><h1 className="h1" style={{ fontSize: 'clamp(2.2rem,5.5vw,4rem)' }}>Three initial programs<br />on one platform thesis.</h1></Reveal>
+          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 24 }}>KritRNA’s initial focus is selected nonsense-mutation contexts in <strong>HBB, DMD and CFTR</strong>. The Kanban view below shows evidence gates, not percentage completion. All three programs remain in discovery and no KritRNA candidate is in human trials.</p></Reveal>
         </div>
       </section>
 
       <section style={{ paddingTop: 0, borderTop: 'none' }}>
         <div className="wrap">
-          <div style={{ border: '1px solid var(--rule)', borderRadius: 10, overflow: 'hidden' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 2fr', background: 'var(--cream-deep)', fontFamily: 'var(--mono)', fontSize: '.68rem', letterSpacing: '.08em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>
-              <div style={{ padding: '14px 22px' }}>Program</div>
-              <div style={{ padding: '14px 22px', display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>{STAGES.map((s) => <span key={s}>{s}</span>)}</div>
-            </div>
-            {PROGRAMS.map((p, i) => (
-              <Reveal key={p.name} delay={i * 0.06}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 2fr', borderTop: '1px solid var(--rule)', alignItems: 'center', background: 'var(--paper)' }}>
-                  <div style={{ padding: '20px 22px' }}>
-                    <div style={{ fontFamily: 'var(--serif)', fontWeight: 600, fontSize: '1.15rem' }}>{p.name}</div>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: '.68rem', color: p.accent, marginTop: 4 }}>{p.area}</div>
-                    <div style={{ color: 'var(--ink-soft)', fontSize: '.9rem', marginTop: 8 }}>{p.goal}</div>
-                  </div>
-                  <div style={{ padding: '20px 22px' }}>
-                    <div style={{ height: 10, borderRadius: 6, background: 'var(--cream-deep)', overflow: 'hidden' }}>
-                      <div style={{ width: `${p.progress}%`, height: '100%', borderRadius: 6, background: `linear-gradient(90deg, ${p.accent}, var(--cyan))` }} />
+          <div style={{ overflowX: 'auto', paddingBottom: 10 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(235px, 1fr))', gap: 14, minWidth: 1000 }}>
+              {STAGES.map((stage, stageIndex) => (
+                <Reveal key={stage.name} delay={stageIndex * 0.05}>
+                  <section style={{ height: '100%', border: '1px solid var(--rule)', borderRadius: 10, background: stageIndex === 0 ? 'var(--paper)' : 'var(--cream-deep)', overflow: 'hidden' }}>
+                    <header style={{ padding: '18px 18px 16px', borderBottom: '1px solid var(--rule)', minHeight: 112 }}>
+                      <div style={{ fontFamily: 'var(--mono)', fontSize: '.65rem', color: 'var(--ink-mute)', letterSpacing: '.09em' }}>0{stageIndex + 1}</div>
+                      <h2 style={{ fontFamily: 'var(--serif)', fontSize: '1.22rem', marginTop: 5 }}>{stage.name}</h2>
+                      <p style={{ color: 'var(--ink-soft)', fontSize: '.82rem', marginTop: 6 }}>{stage.note}</p>
+                    </header>
+                    <div style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 12, minHeight: 420 }}>
+                      {stageIndex === 0 ? PROGRAMS.map((program) => (
+                        <article key={program.name} style={{ border: '1px solid var(--rule)', borderLeft: `4px solid ${program.accent}`, borderRadius: 7, background: 'var(--cream)', padding: '17px 16px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'start' }}>
+                            <div>
+                              <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.08rem' }}>{program.name}</h3>
+                              <div style={{ fontFamily: 'var(--mono)', fontSize: '.65rem', color: program.accent, marginTop: 4 }}>{program.gene} · {program.area}</div>
+                            </div>
+                            <span style={{ fontFamily: 'var(--mono)', fontSize: '.6rem', color: 'var(--forest)', border: '1px solid rgba(42,138,106,.35)', borderRadius: 20, padding: '4px 7px', whiteSpace: 'nowrap' }}>ACTIVE</span>
+                          </div>
+                          <p style={{ color: 'var(--ink-soft)', fontSize: '.85rem', marginTop: 12 }}>{program.goal}</p>
+                          <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--rule)' }}>
+                            <div style={{ fontFamily: 'var(--mono)', fontSize: '.61rem', color: 'var(--ink-mute)', letterSpacing: '.06em', textTransform: 'uppercase' }}>Current milestone</div>
+                            <div style={{ fontSize: '.86rem', fontWeight: 600, marginTop: 4 }}>{program.stage}</div>
+                          </div>
+                          <div style={{ marginTop: 10 }}>
+                            <div style={{ fontFamily: 'var(--mono)', fontSize: '.61rem', color: 'var(--ink-mute)', letterSpacing: '.06em', textTransform: 'uppercase' }}>Next gate</div>
+                            <div style={{ color: 'var(--ink-soft)', fontSize: '.82rem', marginTop: 4 }}>{program.next}</div>
+                          </div>
+                        </article>
+                      )) : (
+                        <div style={{ margin: 5, border: '1px dashed var(--rule)', borderRadius: 7, padding: '24px 16px', color: 'var(--ink-mute)', fontFamily: 'var(--mono)', fontSize: '.72rem', lineHeight: 1.6 }}>
+                          No KritRNA program has entered this evidence stage.
+                        </div>
+                      )}
                     </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+                  </section>
+                </Reveal>
+              ))}
+            </div>
           </div>
-          <Reveal><p style={{ marginTop: 16, fontFamily: 'var(--mono)', fontSize: '.78rem', color: 'var(--ink-mute)' }}>Bars indicate research progress, not clinical status. See our Disclaimer for detail.</p></Reveal>
+          <Reveal><p style={{ marginTop: 14, fontFamily: 'var(--mono)', fontSize: '.78rem', color: 'var(--ink-mute)' }}>A card moves only when the required experimental evidence exists. Position does not represent probability of success, regulatory status or an available therapy.</p></Reveal>
         </div>
       </section>
 
-      {/* Platform reach */}
       <section>
         <div className="wrap">
-          <Reveal><div className="sec-head"><div className="eyebrow">Platform reach</div><h2 className="h2">One modality, many diseases</h2>
-            <p>Potentially addressable ≠ equally tractable. Each indication needs its own codon context, delivery, safety and wet-lab validation.</p></div></Reveal>
+          <Reveal><div className="sec-head"><div className="eyebrow">Broader research scope</div><h2 className="h2">Programmable does not mean automatically transferable</h2>
+            <p>The same molecular concept may be relevant across multiple disease classes, but every indication requires its own sequence context, amino-acid identity, delivery strategy, safety analysis and experimental validation. The areas below are research scope, not active pipeline programs.</p></div></Reveal>
           <div className="grid cols-3">
-            {REACH.map((r, i) => (
-              <Reveal key={r.area} delay={i * 0.05}>
+            {REACH.map((area, i) => (
+              <Reveal key={area.area} delay={i * 0.05}>
                 <div className="cell">
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: r.c, marginBottom: 12 }} />
-                  <h3 style={{ fontSize: '1.1rem' }}>{r.area}</h3>
-                  <p>{r.ex}</p>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: area.c, marginBottom: 12 }} />
+                  <h3 style={{ fontSize: '1.1rem' }}>{area.area}</h3>
+                  <p>{area.ex}</p>
                 </div>
               </Reveal>
             ))}

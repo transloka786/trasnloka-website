@@ -1,0 +1,31 @@
+export const UPDATES = [
+  { date: '2026-07-11', type: 'Website', title: 'Public scientific architecture expanded', summary: 'Science, India-first, investor and translation small-world pages now separate company-stage claims from external scientific evidence.' },
+  { date: '2026-07-11', type: 'Platform', title: 'Evidence-gated research programmes published', summary: 'HBB, DMD and CFTR programmes are shown by explicit research gates rather than unsupported completion percentages.' },
+  { date: '2026-07-11', type: 'Hiring', title: 'Founding roles and internships', summary: 'Current roles cover machine learning, research-data curation, operations and scientific communications.' },
+];
+
+export const SEARCH_INDEX = [
+  { href:'/', title:'Home', section:'Overview', description:'KritRNA overview, audience pathways, India-first strategy and current evidence gates.', keywords:'home company rare disease' },
+  { href:'/problem', title:'The shared molecular problem', section:'Science', description:'How premature stop codons interrupt protein production and how current approaches differ.', keywords:'problem nonsense mutation gene therapy readthrough' },
+  { href:'/science', title:'Suppressor-tRNA science', section:'Science', description:'PTCs, NMD, aminoacylation, release-factor competition and safety constraints.', keywords:'science suppressor trna nmd aminoacylation' },
+  { href:'/platform', title:'Dual-engine platform', section:'Technology', description:'Candidate design, translation-system modelling and the design-test-learn loop.', keywords:'platform ai engine machine learning' },
+  { href:'/small-world', title:'Translation small-world engine', section:'Technology', description:'Ribosome traffic, collision, ISR, NMD and systems modelling.', keywords:'small world ribosome isr network' },
+  { href:'/pipeline', title:'Research programmes', section:'Pipeline', description:'Evidence-gated HBB, DMD and CFTR research programmes.', keywords:'pipeline hbb dmd cftr' },
+  { href:'/india', title:'India-first strategy', section:'Company', description:'Rare-disease ecosystem, validation pathways and India-based scientific ownership.', keywords:'india policy centres excellence' },
+  { href:'/partners', title:'Partner with KritRNA', section:'Connect', description:'Pathways for CROs, hospitals, laboratories, patient organisations, pharma and incubators.', keywords:'partner cro hospital patient organisation' },
+  { href:'/community', title:'Community collaboration', section:'Connect', description:'Ethical collaboration pathway for rare-disease organisations and advocates.', keywords:'community patient organisation advocacy outreach' },
+  { href:'/investors', title:'Investor overview', section:'Connect', description:'Platform thesis, risks, milestones, capital strategy and controlled material requests.', keywords:'investor funding grant capital' },
+  { href:'/impact', title:'Potential impact', section:'Company', description:'Platform leverage, India access and long-term impact without efficacy claims.', keywords:'impact access India' },
+  { href:'/about', title:'About Transloka Bio and KritRNA', section:'Company', description:'Legal entity, brand relationship, mission and operating principles.', keywords:'about legal mission' },
+  { href:'/how-we-work', title:'How we work at Transloka Bio', section:'Company', description:'Scientific standards, sustainable work, inclusion, confidentiality and founding-stage hiring principles.', keywords:'culture values inclusion work employment hiring' },
+  { href:'/team', title:'Team', section:'Company', description:'Founders, computational build, advisory network and publication record.', keywords:'team founder Nikhil Pragati' },
+  { href:'/updates', title:'Updates', section:'Company', description:'Verified company, science and hiring updates.', keywords:'updates news' },
+  { href:'/careers', title:'Careers', section:'Connect', description:'Open roles, company culture and application pathway.', keywords:'career job internship culture' },
+  { href:'/resources', title:'Public and family resources', section:'Learn', description:'Plain-language and bilingual starting points for genes, proteins, premature stops and research-stage boundaries.', keywords:'patient family Hindi public guide' },
+  { href:'/explorer', title:'Disease and gene explorer', section:'Learn', description:'Educational HBB, DMD and CFTR research contexts and validation questions.', keywords:'disease gene explorer stop codon' },
+  { href:'/glossary', title:'Scientific glossary', section:'Learn', description:'Definitions for PTC, NMD, aaRS, readthrough, translation and related terms.', keywords:'glossary definition terminology' },
+  { href:'/references', title:'Scientific references', section:'Learn', description:'Persistent scientific, gene and policy sources used across the public website.', keywords:'references citations DOI PubMed policy' },
+  { href:'/ask', title:'Ask KritRNA', section:'Assistant', description:'Full-page grounded assistant with suggested questions and safety boundaries.', keywords:'chatbot ask assistant' },
+  { href:'/faq', title:'FAQ', section:'Help', description:'Plain answers about the company, science, stage and data handling.', keywords:'faq questions' },
+  { href:'/privacy', title:'Privacy and data use', section:'Legal', description:'How website enquiry, recruitment, newsletter, analytics and assistant information is handled.', keywords:'privacy data consent retention rights' },
+];
