@@ -14,14 +14,14 @@ const geist = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'sw
 const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains', display: 'swap' });
 const devanagari = Noto_Serif_Devanagari({ subsets: ['devanagari'], variable: '--font-devanagari', weight: ['400', '600'], display: 'swap' });
 
-const description = 'KritRNA is developing AI-guided suppressor-tRNA designs for selected premature-stop contexts in HBB, DMD and CFTR. Research-stage and India-first, by Transloka Bio Pvt. Ltd.';
+const description = 'KritRNA is developing AI-guided suppressor tRNA therapeutics for premature-stop contexts in HBB, DMD and TP53. Built in India by Transloka Bio Pvt. Ltd.';
 const og = `/api/og?title=${encodeURIComponent('KritRNA — Engineering the Language of Life')}&subtitle=${encodeURIComponent(description)}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: 'KritRNA — Suppressor tRNA Therapeutics for Rare Genetic Diseases', template: '%s — KritRNA' },
+  title: { default: 'KritRNA — Suppressor tRNA Therapeutics', template: '%s — KritRNA' },
   description,
-  keywords: ['suppressor tRNA', 'tRNA therapeutics', 'nonsense mutation', 'premature stop codon', 'rare disease India', 'HBB', 'DMD', 'CFTR'],
+  keywords: ['suppressor tRNA', 'tRNA therapeutics', 'nonsense mutation', 'premature stop codon', 'rare disease India', 'HBB', 'DMD', 'TP53', 'p53 cancer'],
   authors: [{ name: SITE.legal }],
   icons: { icon: '/favicon.png' },
   alternates: { canonical: SITE.url },
