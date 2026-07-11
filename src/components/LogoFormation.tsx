@@ -39,6 +39,10 @@ export default function LogoFormation() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const canvasElement: HTMLCanvasElement = canvas;
+    const wrapElement: HTMLDivElement = wrap;
+    const context: CanvasRenderingContext2D = ctx;
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const pts = points as P[];
     const minX = Math.min(...pts.map((point) => point.x));
@@ -75,13 +79,13 @@ export default function LogoFormation() {
     }
 
     function resize() {
-      width = wrap.clientWidth;
-      height = wrap.clientHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      width = wrapElement.clientWidth;
+      height = wrapElement.clientHeight;
+      canvasElement.width = width * dpr;
+      canvasElement.height = height * dpr;
+      canvasElement.style.width = `${width}px`;
+      canvasElement.style.height = `${height}px`;
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     function target(node: Node) {
@@ -122,7 +126,7 @@ export default function LogoFormation() {
       progress += (desired - progress) * follow;
       const eased = smoothstep(clamp01(progress));
 
-      ctx.clearRect(0, 0, width, height);
+      context.clearRect(0, 0, width, height);
       for (const node of nodes) {
         const fluidX = Math.cos(elapsed * node.sp + node.ph) * node.amp
           + Math.sin(elapsed * 0.34 + node.ph * 1.7) * node.amp * 0.28;
@@ -136,9 +140,9 @@ export default function LogoFormation() {
         const y = freeY + (destination.y - freeY) * eased + Math.cos(elapsed * 1.05 + node.ph) * 1.15 * eased;
         const size = node.size * (1 - eased * 0.35);
 
-        ctx.globalAlpha = 0.22 + eased * 0.65;
+        context.globalAlpha = 0.22 + eased * 0.65;
         if (node.img.complete && node.img.naturalWidth > 0) {
-          ctx.drawImage(node.img, x - size / 2, y - size / 2, size, size * 1.12);
+          context.drawImage(node.img, x - size / 2, y - size / 2, size, size * 1.12);
         }
       }
 
