@@ -136,17 +136,19 @@ export default function LogoFormation() {
       fx: random(),
       fy: random(),
       phase: random() * Math.PI * 2,
-      speed: 0.22 + random() * 0.34,
-      amplitude: mobile ? 5 + random() * 8 : 8 + random() * 14,
+      speed: 0.08 + random() * 0.12,
+      amplitude: mobile ? 3 + random() * 5 : 5 + random() * 8,
       target,
-      delay: random() * 0.08,
+      delay: random() * 0.035,
     }));
 
     let width = 0;
     let height = 0;
     let animationFrame = 0;
     let visible = true;
-    let scrollProgress = reducedMotion ? 1 : 0;
+    let targetProgress = reducedMotion || window.scrollY > 4 ? 1 : 0;
+    let currentProgress = targetProgress;
+    let lastFrameTime = performance.now();
 
     const resize = () => {
       width = wrap.clientWidth;
@@ -158,22 +160,14 @@ export default function LogoFormation() {
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const updateScrollProgress = () => {
+    const updateFormationTarget = () => {
       if (reducedMotion) {
-        scrollProgress = 1;
+        targetProgress = 1;
         return;
       }
 
       const rect = wrap.getBoundingClientRect();
-      const travel = Math.max(0, -rect.top);
-      const formationDistance = Math.max(
-        180,
-        Math.min(rect.height * 0.48, window.innerHeight * 0.44),
-      );
-
-      // Complete while roughly half of the hero is still visible; reversing the
-      // scroll reverses the formation because progress is derived from position.
-      scrollProgress = clamp(travel / formationDistance);
+      targetProgress = rect.top < -4 || window.scrollY > 4 ? 1 : 0;
     };
 
     const drawFallback = (x: number, y: number, size: number, angle: number, alpha: number) => {
@@ -196,8 +190,14 @@ export default function LogoFormation() {
       animationFrame = 0;
       if (!visible) return;
 
+      const elapsed = Math.min(64, Math.max(0, now - lastFrameTime));
+      lastFrameTime = now;
+      const follow = reducedMotion ? 1 : 1 - Math.exp(-elapsed / 520);
+      currentProgress += (targetProgress - currentProgress) * follow;
+      if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
+
       context.clearRect(0, 0, width, height);
-      const masterProgress = smoothstep(scrollProgress);
+      const masterProgress = smoothstep(currentProgress);
       const shapeWidth = Math.min(width * (mobile ? 0.82 : 0.64), height * 0.76);
       const shapeHeight = shapeWidth * 1.08;
       const originX = width * (mobile ? 0.55 : 0.69) - shapeWidth / 2;
@@ -232,17 +232,20 @@ export default function LogoFormation() {
     };
 
     const startAnimation = () => {
-      if (!animationFrame && visible) animationFrame = window.requestAnimationFrame(draw);
+      if (!animationFrame && visible) {
+        lastFrameTime = performance.now();
+        animationFrame = window.requestAnimationFrame(draw);
+      }
     };
 
     const onScroll = () => {
-      updateScrollProgress();
+      updateFormationTarget();
       startAnimation();
     };
 
     const onResize = () => {
       resize();
-      updateScrollProgress();
+      updateFormationTarget();
       startAnimation();
     };
 
@@ -259,7 +262,7 @@ export default function LogoFormation() {
     );
 
     resize();
-    updateScrollProgress();
+    updateFormationTarget();
     observer.observe(wrap);
     window.addEventListener('resize', onResize);
     window.addEventListener('scroll', onScroll, { passive: true });
