@@ -1,6 +1,13 @@
 import Link from 'next/link';
 import { SITE, NAV } from '@/lib/content';
 
+const EXPLORE = [
+  { href: '/science', label: 'Science' },
+  { href: '/platform', label: 'Platform' },
+  { href: '/small-world', label: 'Small-world engine' },
+  ...NAV.filter((item) => item.href !== '/platform'),
+];
+
 export default function Footer() {
   return (
     <footer className="footer">
@@ -12,7 +19,7 @@ export default function Footer() {
           </div>
           <div>
             <h4>Explore</h4>
-            <ul>{NAV.map((n) => <li key={n.href}><Link href={n.href}>{n.label}</Link></li>)}</ul>
+            <ul>{EXPLORE.map((item) => <li key={item.href}><Link href={item.href}>{item.label}</Link></li>)}</ul>
           </div>
           <div>
             <h4>Company</h4>
