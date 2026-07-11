@@ -24,7 +24,7 @@ function RibosomeGlyph() {
       <div
         style={{
           position: 'absolute',
-          left: 29,
+          left: 12.5,
           top: 3,
           width: 39,
           height: 30,
@@ -37,7 +37,7 @@ function RibosomeGlyph() {
       <div
         style={{
           position: 'absolute',
-          left: 19,
+          left: 12,
           top: 31,
           width: 40,
           height: 2,
