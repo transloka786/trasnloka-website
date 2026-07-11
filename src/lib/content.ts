@@ -8,7 +8,9 @@ export const SITE = {
   legal: 'Transloka Bio Pvt. Ltd.',
   cin: 'U72100UW2026PTC252612',
   tagline: 'Reading through silence, restoring the protein.',
-  email: 'hellokritrna@gmail.com',
+  email: 'hello@hellokritrna.com',
+  careersEmail: 'careers@hellokritrna.com',
+  adminEmail: 'hellokritrna@gmail.com',
   phone: '+91 85958 98238',
   location: 'Noida, Uttar Pradesh, India',
   url: 'https://www.hellokritrna.com',
@@ -65,12 +67,12 @@ export const REACH = [
   { area: 'Additional research contexts', ex: 'Evaluated only after sequence, delivery and safety review', c: 'var(--magenta)' },
 ];
 
-// ── Co-founders ──
+// ── Team and advisory network ──
 export const TEAM = {
   lead: {
     name: 'Dr. Nikhil Bharti',
     role: 'Co-Founder & Director · Chief Scientific & Technology Officer',
-    bio: 'Molecular biologist focused on translation regulation and tRNA biology. Leads scientific strategy, platform architecture and experimental-validation planning. Co-author of a 2023 Nature study on engineered suppressor tRNAs.',
+    bio: 'Molecular biologist focused on translation regulation and tRNA biology. Leads scientific strategy, platform architecture and experimental-validation planning.',
     photo: '/team/nikhil.png',
   },
   outreach: {
@@ -79,10 +81,28 @@ export const TEAM = {
     bio: 'Leads rare-disease outreach, awareness, stakeholder communication and patient-community engagement, with equal co-founder responsibility for building KritRNA.',
     photo: '/team/pragati.png',
   },
+  build: [
+    { name: 'Additional AI / ML developer', note: 'Computational-development role currently under discussion; appointment not yet announced.' },
+  ],
+  advisory: [
+    { name: 'Sandeep M. Eswarappa', note: 'Scientific-advisor onboarding and paperwork underway.' },
+    { name: 'Additional scientific advisors', note: 'Approached; names will be announced only after formal confirmation.' },
+    { name: 'LNJP Hospital — Genetics Department', note: 'Clinical-advisory discussions initiated; individual clinicians will be named after formal confirmation.' },
+  ],
 };
 
-// ── Verified selected publication ──
+// ── Founder publication record ──
 export const PUBS = [
+  {
+    year: '2024',
+    venue: 'Nature Communications',
+    title: 'Translation velocity and suppressor-tRNA efficacy',
+    topic: 'First-author research on translation dynamics and suppressor-tRNA performance. Full bibliographic details are being cross-checked before final publication.',
+    role: 'First author',
+    doi: null as string | null,
+    pubmed: 'https://pubmed.ncbi.nlm.nih.gov/?term=Nikhil+Bharti%5BAuthor%5D',
+    c: 'var(--magenta)',
+  },
   {
     year: '2023',
     venue: 'Nature',
@@ -92,6 +112,16 @@ export const PUBS = [
     doi: 'https://doi.org/10.1038/s41586-023-06133-1',
     pubmed: 'https://pubmed.ncbi.nlm.nih.gov/37258671/',
     c: 'var(--violet)',
+  },
+  {
+    year: '2023',
+    venue: 'Journal of Biological Chemistry',
+    title: 'tRNA biology and translation regulation',
+    topic: 'Co-authored work in tRNA biology and translational regulation. Full bibliographic details are being cross-checked before final publication.',
+    role: 'Co-author',
+    doi: null as string | null,
+    pubmed: 'https://pubmed.ncbi.nlm.nih.gov/?term=Nikhil+Bharti%5BAuthor%5D',
+    c: 'var(--cyan)',
   },
 ];
 
@@ -198,7 +228,7 @@ export const FAQ = [
   },
   {
     q: 'How can I partner with or invest in KritRNA?',
-    a: 'Email hellokritrna@gmail.com or use the contact form. Please identify whether your enquiry concerns scientific validation, CRO work, rare-disease outreach, investment or another partnership area.',
+    a: 'Email hello@hellokritrna.com or use the contact form. Please identify whether your enquiry concerns scientific validation, CRO work, rare-disease outreach, investment or another partnership area.',
   },
   {
     q: 'Is KritRNA hiring?',
