@@ -78,32 +78,26 @@ function addArc(
 function buildTRNA(targetCount: number) {
   const points: Point[] = [];
 
-  // Acceptor stem and amino-acid end.
   addLine(points, 0.47, 0.08, 0.47, 0.34, 30);
   addLine(points, 0.53, 0.08, 0.53, 0.34, 30);
   addArc(points, 0.5, 0.075, 0.03, 0.018, Math.PI, Math.PI * 2, 10);
 
-  // D arm on the left.
   addLine(points, 0.47, 0.31, 0.37, 0.35, 15);
   addArc(points, 0.29, 0.37, 0.09, 0.085, -0.15, Math.PI * 1.9, 38);
   addLine(points, 0.37, 0.42, 0.47, 0.45, 15);
 
-  // T arm on the right.
   addLine(points, 0.53, 0.31, 0.63, 0.35, 15);
   addArc(points, 0.71, 0.37, 0.09, 0.085, Math.PI * 1.15, Math.PI * 3.2, 38);
   addLine(points, 0.63, 0.42, 0.53, 0.45, 15);
 
-  // Anticodon stem and loop.
   addLine(points, 0.47, 0.43, 0.44, 0.64, 25);
   addLine(points, 0.53, 0.43, 0.56, 0.64, 25);
   addArc(points, 0.5, 0.69, 0.065, 0.075, Math.PI * 0.05, Math.PI * 1.95, 34);
 
-  // Variable arm, giving the cloverleaf its asymmetric tRNA identity.
   addLine(points, 0.54, 0.47, 0.63, 0.56, 15);
   addArc(points, 0.66, 0.59, 0.045, 0.04, Math.PI * 1.2, Math.PI * 3.1, 18);
   addLine(points, 0.62, 0.61, 0.53, 0.52, 15);
 
-  // Central junction density makes the final silhouette read clearly.
   addArc(points, 0.5, 0.41, 0.065, 0.055, 0, Math.PI * 2, 24);
 
   if (points.length <= targetCount) return points;
@@ -145,7 +139,7 @@ export default function LogoFormation() {
       speed: 0.22 + random() * 0.34,
       amplitude: mobile ? 5 + random() * 8 : 8 + random() * 14,
       target,
-      delay: random() * 0.14,
+      delay: random() * 0.08,
     }));
 
     let width = 0;
@@ -172,8 +166,14 @@ export default function LogoFormation() {
 
       const rect = wrap.getBoundingClientRect();
       const travel = Math.max(0, -rect.top);
-      // Formation spans most of the hero scroll and completes before the hero exits.
-      scrollProgress = clamp(travel / Math.max(1, rect.height * 0.78));
+      const formationDistance = Math.max(
+        180,
+        Math.min(rect.height * 0.48, window.innerHeight * 0.44),
+      );
+
+      // Complete while roughly half of the hero is still visible; reversing the
+      // scroll reverses the formation because progress is derived from position.
+      scrollProgress = clamp(travel / formationDistance);
     };
 
     const drawFallback = (x: number, y: number, size: number, angle: number, alpha: number) => {
@@ -240,6 +240,12 @@ export default function LogoFormation() {
       startAnimation();
     };
 
+    const onResize = () => {
+      resize();
+      updateScrollProgress();
+      startAnimation();
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -255,14 +261,14 @@ export default function LogoFormation() {
     resize();
     updateScrollProgress();
     observer.observe(wrap);
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', onResize);
     window.addEventListener('scroll', onScroll, { passive: true });
     startAnimation();
 
     return () => {
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
       observer.disconnect();
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onResize);
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
