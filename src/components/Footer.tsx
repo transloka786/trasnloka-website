@@ -17,7 +17,8 @@ export default function Footer() {
           <div>
             <h4>Company</h4>
             <ul>
-              <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+              <li><span style={{ color: 'var(--ink-mute)' }}>General: </span><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+              <li><span style={{ color: 'var(--ink-mute)' }}>Careers: </span><a href={`mailto:${SITE.careersEmail}`}>{SITE.careersEmail}</a></li>
               <li>{SITE.phone}</li>
               <li>{SITE.location}</li>
               <li><Link href="/privacy">Privacy & Data Use</Link></li>
