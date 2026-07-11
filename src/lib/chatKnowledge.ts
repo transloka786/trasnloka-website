@@ -31,8 +31,8 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     id: 'company',
     title: 'Company identity and stage',
     route: '/',
-    keywords: ['kritrna', 'transloka', 'company', 'startup', 'stage', 'noida', 'india', 'what is'],
-    content: 'KritRNA is the operating brand of Transloka Bio Pvt. Ltd., an India-first, pre-seed deep-tech biotechnology company based in Noida. It is developing suppressor-tRNA therapeutics and computational design systems for selected genetic diseases caused by premature termination codons. The company is at an early preclinical research stage. No KritRNA candidate is in clinical trials or available as a treatment.',
+    keywords: ['kritrna', 'transloka', 'company', 'startup', 'stage', 'noida', 'india', 'what is', 'name meaning'],
+    content: 'KritRNA is the operating brand of Transloka Bio Pvt. Ltd., an India-first deep-tech biotechnology company based in Noida. The name combines “Krit”—creation or something deliberately made—with RNA, the molecular language the company engineers. KritRNA is developing suppressor-tRNA therapeutics and computational translation systems for selected premature-stop disease contexts. The company is at an early preclinical research stage.',
     sources: [CHAT_SOURCES.science, CHAT_SOURCES.india],
   },
   {
@@ -40,7 +40,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Premature stop codons and suppressor tRNA',
     route: '/science',
     keywords: ['ptc', 'premature stop', 'nonsense mutation', 'suppressor trna', 'readthrough', 'translation', 'protein', 'genome editing'],
-    content: 'A nonsense mutation can create an early UAA, UAG or UGA stop codon. Translation may end before the full protein is produced, and the transcript may also be reduced by nonsense-mediated mRNA decay. A suppressor tRNA is designed to recognise a selected premature stop and deliver an amino acid so translation can continue. This acts at the level of translation and does not edit DNA. Readthrough is not automatically therapeutic: amino-acid identity, useful protein restoration, normal-stop effects, delivery and safety must be tested.',
+    content: 'A nonsense mutation can create an early UAA, UAG or UGA stop codon. Translation may end before the full protein is produced, and the transcript may also be reduced by nonsense-mediated mRNA decay. A suppressor tRNA is designed to recognise a selected premature stop and deliver an amino acid so translation can continue toward a full-length protein. This acts at the level of translation, works with the cell’s own mRNA and does not permanently edit DNA. Engineered suppressor tRNAs have shown promise in peer-reviewed cellular and in-vivo research.',
     sources: [CHAT_SOURCES.science, CHAT_SOURCES.nature2023],
   },
   {
@@ -48,7 +48,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Dual-engine platform',
     route: '/platform',
     keywords: ['platform', 'engine 1', 'engine 2', 'ai', 'machine learning', 'design', 'ranking', 'candidate'],
-    content: 'KritRNA is developing two connected computational engines. Engine 01 generates, filters and ranks suppressor-tRNA candidates using biological, structural, kinetic and context constraints. Engine 02 models the candidate as a perturbation within the wider translation system, including termination competition, ribosome traffic, NMD, quality control, stress signalling and protein output. Selected candidates must be tested experimentally in a design-test-learn loop.',
+    content: 'KritRNA is developing two connected computational engines. Engine 01 generates, filters and ranks suppressor-tRNA candidates using biological, structural, kinetic and context constraints. Engine 02 models each candidate within the wider translation system, including termination competition, ribosome traffic, NMD, quality control, stress signalling and protein output. The combined platform is intended to move from a target mutation to a scientifically defensible experimental shortlist.',
     sources: [CHAT_SOURCES.platform, CHAT_SOURCES.smallWorld],
   },
   {
@@ -56,15 +56,15 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Translation small-world engine',
     route: '/small-world',
     keywords: ['small world', 'network', 'ribosome', 'nmd', 'isr', 'gcn2', 'zak', 'release factor', 'erf1', 'erf3'],
-    content: 'The translation small-world engine is a mechanistic systems-model architecture. It is intended to connect initiation, elongation, tRNA supply, ribosome pausing and collision, termination, recycling, nonsense-mediated decay, ribosome rescue, integrated stress response and protein folding. The public website describes the architecture only; it does not disclose proprietary model weights, scoring functions, candidate sequences or training data.',
+    content: 'The translation small-world engine is a mechanistic systems-model architecture intended to connect initiation, elongation, tRNA supply, ribosome pausing and collision, termination, recycling, nonsense-mediated decay, ribosome rescue, integrated stress response and protein folding. It is designed to evaluate a suppressor tRNA as a systems-level intervention rather than an isolated sequence.',
     sources: [CHAT_SOURCES.smallWorld],
   },
   {
     id: 'programs',
     title: 'Initial research programs',
     route: '/pipeline',
-    keywords: ['pipeline', 'hbb', 'thalassemia', 'dmd', 'duchenne', 'cftr', 'cystic fibrosis', 'disease', 'program'],
-    content: 'KritRNA’s initial research focus is selected nonsense-mutation contexts in HBB for beta-thalassemia, DMD for Duchenne muscular dystrophy and CFTR for cystic fibrosis. These are discovery-stage research programs shown through evidence gates, not percentage completion. They are not clinical-stage assets or available therapies.',
+    keywords: ['pipeline', 'hbb', 'thalassemia', 'dmd', 'duchenne', 'tp53', 'p53', 'cancer', 'oncology', 'disease', 'program'],
+    content: 'KritRNA’s initial research focus is selected nonsense-mutation contexts in HBB for beta-thalassemia, DMD for Duchenne muscular dystrophy and TP53 for p53-deficient cancer. Together, these programmes test the platform across hematology, neuromuscular disease and oncology.',
     sources: [CHAT_SOURCES.pipeline],
   },
   {
@@ -72,7 +72,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'India-first strategy',
     route: '/india',
     keywords: ['india', 'india first', 'indigenous', 'rare disease india', 'noida', 'access'],
-    content: 'India-first means building scientific ownership, mutation mapping, validation relationships and an access-aware development path from India. It is not a claim of government endorsement, clinical access or a confirmed institutional partnership. KritRNA aims to combine globally serious science with attention to India’s rare-disease and biotechnology context.',
+    content: 'India-first means building scientific ownership, mutation mapping, validation relationships and an access-aware development path from India. KritRNA aims to combine globally serious science with India-based capability in computational translation biology, therapeutic design and experimental validation.',
     sources: [CHAT_SOURCES.india],
   },
   {
@@ -80,7 +80,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Founders and team',
     route: '/team',
     keywords: ['founder', 'nikhil', 'pragati', 'team', 'advisor', 'publication'],
-    content: 'KritRNA is led by equal co-founders and directors Dr. Nikhil Bharti and Pragati Bhaisora. Nikhil leads scientific strategy, platform architecture and validation planning. Pragati leads outreach, awareness, stakeholder communication and rare-disease community engagement. Pending advisors and collaborators are labelled by their actual status and are not presented as confirmed appointments or partnerships.',
+    content: 'KritRNA is led by equal co-founders and directors Dr. Nikhil Bharti and Pragati Bhaisora. Nikhil leads scientific strategy, platform architecture and validation planning. Pragati leads outreach, awareness, stakeholder communication and rare-disease community engagement.',
     sources: [CHAT_SOURCES.team],
   },
   {
@@ -88,7 +88,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Investment and partnerships',
     route: '/investors',
     keywords: ['invest', 'investor', 'funding', 'partner', 'cro', 'collaboration', 'grant', 'business'],
-    content: 'KritRNA is pre-seed and is pursuing evidence-gated development. Relevant discussions include scientific validation, CRO work, rare-disease outreach, strategic partnerships and investment. The company does not publish confidential fundraising terms through the chatbot. Serious enquiries should use the investor or contact pathway.',
+    content: 'KritRNA is a pre-seed biotechnology company building a differentiated suppressor-tRNA and translation-modelling platform. Relevant discussions include scientific validation, CRO work, disease-model partnerships, strategic collaborations and investment.',
     sources: [CHAT_SOURCES.investors, CHAT_SOURCES.contact],
   },
   {
@@ -96,7 +96,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Careers',
     route: '/careers',
     keywords: ['career', 'job', 'role', 'internship', 'apply', 'hiring', 'resume', 'cv'],
-    content: 'Current opportunities and application instructions are listed on the Careers page. Career enquiries should be sent to careers@hellokritrna.com. The assistant must not promise selection, compensation, interview outcomes or role availability beyond the approved public page.',
+    content: 'Current opportunities and application instructions are listed on the Careers page. Career enquiries should be sent to careers@hellokritrna.com.',
     sources: [CHAT_SOURCES.careers],
   },
   {
@@ -104,7 +104,7 @@ export const KNOWLEDGE: KnowledgeEntry[] = [
     title: 'Contact details',
     route: '/contact',
     keywords: ['contact', 'email', 'phone', 'reach', 'message'],
-    content: 'General enquiries: hello@hellokritrna.com. Careers: careers@hellokritrna.com. The public website must not be used to submit medical records, genetic reports or other patient health information.',
+    content: 'General enquiries: hello@hellokritrna.com. Careers: careers@hellokritrna.com. The public website should not be used to submit medical records, genetic reports or other patient health information.',
     sources: [CHAT_SOURCES.contact],
   },
 ];
