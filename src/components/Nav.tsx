@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const CORE = [['/problem','Problem'],['/science','Science'],['/platform','Platform'],['/pipeline','Programs'],['/india','India']];
 const COMPANY = [['/about','About'],['/team','Team'],['/how-we-work','How we work'],['/impact','Impact'],['/updates','Updates']];
@@ -13,31 +13,72 @@ type GroupName = 'learn' | 'company' | 'connect' | null;
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [openGroup, setOpenGroup] = useState<GroupName>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function cancelClose() {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }
+
+  function openMenu(name: Exclude<GroupName, null>) {
+    cancelClose();
+    setOpenGroup(name);
+  }
+
+  function scheduleClose() {
+    cancelClose();
+    closeTimer.current = setTimeout(() => {
+      setOpenGroup(null);
+      closeTimer.current = null;
+    }, 550);
+  }
+
+  function closeMenu() {
+    cancelClose();
+    setOpenGroup(null);
+  }
 
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false);
-        setOpenGroup(null);
+        closeMenu();
       }
     };
     document.addEventListener('keydown', key);
-    return () => document.removeEventListener('keydown', key);
+    return () => {
+      document.removeEventListener('keydown', key);
+      cancelClose();
+    };
   }, []);
 
   const group = (name: Exclude<GroupName, null>, label: string, items: string[][]) => (
     <details
       className="nav-group"
       open={openGroup === name}
-      onMouseEnter={() => setOpenGroup(name)}
-      onMouseLeave={() => setOpenGroup(null)}
-      onToggle={(event) => {
-        const isOpen = (event.currentTarget as HTMLDetailsElement).open;
-        setOpenGroup(isOpen ? name : null);
+      onMouseEnter={() => openMenu(name)}
+      onMouseLeave={scheduleClose}
+      onFocus={() => openMenu(name)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) scheduleClose();
       }}
     >
-      <summary onClick={(event) => { event.preventDefault(); setOpenGroup(openGroup === name ? null : name); }}>{label}</summary>
-      <div className="nav-popover">{items.map(([href,itemLabel])=><Link key={href} href={href} onClick={()=>setOpenGroup(null)}>{itemLabel}</Link>)}</div>
+      <summary
+        aria-expanded={openGroup === name}
+        onClick={(event) => {
+          event.preventDefault();
+          openGroup === name ? closeMenu() : openMenu(name);
+        }}
+      >
+        {label}
+      </summary>
+      <div className="nav-popover" onMouseEnter={cancelClose}>
+        {items.map(([href,itemLabel]) => (
+          <Link key={href} href={href} onClick={closeMenu}>{itemLabel}</Link>
+        ))}
+      </div>
     </details>
   );
 
