@@ -5,10 +5,10 @@ import Reveal from '@/components/Reveal';
 import { PROGRAMS } from '@/lib/content';
 
 const AUDIENCES = [
-  ['For patients & families', 'Clear, respectful explanations of nonsense mutations, suppressor tRNA science and what research-stage development means.', '/resources', 'Explore the public guide'],
-  ['For scientists & CROs', 'A detailed view of the biology, candidate-design architecture, experimental gates and collaboration opportunities.', '/platform', 'Explore the platform'],
-  ['For investors & partners', 'The scientific thesis, platform strategy, development milestones and India-first execution model.', '/investors', 'View the investor overview'],
-  ['For future team members', 'Founding-stage opportunities across computational biology, research, operations and scientific communication.', '/careers', 'View open roles'],
+  ['Families & advocates', 'Understand how premature stop codons interrupt protein production and why suppressor tRNA offers a new route toward restoration.', '/resources', 'Explore the science in plain language'],
+  ['Scientists & development partners', 'Examine the molecular logic, dual-engine architecture, experimental strategy and collaboration opportunities behind the platform.', '/platform', 'Enter the platform'],
+  ['Investors & strategic partners', 'Review the shared-mechanism thesis, development strategy, programme logic and India-built biotechnology opportunity.', '/investors', 'View the investment thesis'],
+  ['Builders of the company', 'Join a founding-stage team working across computation, molecular biology, operations and scientific communication.', '/careers', 'Explore open roles'],
 ];
 
 export default function Home() {
@@ -19,21 +19,21 @@ export default function Home() {
         <div className="wrap" style={{ position: 'relative', zIndex: 2, padding: '80px 32px' }}>
           <Reveal><div className="eyebrow" style={{ marginBottom: 24 }}>AI-guided suppressor tRNA therapeutics</div></Reveal>
           <Reveal delay={0.05}><h1 className="h1">Reading through <em>silence</em>,<br />restoring the protein.</h1></Reveal>
-          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 28 }}>KritRNA is building a new class of programmable suppressor tRNA therapeutics for diseases caused by premature stop codons. Our platform is designed to help the ribosome continue translation and restore full-length protein from the patient’s own mRNA—without editing DNA.</p></Reveal>
+          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 28 }}>KritRNA is building a programmable therapeutic platform for diseases caused by premature stop codons. Our suppressor tRNA strategy is designed to help the ribosome continue translation and recover full-length protein from the cell’s own mRNA—without permanently editing DNA.</p></Reveal>
           <Reveal delay={0.15}><div style={{ marginTop: 34, display: 'flex', gap: 14, flexWrap: 'wrap' }}><Link className="btn btn-solid" href="/science">Understand the science →</Link><Link className="btn btn-ghost" href="/platform">Explore the platform</Link></div></Reveal>
         </div>
       </header>
 
       <section className="ink-sec" style={{ borderTop: 'none' }}><div className="wrap">
         <Reveal><div className="sec-head"><div className="eyebrow">The molecular problem</div><h2 className="h2">The cell reaches “stop” too early</h2></div></Reveal>
-        <Reveal delay={0.05}><p className="lead">A nonsense mutation inserts an early stop signal into a protein-coding message. The ribosome leaves before the protein is complete, often reducing or eliminating the protein the cell needs.</p></Reveal>
+        <Reveal delay={0.05}><p className="lead">A nonsense mutation inserts an early stop signal into a protein-coding message. The ribosome leaves before the protein is complete, often reducing or eliminating a protein the cell needs.</p></Reveal>
         <Reveal delay={0.1}><TranslationTrack /></Reveal>
-        <div style={{ marginTop: 40 }}><Reveal><div className="sec-head" style={{ marginBottom: 20 }}><div className="eyebrow">The KritRNA approach</div><h2 className="h2">Reprogramme translation to continue</h2></div></Reveal><Reveal delay={0.05}><p className="lead">Suppressor tRNAs can be engineered to recognise selected premature stop codons and deliver an amino acid, allowing the ribosome to continue toward a full-length protein. Peer-reviewed studies have already demonstrated the promise of engineered suppressor tRNAs in cells and in vivo. KritRNA is building the design and validation platform required to turn that modality into a precise therapeutic strategy.</p></Reveal><Reveal delay={0.1}><TranslationTrack readthrough /></Reveal></div>
+        <div style={{ marginTop: 40 }}><Reveal><div className="sec-head" style={{ marginBottom: 20 }}><div className="eyebrow">The KritRNA approach</div><h2 className="h2">Reprogramme translation to continue</h2></div></Reveal><Reveal delay={0.05}><p className="lead">Engineered suppressor tRNAs can recognise selected premature stop codons and deliver an amino acid, allowing the ribosome to continue toward a full-length protein. The modality has already shown promise in peer-reviewed cellular and in-vivo studies. KritRNA is building the computational and experimental system needed to make that possibility precise, programmable and disease-relevant.</p></Reveal><Reveal delay={0.1}><TranslationTrack readthrough /></Reveal></div>
         <Reveal delay={0.12}><div style={{ marginTop: 28 }}><Link className="btn btn-ghost" href="/science" style={{ borderColor: 'var(--cream)', color: 'var(--cream)' }}>Read the detailed science →</Link></div></Reveal>
       </div></section>
 
       <section><div className="wrap">
-        <Reveal><div className="sec-head"><div className="eyebrow">Explore KritRNA</div><h2 className="h2">A clear path into the company</h2><p>Explore the science, platform, company and opportunities at the level most relevant to you.</p></div></Reveal>
+        <Reveal><div className="sec-head"><div className="eyebrow">Discover KritRNA</div><h2 className="h2">Different perspectives. One scientific mission.</h2><p>KritRNA connects molecular science, therapeutic design, company building and patient-centred communication within one focused platform.</p></div></Reveal>
         <div className="grid cols-4">{AUDIENCES.map(([title, text, href, action], i) => <Reveal key={title} delay={i * 0.05}><article className="cell" style={{ height: '100%', display: 'flex', flexDirection: 'column', borderTop: `4px solid ${i === 0 ? 'var(--magenta)' : i === 1 ? 'var(--cyan)' : i === 2 ? 'var(--forest)' : 'var(--violet)'}` }}><h3>{title}</h3><p style={{ flex: 1 }}>{text}</p><Link href={href} style={{ marginTop: 18, fontFamily: 'var(--mono)', fontSize: '.72rem', color: i === 0 ? 'var(--magenta)' : i === 1 ? 'var(--cyan)' : i === 2 ? 'var(--forest)' : 'var(--violet)' }}>{action} →</Link></article></Reveal>)}</div>
       </div></section>
 
@@ -49,13 +49,13 @@ export default function Home() {
       </div></section>
 
       <section><div className="wrap">
-        <Reveal><div className="sec-head"><div className="eyebrow">Initial research focus</div><h2 className="h2">Three programmes, one platform thesis</h2><p>Our first programmes test the platform across hematology, neuromuscular disease and cancer biology.</p></div></Reveal>
+        <Reveal><div className="sec-head"><div className="eyebrow">Initial research focus</div><h2 className="h2">Three programmes. One programmable modality.</h2><p>Our first programmes test the platform across hematology, neuromuscular disease and oncology.</p></div></Reveal>
         <div className="grid cols-3">{PROGRAMS.map((program, i) => <Reveal key={program.name} delay={i * 0.06}><div className="cell"><div className="k" style={{ color: program.accent }}>{program.area}</div><h3>{program.name}</h3><p>{program.goal}</p><div style={{ marginTop: 18, paddingTop: 14, borderTop: '1px solid var(--rule)' }}><div style={{ fontFamily: 'var(--mono)', fontSize: '.68rem', letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>Current milestone</div><div style={{ marginTop: 5, fontWeight: 600 }}>{program.stage}</div><div style={{ marginTop: 8, color: 'var(--ink-soft)', fontSize: '.86rem' }}>Next: {program.next}</div></div></div></Reveal>)}</div>
-        <Reveal delay={0.1}><div style={{ marginTop: 24 }}><Link className="btn btn-ghost" href="/pipeline">Full research-program view →</Link></div></Reveal>
+        <Reveal delay={0.1}><div style={{ marginTop: 24 }}><Link className="btn btn-ghost" href="/pipeline">Explore the research programmes →</Link></div></Reveal>
       </div></section>
 
       <section className="ink-sec center"><div className="wrap">
-        <Reveal><div className="eyebrow" style={{ justifyContent: 'center' }}>Why the name KritRNA</div></Reveal><Reveal delay={0.04}><h2 className="h1" style={{ margin: '18px auto 0', maxWidth: '20ch' }}><em style={{ color: '#ff6f9c' }}>Krit</em> evokes creation. <em style={{ color: '#6bdcff' }}>RNA</em> is the language we engineer.</h2></Reveal><Reveal delay={0.08}><p className="lead" style={{ margin: '22px auto 0', color: 'rgba(244,234,213,.72)' }}>KritRNA represents deliberate creation at the RNA level: engineering translation to restore what a premature stop codon interrupts.</p></Reveal>
+        <Reveal><div className="eyebrow" style={{ justifyContent: 'center' }}>The meaning of KritRNA</div></Reveal><Reveal delay={0.04}><h2 className="h1" style={{ margin: '18px auto 0', maxWidth: '20ch' }}><em style={{ color: '#ff6f9c' }}>Creation</em> through the language of <em style={{ color: '#6bdcff' }}>RNA.</em></h2></Reveal><Reveal delay={0.08}><p className="lead" style={{ margin: '22px auto 0', color: 'rgba(244,234,213,.72)' }}>KritRNA brings together “Krit”—our shorthand for deliberate creation—with RNA, the molecular language we engineer. The name expresses our purpose: redesign translation so a premature stop does not have to be the end of the message.</p></Reveal>
         <Reveal delay={0.12}><div style={{ marginTop: 32, display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}><Link className="btn btn-solid" href="/partners" style={{ background: 'var(--cream)', color: 'var(--ink)', borderColor: 'var(--cream)' }}>Scientific or CRO collaboration</Link><Link className="btn btn-ghost" href="/investors" style={{ borderColor: 'var(--cream)', color: 'var(--cream)' }}>Investor discussion</Link><Link className="btn btn-ghost" href="/careers" style={{ borderColor: 'var(--cream)', color: 'var(--cream)' }}>Join the team</Link></div></Reveal>
       </div></section>
     </>
