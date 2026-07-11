@@ -58,7 +58,7 @@ export default function CareersPage() {
                       <div style={{ fontSize: '.95rem', color: 'var(--ink)', background: `${accent}12`, borderLeft: `3px solid ${accent}`, padding: '12px 16px', borderRadius: '0 4px 4px 0' }}>{role.warn}</div>
                       {role.stipend && <div style={{ fontFamily: 'var(--mono)', fontSize: '.82rem', color: accent, marginTop: 16 }}>{role.stipend}</div>}
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 22, alignItems: 'center' }}>
-                        {role.jd ? <a className="btn btn-ghost" href={role.jd} target="_blank" rel="noopener noreferrer">View full JD (PDF)</a> : <span style={{ fontFamily: 'var(--mono)', fontSize: '.72rem', color: 'var(--ink-mute)', border: '1px solid var(--rule)', padding: '10px 13px', borderRadius: 4 }}>Approved role brief available on request</span>}
+                        {role.jd ? <a className="btn btn-ghost" href={role.jd} target="_blank" rel="noopener noreferrer">Job description</a> : <span style={{ fontFamily: 'var(--mono)', fontSize: '.72rem', color: 'var(--ink-mute)', border: '1px solid var(--rule)', padding: '10px 13px', borderRadius: 4 }}>Job description</span>}
                         <button className="btn btn-solid" onClick={() => apply(role.title)}>Apply for this role →</button>
                       </div>
                     </div>
@@ -76,7 +76,7 @@ export default function CareersPage() {
           <div className="split-2" style={{ display: 'grid', gap: 44, alignItems: 'start' }}>
             <div>
               <h3 style={{ color: 'var(--cream)', fontWeight: 500, fontSize: '1.3rem', marginBottom: 16 }}>What happens after you apply</h3>
-              {[['01', 'We read it.', 'Every application, to completion. Usually within a week.'],['02', 'Paid trial task.', 'If there’s a fit, you get a scoped, paid task—not an unpaid take-home.'],['03', 'Conversation.', 'We talk about the task and the work. No trick questions.'],['04', 'Offer.', 'Internships carry a PPO pathway; the founding seat carries equity.']].map(([number, title, description]) => (
+              {[[ '01', 'We read it.', 'Every application, to completion. Usually within a week.' ],[ '02', 'Paid trial task.', 'If there’s a fit, you get a scoped, paid task—not an unpaid take-home.' ],[ '03', 'Conversation.', 'We talk about the task and the work. No trick questions.' ],[ '04', 'Offer.', 'Internships carry a PPO pathway; the founding seat carries equity.' ]].map(([number, title, description]) => (
                 <div key={number} style={{ display: 'flex', gap: 14, padding: '14px 0', borderTop: '1px solid rgba(244,234,213,.14)' }}>
                   <div style={{ fontFamily: 'var(--mono)', fontSize: '.8rem', color: 'var(--cyan)', width: 24 }}>{number}</div>
                   <p style={{ fontSize: '.92rem', color: 'rgba(244,234,213,.72)' }}><b style={{ color: 'var(--cream)' }}>{title}</b> {description}</p>
