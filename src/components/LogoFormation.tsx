@@ -136,8 +136,8 @@ export default function LogoFormation() {
       fx: random(),
       fy: random(),
       phase: random() * Math.PI * 2,
-      speed: 0.08 + random() * 0.12,
-      amplitude: mobile ? 3 + random() * 5 : 5 + random() * 8,
+      speed: 0.055 + random() * 0.085,
+      amplitude: mobile ? 2 + random() * 4 : 4 + random() * 6,
       target,
       delay: random() * 0.035,
     }));
@@ -175,7 +175,7 @@ export default function LogoFormation() {
       context.translate(x, y);
       context.rotate(angle);
       context.globalAlpha = alpha;
-      context.strokeStyle = 'rgba(107, 220, 255, 0.9)';
+      context.strokeStyle = 'rgba(107, 220, 255, 0.72)';
       context.lineWidth = 1;
       context.beginPath();
       context.moveTo(0, -size * 0.42);
@@ -192,7 +192,7 @@ export default function LogoFormation() {
 
       const elapsed = Math.min(64, Math.max(0, now - lastFrameTime));
       lastFrameTime = now;
-      const follow = reducedMotion ? 1 : 1 - Math.exp(-elapsed / 520);
+      const follow = reducedMotion ? 1 : 1 - Math.exp(-elapsed / 720);
       currentProgress += (targetProgress - currentProgress) * follow;
       if (Math.abs(targetProgress - currentProgress) < 0.001) currentProgress = targetProgress;
 
@@ -202,19 +202,30 @@ export default function LogoFormation() {
       const shapeHeight = shapeWidth * 1.08;
       const originX = width * (mobile ? 0.55 : 0.69) - shapeWidth / 2;
       const originY = height * 0.5 - shapeHeight / 2;
+      const centreX = originX + shapeWidth / 2;
+      const centreY = originY + shapeHeight / 2;
+      const floatX = reducedMotion ? 0 : Math.sin(now * 0.00018) * (mobile ? 3 : 6);
+      const floatY = reducedMotion ? 0 : Math.sin(now * 0.00024 + 0.8) * (mobile ? 4 : 8);
+      const groupTilt = -0.12 + (reducedMotion ? 0 : Math.sin(now * 0.00016 + 1.1) * 0.016);
+      const cosTilt = Math.cos(groupTilt);
+      const sinTilt = Math.sin(groupTilt);
 
       nodes.forEach((node) => {
         const localProgress = smoothstep(clamp((masterProgress - node.delay) / (1 - node.delay)));
         const freeX = node.fx * width + Math.cos(now * 0.001 * node.speed + node.phase) * node.amplitude;
         const freeY = node.fy * height + Math.sin(now * 0.001 * node.speed + node.phase) * node.amplitude;
-        const targetX = originX + node.target.x * shapeWidth;
-        const targetY = originY + node.target.y * shapeHeight;
+        const rawTargetX = originX + node.target.x * shapeWidth;
+        const rawTargetY = originY + node.target.y * shapeHeight;
+        const relativeX = rawTargetX - centreX;
+        const relativeY = rawTargetY - centreY;
+        const targetX = centreX + relativeX * cosTilt - relativeY * sinTilt + floatX;
+        const targetY = centreY + relativeX * sinTilt + relativeY * cosTilt + floatY;
         const x = lerp(freeX, targetX, localProgress);
         const y = lerp(freeY, targetY, localProgress);
         const finalSize = node.size * 0.72;
         const size = lerp(node.size, finalSize, localProgress);
-        const angle = lerp(node.phase * 0.35, node.target.angle + Math.PI / 2, localProgress);
-        const alpha = 0.18 + localProgress * 0.78;
+        const angle = lerp(node.phase * 0.35, node.target.angle + Math.PI / 2 + groupTilt, localProgress);
+        const alpha = 0.08 + localProgress * 0.38;
 
         if (node.img.complete && node.img.naturalWidth > 0) {
           context.save();
