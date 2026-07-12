@@ -56,7 +56,6 @@ export default function CareersPage() {
                       </ul>
                       <h2 style={{ fontFamily: 'var(--mono)', fontSize: '.7rem', letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--ink-soft)', margin: '20px 0 8px' }}>{role.warnLabel}</h2>
                       <div style={{ fontSize: '.95rem', color: 'var(--ink)', background: `${accent}12`, borderLeft: `3px solid ${accent}`, padding: '12px 16px', borderRadius: '0 4px 4px 0' }}>{role.warn}</div>
-                      {role.stipend && <div style={{ fontFamily: 'var(--mono)', fontSize: '.82rem', color: accent, marginTop: 16 }}>{role.stipend}</div>}
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 22, alignItems: 'center' }}>
                         {role.jd ? <a className="btn btn-ghost" href={role.jd} target="_blank" rel="noopener noreferrer">Job description</a> : <span style={{ fontFamily: 'var(--mono)', fontSize: '.72rem', color: 'var(--ink-mute)', border: '1px solid var(--rule)', padding: '10px 13px', borderRadius: 4 }}>Job description</span>}
                         <button className="btn btn-solid" onClick={() => apply(role.title)}>Apply for this role →</button>
