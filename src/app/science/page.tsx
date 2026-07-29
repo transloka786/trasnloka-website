@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
+import { FourGatesEvidence, ReportingEvidence } from '@/components/EvidenceModules';
 
 export const metadata: Metadata = {
   title: 'Science',
@@ -69,6 +70,9 @@ export default function SciencePage() {
         <Reveal><div className="sec-head"><div className="eyebrow">Design constraints</div><h2 className="h2">The opportunity is powerful because the biology is demanding</h2><p>A successful candidate must satisfy several coupled biological constraints at once. KritRNA evaluates each design as a complete molecule in a specific transcript and cellular context.</p></div></Reveal>
         <div className="grid cols-2">{CONSTRAINTS.map(([title, text], i) => <Reveal key={title} delay={(i % 4) * 0.035}><article className="cell" style={{ height: '100%' }}><div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}><span style={{ fontFamily: 'var(--mono)', fontSize: '.72rem', color: i % 2 ? 'var(--cyan)' : 'var(--magenta)', marginTop: 3 }}>{String(i + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{text}</p></div></div></article></Reveal>)}</div>
       </div></section>
+
+      <FourGatesEvidence />
+      <ReportingEvidence />
 
       <section className="ink-sec"><div className="wrap">
         <Reveal><div className="sec-head"><div className="eyebrow">Scientific foundation</div><h2 className="h2">Built on evidence, advanced through experimentation</h2><p style={{ color: 'rgba(244,234,213,.72)' }}>The modality has credible scientific precedent. KritRNA’s programmes now focus on designing better candidates, testing them rigorously and building a repeatable platform around the biology.</p></div></Reveal>

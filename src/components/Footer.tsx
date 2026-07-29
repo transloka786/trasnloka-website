@@ -4,7 +4,7 @@ import { SITE } from '@/lib/content';
 
 const EXPLORE = [['/problem','Problem'],['/science','Science'],['/platform','Platform'],['/small-world','Small-world engine'],['/pipeline','Programs'],['/india','India'],['/impact','Impact'],['/ask','Ask KritRNA']];
 const COMPANY = [['/about','About'],['/team','Team'],['/how-we-work','How we work'],['/partners','Partners'],['/community','Communities'],['/investors','Investors'],['/updates','Updates'],['/careers','Careers']];
-const LEARN = [['/resources','Public resources'],['/explorer','Disease explorer'],['/glossary','Glossary'],['/references','References'],['/faq','FAQ'],['/search','Search']];
+const LEARN = [['/resources','Public resources'],['/evidence','Evidence'],['/explorer','Disease explorer'],['/glossary','Glossary'],['/references','References'],['/faq','FAQ'],['/search','Search']];
 
 export default function Footer() {
   return <footer className="footer"><div className="wrap"><div className="foot-grid">

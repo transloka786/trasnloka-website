@@ -2,6 +2,7 @@ import Link from 'next/link';
 import LogoFormation from '@/components/LogoFormation';
 import TranslationTrack from '@/components/TranslationTrack';
 import Reveal from '@/components/Reveal';
+import EvidenceCarousel from '@/components/EvidenceCarousel';
 import { PROGRAMS } from '@/lib/content';
 
 const AUDIENCES = [
@@ -11,13 +12,19 @@ const AUDIENCES = [
   ['Builders of the company', 'Join a founding-stage team working across computation, molecular biology, operations and scientific communication.', '/careers', 'Explore open roles'],
 ];
 
+const FIELD_SLIDES = [
+  { kicker: 'Why now', title: 'Engineered tRNA has crossed into first-in-human development.', body: 'The modality has moved beyond a purely preclinical category. That milestone validates the seriousness of the field while raising the standard for candidate quality, delivery and safety.', note: 'Category milestone, not evidence that KritRNA has a clinical product.', href: '/evidence', linkLabel: 'See the evidence context', accent: 'var(--magenta)' },
+  { kicker: 'The real bottleneck', title: 'Readthrough is possible. Reliable translation repair is the harder problem.', body: 'A candidate must be correctly charged, work in the endogenous transcript, reach the binding tissue and avoid unacceptable readthrough at normal stop codons.', note: 'These four gates organise KritRNA’s public scientific strategy.', href: '/science', linkLabel: 'Explore the four gates', accent: 'var(--cyan)' },
+  { kicker: 'India-first advantage', title: 'The missing Indian evidence is itself a measurable scientific finding.', body: 'Indian variant submissions are geographically concentrated, population and clinical datasets answer different questions, and delivery assumptions imported from other populations may not transfer cleanly.', note: 'Records and reports are not prevalence or patient counts.', href: '/india', linkLabel: 'See the India evidence', accent: 'var(--forest)' },
+];
+
 export default function Home() {
   return (
     <>
       <header style={{ position: 'relative', minHeight: '92vh', display: 'flex', alignItems: 'center', overflow: 'hidden', borderBottom: '1px solid var(--rule)' }}>
         <LogoFormation />
         <div className="wrap" style={{ position: 'relative', zIndex: 2, padding: '80px 32px' }}>
-          <Reveal><div className="eyebrow" style={{ marginBottom: 24 }}>AI-guided suppressor tRNA therapeutics</div></Reveal>
+          <Reveal><div className="eyebrow" style={{ marginBottom: 24 }}>Evidence-guided suppressor tRNA therapeutics</div></Reveal>
           <Reveal delay={0.05}><h1 className="h1">Reading through <em>silence</em>,<br />restoring the protein.</h1></Reveal>
           <Reveal delay={0.1}><p className="lead" style={{ marginTop: 28 }}>KritRNA is building a programmable therapeutic platform for diseases caused by premature stop codons. Our suppressor tRNA strategy is designed to help the ribosome continue translation and recover full-length protein from the cell’s own mRNA—without permanently editing DNA.</p></Reveal>
           <Reveal delay={0.15}><div style={{ marginTop: 34, display: 'flex', gap: 14, flexWrap: 'wrap' }}><Link className="btn btn-solid" href="/science">Understand the science →</Link><Link className="btn btn-ghost" href="/platform">Explore the platform</Link></div></Reveal>
@@ -31,6 +38,18 @@ export default function Home() {
         <div style={{ marginTop: 40 }}><Reveal><div className="sec-head" style={{ marginBottom: 20 }}><div className="eyebrow">The KritRNA approach</div><h2 className="h2">Reprogramme translation to continue</h2></div></Reveal><Reveal delay={0.05}><p className="lead">Engineered suppressor tRNAs can recognise selected premature stop codons and deliver an amino acid, allowing the ribosome to continue toward a full-length protein. The modality has already shown promise in peer-reviewed cellular and in-vivo studies. KritRNA is building the computational and experimental system needed to make that possibility precise, programmable and disease-relevant.</p></Reveal><Reveal delay={0.1}><TranslationTrack readthrough /></Reveal></div>
         <Reveal delay={0.12}><div style={{ marginTop: 28 }}><Link className="btn btn-ghost" href="/science" style={{ borderColor: 'var(--cream)', color: 'var(--cream)' }}>Read the detailed science →</Link></div></Reveal>
       </div></section>
+
+      <section className="evidence-band"><div className="wrap">
+        <div className="evidence-head"><div><div className="eyebrow">The scale of the problem, measured</div><h2>One mutation class. Thousands of genes. A platform-sized opportunity.</h2><p className="evidence-subcopy">These counts describe curated records and genes, not patients or prevalence. Their value is to show the breadth of the molecular failure before mechanism, transcript, threshold and delivery filters are applied.</p></div><Link className="btn btn-ghost" href="/evidence">Open evidence hub →</Link></div>
+        <div className="evidence-stats">
+          <div className="evidence-stat-card"><strong>92,157</strong><span>distinct stop-gain variants</span><small>ClinVar ascertainment count; not population prevalence</small></div>
+          <div className="evidence-stat-card"><strong>7,811</strong><span>genes represented</span><small>3,649 carry at least one pathogenic or likely-pathogenic stop</small></div>
+          <div className="evidence-stat-card"><strong>1,467</strong><span>pure loss-of-function genes</span><small>Mechanistically favourable before threshold and delivery review</small></div>
+          <div className="evidence-stat-card"><strong>40</strong><span>diseases evaluated</span><small>No disease passed every non-compensatory axis under current evidence</small></div>
+        </div>
+      </div></section>
+
+      <section><div className="wrap"><div className="evidence-head"><div><div className="eyebrow">Where the field stands</div><h2>Momentum without mythology.</h2><p className="evidence-subcopy">The category is advancing. The decisive questions are now the quality of charging, endogenous-context performance, delivery and safety—not whether a reporter can show readthrough.</p></div></div><EvidenceCarousel slides={FIELD_SLIDES} label="KritRNA field-position highlights" /></div></section>
 
       <section><div className="wrap">
         <Reveal><div className="sec-head"><div className="eyebrow">Discover KritRNA</div><h2 className="h2">Different perspectives. One scientific mission.</h2><p>KritRNA connects molecular science, therapeutic design, company building and patient-centred communication within one focused platform.</p></div></Reveal>

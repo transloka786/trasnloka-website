@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Fraunces, Geist, JetBrains_Mono, Noto_Serif_Devanagari } from 'next/font/google';
 import './globals.css';
+import './evidence-layer.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
