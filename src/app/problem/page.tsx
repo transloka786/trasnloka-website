@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ModalityEvidence } from '@/components/EvidenceModules';
 
 export const metadata:Metadata={
   title:'The Problem',
@@ -45,6 +46,8 @@ export default function ProblemPage(){
       <div className="sec-head"><div className="eyebrow">Why suppressor tRNA is different</div><h2 className="h2">A distinct therapeutic logic</h2><p>Suppressor tRNA combines translation-level intervention with programmable molecular design and cross-disease platform potential.</p></div>
       <div className="grid cols-2">{DIFFERENCES.map(([title,text],i)=><article className="cell" key={title} style={{borderTop:`4px solid ${i%2?'var(--cyan)':'var(--magenta)'}`}}><h3>{title}</h3><p>{text}</p></article>)}</div>
     </div></section>
+
+    <ModalityEvidence />
 
     <section><div className="wrap">
       <div className="sec-head"><div className="eyebrow">Therapeutic landscape</div><h2 className="h2">Different modalities, different biological trade-offs</h2><p>KritRNA’s approach is not a copy of gene replacement, editing or small-molecule readthrough. It is a separate modality with its own strengths, risks and development requirements.</p></div>
