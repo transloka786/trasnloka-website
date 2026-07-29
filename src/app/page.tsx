@@ -11,24 +11,37 @@ const AUDIENCES = [
   ['Builders of the company', 'Join a founding-stage team working across computation, molecular biology, operations and scientific communication.', '/careers', 'Explore open roles'],
 ];
 
+const EVIDENCE = [
+  ['92,157', 'distinct stop-gain variants catalogued across ClinVar', 'A measurable molecular landscape for programme discovery'],
+  ['7,811', 'genes represented in the stop-gain landscape', 'A platform opportunity extending across many disease areas'],
+  ['4 gates', 'charging, transcript context, delivery and native-stop safety', 'The operating framework guiding candidate quality'],
+  ['India-first', 'population-aware evidence and development strategy', 'Domestic origination capability built for global standards'],
+];
+
 export default function Home() {
   return (
     <>
       <header style={{ position: 'relative', minHeight: '92vh', display: 'flex', alignItems: 'center', overflow: 'hidden', borderBottom: '1px solid var(--rule)' }}>
         <LogoFormation />
         <div className="wrap" style={{ position: 'relative', zIndex: 2, padding: '80px 32px' }}>
-          <Reveal><div className="eyebrow" style={{ marginBottom: 24 }}>AI-guided suppressor tRNA therapeutics</div></Reveal>
+          <Reveal><div className="eyebrow" style={{ marginBottom: 24 }}>India-built precision translation therapeutics</div></Reveal>
           <Reveal delay={0.05}><h1 className="h1">Reading through <em>silence</em>,<br />restoring the protein.</h1></Reveal>
-          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 28 }}>KritRNA is building a programmable therapeutic platform for diseases caused by premature stop codons. Our suppressor tRNA strategy is designed to help the ribosome continue translation and recover full-length protein from the cell’s own mRNA—without permanently editing DNA.</p></Reveal>
-          <Reveal delay={0.15}><div style={{ marginTop: 34, display: 'flex', gap: 14, flexWrap: 'wrap' }}><Link className="btn btn-solid" href="/science">Understand the science →</Link><Link className="btn btn-ghost" href="/platform">Explore the platform</Link></div></Reveal>
+          <Reveal delay={0.1}><p className="lead" style={{ marginTop: 28 }}>KritRNA is building a suppressor tRNA therapeutics platform for rare genetic diseases caused by premature stop codons. We combine molecular biology, evidence-led programme selection and computational translation science to identify where restoring full-length protein can create the strongest therapeutic opportunity.</p></Reveal>
+          <Reveal delay={0.15}><div style={{ marginTop: 34, display: 'flex', gap: 14, flexWrap: 'wrap' }}><Link className="btn btn-solid" href="/science">Understand the science →</Link><Link className="btn btn-ghost" href="/evidence">Explore the evidence</Link></div></Reveal>
         </div>
       </header>
 
-      <section className="ink-sec" style={{ borderTop: 'none' }}><div className="wrap">
+      <section style={{ borderTop: 'none' }}><div className="wrap">
+        <Reveal><div className="sec-head"><div className="eyebrow">A category becoming real</div><h2 className="h2">The field has moved from possibility to disciplined execution.</h2><p>Suppressor tRNA has reached a new stage of external validation. The differentiator now is not whether readthrough can occur, but whether candidate design, disease context, delivery and safety are integrated with enough discipline to produce durable programmes.</p></div></Reveal>
+        <div className="grid cols-4">{EVIDENCE.map(([value, label, note], i) => <Reveal key={value} delay={i * 0.05}><article className="cell" style={{ height: '100%', borderTop: `4px solid ${i === 0 ? 'var(--magenta)' : i === 1 ? 'var(--cyan)' : i === 2 ? 'var(--forest)' : 'var(--violet)'}` }}><div style={{ fontFamily: 'var(--serif)', fontSize: '2.2rem', lineHeight: 1, marginBottom: 14 }}>{value}</div><h3>{label}</h3><p style={{ marginTop: 10 }}>{note}</p></article></Reveal>)}</div>
+        <Reveal delay={0.12}><div style={{ marginTop: 24 }}><Link className="btn btn-ghost" href="/evidence">See how KritRNA turns evidence into decisions →</Link></div></Reveal>
+      </div></section>
+
+      <section className="ink-sec"><div className="wrap">
         <Reveal><div className="sec-head"><div className="eyebrow">The molecular problem</div><h2 className="h2">The cell reaches “stop” too early</h2></div></Reveal>
         <Reveal delay={0.05}><p className="lead">A nonsense mutation inserts an early stop signal into a protein-coding message. The ribosome leaves before the protein is complete, often reducing or eliminating a protein the cell needs.</p></Reveal>
         <Reveal delay={0.1}><TranslationTrack /></Reveal>
-        <div style={{ marginTop: 40 }}><Reveal><div className="sec-head" style={{ marginBottom: 20 }}><div className="eyebrow">The KritRNA approach</div><h2 className="h2">Reprogramme translation to continue</h2></div></Reveal><Reveal delay={0.05}><p className="lead">Engineered suppressor tRNAs can recognise selected premature stop codons and deliver an amino acid, allowing the ribosome to continue toward a full-length protein. The modality has already shown promise in peer-reviewed cellular and in-vivo studies. KritRNA is building the computational and experimental system needed to make that possibility precise, programmable and disease-relevant.</p></Reveal><Reveal delay={0.1}><TranslationTrack readthrough /></Reveal></div>
+        <div style={{ marginTop: 40 }}><Reveal><div className="sec-head" style={{ marginBottom: 20 }}><div className="eyebrow">The KritRNA approach</div><h2 className="h2">Reprogramme translation to continue</h2></div></Reveal><Reveal delay={0.05}><p className="lead">Engineered suppressor tRNAs can recognise selected premature stop codons and deliver an amino acid, allowing the ribosome to continue toward a full-length protein. KritRNA is building the design and evidence system required to make that possibility precise, programmable and disease-relevant.</p></Reveal><Reveal delay={0.1}><TranslationTrack readthrough /></Reveal></div>
         <Reveal delay={0.12}><div style={{ marginTop: 28 }}><Link className="btn btn-ghost" href="/science" style={{ borderColor: 'var(--cream)', color: 'var(--cream)' }}>Read the detailed science →</Link></div></Reveal>
       </div></section>
 
