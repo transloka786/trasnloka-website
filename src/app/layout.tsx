@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Fraunces, Geist, JetBrains_Mono, Noto_Serif_Devanagari } from 'next/font/google';
+import { Fraunces, IBM_Plex_Sans, JetBrains_Mono, Noto_Serif_Devanagari } from 'next/font/google';
 import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
@@ -10,27 +10,27 @@ import Analytics from '@/components/Analytics';
 import { SITE, TEAM } from '@/lib/content';
 
 const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces', display: 'swap' });
-const geist = Geist({ subsets: ['latin'], variable: '--font-geist', display: 'swap' });
+const plex = IBM_Plex_Sans({ subsets: ['latin'], variable: '--font-geist', weight: ['400', '500', '600', '700'], display: 'swap' });
 const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains', display: 'swap' });
 const devanagari = Noto_Serif_Devanagari({ subsets: ['devanagari'], variable: '--font-devanagari', weight: ['400', '600'], display: 'swap' });
 
-const description = 'KritRNA is developing AI-guided suppressor tRNA therapeutics for premature-stop contexts in HBB, DMD and TP53. Built in India by Transloka Bio Pvt. Ltd.';
-const og = `/api/og?title=${encodeURIComponent('KritRNA — Engineering the Language of Life')}&subtitle=${encodeURIComponent(description)}`;
+const description = 'KritRNA is building an India-originated suppressor tRNA therapeutics platform for rare genetic diseases caused by premature stop codons, combining molecular biology, evidence-led programme selection and computational translation science.';
+const og = `/api/og?title=${encodeURIComponent('KritRNA — Reading Through Silence')}&subtitle=${encodeURIComponent(description)}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: 'KritRNA — Suppressor tRNA Therapeutics', template: '%s — KritRNA' },
   description,
-  keywords: ['suppressor tRNA', 'tRNA therapeutics', 'nonsense mutation', 'premature stop codon', 'rare disease India', 'HBB', 'DMD', 'TP53', 'p53 cancer'],
+  keywords: ['suppressor tRNA', 'tRNA therapeutics', 'nonsense mutation', 'premature stop codon', 'rare disease India', 'HBB', 'DMD', 'TP53', 'translation biology'],
   authors: [{ name: SITE.legal }],
   icons: { icon: '/favicon.png' },
   alternates: { canonical: SITE.url },
   openGraph: {
     type: 'website', locale: 'en_IN', url: SITE.url, siteName: 'KritRNA',
-    title: 'KritRNA — Engineering the Language of Life', description,
+    title: 'KritRNA — Reading Through Silence', description,
     images: [{ url: og, width: 1200, height: 630, alt: 'KritRNA social preview' }],
   },
-  twitter: { card: 'summary_large_image', title: 'KritRNA — Engineering the Language of Life', description, images: [og] },
+  twitter: { card: 'summary_large_image', title: 'KritRNA — Reading Through Silence', description, images: [og] },
   robots: { index: true, follow: true },
 };
 
@@ -53,7 +53,7 @@ const graph = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const fonts = `${fraunces.variable} ${geist.variable} ${jetbrains.variable} ${devanagari.variable}`;
+  const fonts = `${fraunces.variable} ${plex.variable} ${jetbrains.variable} ${devanagari.variable}`;
   return (
     <html lang="en" className={fonts}>
       <head><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }} /></head>
