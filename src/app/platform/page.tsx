@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Reveal from '@/components/Reveal';
+import { PlatformEvidence } from '@/components/EvidenceModules';
 
 export const metadata: Metadata = {
   title: 'Platform',
@@ -63,6 +64,8 @@ export default function PlatformPage() {
         <div className="grid cols-4">{[['Design grammar', 'Rules defining viable search space without disclosing exact generation logic.', 'var(--magenta)'], ['Constraint stack', 'Coupled sequence, structure, charging, context, kinetics and safety filters.', 'var(--cyan)'], ['Evidence memory', 'Versioned candidate and assay records, including failures and uncertainty.', 'var(--forest)'], ['Closed-loop learning', 'Experimental outcomes progressively reshape prioritisation and calibration.', 'var(--violet)']].map(([title, text, color], i) => <Reveal key={title} delay={i * 0.05}><article className="cell" style={{ height: '100%', borderTop: `4px solid ${color}` }}><h3>{title}</h3><p>{text}</p></article></Reveal>)}</div>
         <Reveal delay={0.12}><div className="callout" style={{ marginTop: 24 }}>Public pages describe the architecture and scientific rationale. Proprietary model weights, feature transformations, ranking functions, training corpora and candidate sequences are not published.</div></Reveal>
       </div></section>
+
+      <PlatformEvidence />
 
       <section><div className="wrap">
         <Reveal><div className="sec-head"><div className="eyebrow">Kinetic and translation features</div><h2 className="h2">A candidate enters a race at the ribosome</h2><p>Readthrough depends on timing and context. The model therefore needs more than a static tRNA structure score.</p></div></Reveal>
