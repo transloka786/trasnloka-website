@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/Reveal';
 import { PROGRAMS, REACH } from '@/lib/content';
+import { ProgrammeEvidence } from '@/components/EvidenceModules';
 
 export const metadata: Metadata = {
   title: 'Research Programs',
@@ -70,6 +71,8 @@ export default function PipelinePage() {
           </div>
         </div>
       </section>
+
+      <ProgrammeEvidence />
 
       <section>
         <div className="wrap">
