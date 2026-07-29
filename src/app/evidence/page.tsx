@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+// Supplementary route only: all original website pages remain unchanged.
 export const metadata: Metadata = {
   title: 'Evidence',
   description: 'A supplementary evidence map for KritRNA scientific claims, programme decisions and public limitations.',
