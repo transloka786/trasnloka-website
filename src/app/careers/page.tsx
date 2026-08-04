@@ -24,7 +24,7 @@ export default function CareersPage() {
           <Reveal delay={0.05}><h1 className="h1" style={{ fontSize: 'clamp(2.2rem,5.5vw,4.2rem)' }}>Do the hardest work of your<br />career on something that <em>matters.</em></h1></Reveal>
           <Reveal delay={0.1}><p className="lead" style={{ marginTop: 24 }}>KritRNA engineers suppressor tRNAs for selected nonsense-mutation contexts. Small founding team, real biology, frontier tooling. We care more about what you can learn, build and own than pedigree.</p></Reveal>
           <Reveal delay={0.13}><div style={{ marginTop: 24 }}><Link className="btn btn-ghost" href="/how-we-work">Read how we work before applying →</Link></div></Reveal>
-          <Reveal delay={0.15}><div style={{ marginTop: 26, display: 'inline-flex', gap: 10, alignItems: 'center', fontFamily: 'var(--mono)', fontSize: '.78rem', color: 'var(--forest)', border: '1px solid rgba(42,138,106,.4)', padding: '8px 14px', borderRadius: 2, background: 'rgba(42,138,106,.06)', flexWrap: 'wrap' }}>Applications close 31 July 2026 · <a href={`mailto:${SITE.careersEmail}`} style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>{SITE.careersEmail}</a></div></Reveal>
+          <Reveal delay={0.15}><div style={{ marginTop: 26, display: 'inline-flex', gap: 10, alignItems: 'center', fontFamily: 'var(--mono)', fontSize: '.78rem', color: 'var(--forest)', border: '1px solid rgba(42,138,106,.4)', padding: '8px 14px', borderRadius: 2, background: 'rgba(42,138,106,.06)', flexWrap: 'wrap' }}>Applications open · <a href={`mailto:${SITE.careersEmail}`} style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>{SITE.careersEmail}</a></div></Reveal>
         </div>
       </section>
 
