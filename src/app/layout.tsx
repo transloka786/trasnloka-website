@@ -4,7 +4,7 @@ import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
-import AmbientTRNA from '@/components/AmbientTRNA';
+import { AmbientSignals } from '@/components/ConceptWorlds';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Analytics from '@/components/Analytics';
 import { SITE, TEAM } from '@/lib/content';
@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }} /></head>
       <body>
         <a className="skip-link" href="#main-content">Skip to main content</a>
-        <AmbientTRNA />
+        <AmbientSignals />
         <Nav />
         <Breadcrumbs />
         <main id="main-content" tabIndex={-1}>{children}</main>
