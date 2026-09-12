@@ -1,9 +1,14 @@
 # Noir preview release checks
 
-The initial Noir build b621aa7 passed compilation and structural-data preparation. Browser checks identified a narrow-screen contact layout issue. Commit b2982f7 corrected it; that commit passed browser checks at 1440, 768 and 390 pixels, with 15 interior routes returning HTTP 200 and no tested horizontal overflow. Public 1EHZ geometry loaded, hero/network renderers were ready and the tested homepage viewports reported no JavaScript page errors.
+The initial Noir build b621aa7 passed compilation and structural-data preparation. Browser checks identified a narrow-screen contact layout issue. Commit b2982f7 corrected it and passed the automated browser checks. Commit 2e61dcb also passed the production build and browser checks with the refreshed Evidence and Team pages.
 
-A dependency audit at that point identified outdated Next, image-processing, mail and browser-test packages. The preview has been updated to the exact remediation versions reported by the registry audit: Next 15.5.25, sharp 0.35.4, Nodemailer 10.0.9 and Playwright 1.63.0. The subsequent commit must have its own successful build and browser checks; earlier results are not inherited.
+## Automated scope
+Homepage at 1440, 768 and 390 pixels; 15 interior routes returning HTTP 200 and no tested horizontal overflow; public 1EHZ geometry loaded; hero and network renderers ready; no reported JavaScript page errors in the tested homepage viewports; chapter selection, motion pause, reduced motion, mobile navigation/Escape, original brand-image loading and no-JavaScript content availability.
 
-The Nodemailer change includes a message-compilation smoke check using streamTransport. This verifies message construction and an in-memory attachment without SMTP, credentials or sending mail. It is not an end-to-end delivery test.
+## Dependency remediation
+The registry audit identified outdated framework, image-processing, mail and browser-test packages. The preview uses the reported remediation versions: Next 15.5.25, sharp 0.35.4, Nodemailer 10.0.9 and Playwright 1.63.0. A remaining transitive PostCSS finding is addressed with a same-major override to PostCSS 8.5.23, the maintainer’s patched version for GHSA-fxqj-rqcc-2cmp. This avoids a framework-major migration solely to update the transitive package. Read the audit and build outputs for the latest commit; previous results are not inherited.
 
-Review the current GitHub Actions report and Vercel status before merge. No production/main update is authorised by this design-preview work. Browser screenshots are stored in the workflow artefact for visual review; an automated structural check is not aesthetic approval. The dependency audit is a registry check, not a complete security assessment.
+The Nodemailer upgrade includes a passing message-compilation smoke check using streamTransport: subject, reply-to and an in-memory PDF-labelled attachment. No SMTP connection, credentials or external message delivery are involved. It is not an end-to-end delivery test.
+
+## Release boundary
+Review the current GitHub Actions report and Vercel status before merge. Production/main is unchanged by this design-preview work. Browser screenshots are stored in the workflow artefact for visual review. Automated checks are not aesthetic approval or a full security assessment. Live forms, chat integrations and additional physical devices still require appropriate review before production approval.
