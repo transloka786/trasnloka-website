@@ -3,6 +3,7 @@ import {Cormorant_Garamond,Manrope,JetBrains_Mono,Noto_Serif_Devanagari} from 'n
 import './globals.css';
 import './editorial.css';
 import './noir.css';
+import './journey.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
