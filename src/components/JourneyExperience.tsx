@@ -29,7 +29,7 @@ export default function JourneyExperience({children}:{children:ReactNode}){
  const disabled=useExperienceMotion();
  const [host,setHost]=useState<HTMLElement|null>(null),[mode,setMode]=useState<Mode>('explore');
  const [chapter,setChapter]=useState(0),[engaged,setEngaged]=useState(false),[replay,setReplay]=useState(0);
- const [loaded,setLoaded]=useState(false),[sound,setSound]=useState(false),[notice,setNotice]=useState('');
+ const [loaded,setLoaded]=useState(false),[sound,setSound]=useState(false),[notice,setNotice]=useState(''),[audioPlaying,setAudioPlaying]=useState(false);
  const runtime=useRef({mode:'explore' as Mode,time:0,chapter:0,sound:false,loaded:false,disabled:true,ended:false});
  const blob=useRef(''),seekTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
  const ctx=useRef<AudioContext|null>(null),analyser=useRef<AnalyserNode|null>(null);
@@ -37,7 +37,7 @@ export default function JourneyExperience({children}:{children:ReactNode}){
  runtime.current.disabled=disabled;
  const changeMode=useCallback((next:Mode)=>{runtime.current.mode=next;setMode(next);},[]);
  const selectChapter=useCallback((i:number)=>{runtime.current.chapter=i;setChapter(i);},[]);
- const stop=useCallback(()=>{audio.current?.pause();changeMode('paused');},[changeMode]);
+ const stop=useCallback(()=>{if(seekTimer.current){clearTimeout(seekTimer.current);seekTimer.current=null;}audio.current?.pause();changeMode('paused');},[changeMode]);
  const measure=useCallback(()=>{
   const nav=document.querySelector('.nav')?.getBoundingClientRect().height||68;
   const maximum=Math.max(0,document.documentElement.scrollHeight-innerHeight);
@@ -65,9 +65,8 @@ export default function JourneyExperience({children}:{children:ReactNode}){
  };
  const seekAudio=useCallback((t:number)=>{
   const a=audio.current,r=runtime.current;if(!a||!r.loaded)return;
-  if(seekTimer.current)clearTimeout(seekTimer.current);
-  a.volume=.12;
-  seekTimer.current=setTimeout(()=>{if(!audio.current)return;audio.current.currentTime=Math.min(t,audio.current.duration||DURATION);audio.current.volume=.5;if(runtime.current.sound)void audio.current.play().catch(()=>setNotice('Press Play to resume the soundtrack.'));},150);
+  if(seekTimer.current)clearTimeout(seekTimer.current);a.volume=.12;
+  seekTimer.current=setTimeout(()=>{seekTimer.current=null;const media=audio.current;if(!media)return;media.currentTime=Math.min(t,media.duration||DURATION);media.volume=.5;if(runtime.current.sound&&runtime.current.mode!=='paused')void media.play().catch(()=>setNotice('Press Play to resume the soundtrack.'));},150);
  },[]);
  const jump=(i:number)=>{
   measure();const r=runtime.current;r.time=CHAPTERS[i].start;r.ended=false;selectChapter(i);setEngaged(true);changeMode('explore');seekAudio(r.time);
@@ -86,8 +85,8 @@ export default function JourneyExperience({children}:{children:ReactNode}){
   a.onerror=()=>setNotice('This audio file could not be decoded. Try the supplied MP3.');
  };
  useEffect(()=>{
-  const area=root.current;if(!area)return;
-  setHost(area.querySelector('.hero-copy'));measure();
+  const area=root.current,media=audio.current;if(!area)return;
+  setHost(area.querySelector<HTMLElement>('.hero-copy'));measure();
   const rs=new ResizeObserver(measure);rs.observe(area);
   CHAPTERS.forEach((c,i)=>{const e=area.querySelector<HTMLElement>(c.selector);if(e){e.dataset.journeyChapter=String(i);e.id=e.id||'journey-'+c.name.toLowerCase().replace(/\s/g,'-');}});
   let last=0,displayAt=0,frame=0,scrollTimer:ReturnType<typeof setTimeout>|null=null,lastEmitted=-1;
@@ -118,28 +117,24 @@ export default function JourneyExperience({children}:{children:ReactNode}){
   };
   const focus=(e:FocusEvent)=>{if((e.target as HTMLElement)?.closest('input,textarea,select')&&!(e.target as HTMLElement)?.closest('.journey-ui')&&runtime.current.mode==='guided')stop();};
   const scroll=()=>{
-   if(runtime.current.mode==='guided')return;
-   if(scrollY>60)setEngaged(true);
+   if(runtime.current.mode==='guided')return;if(scrollY>60)setEngaged(true);
    if(scrollTimer)clearTimeout(scrollTimer);
-   scrollTimer=setTimeout(()=>{
-    const r=runtime.current;if(r.mode==='guided')return;
-    let i=0;anchors.current.forEach((y,n)=>{if(scrollY+innerHeight*.24>=y)i=n;});
-    if(i!==r.chapter){selectChapter(i);r.time=CHAPTERS[i].start;if(r.sound&&r.mode==='explore')seekAudio(r.time);}
-   },180);
+   scrollTimer=setTimeout(()=>{const r=runtime.current;if(r.mode==='guided')return;let i=0;anchors.current.forEach((y,n)=>{if(scrollY+innerHeight*.24>=y)i=n;});if(i!==r.chapter){selectChapter(i);r.time=CHAPTERS[i].start;if(r.sound&&r.mode==='explore')seekAudio(r.time);}},180);
   };
   const visibility=()=>{if(document.hidden)stop();};
   const receiver=(e:MessageEvent)=>{
-   // Optional local review launcher: only accept audio from the exact window that opened this preview.
+   // Accept local review audio only from the window that explicitly opened this preview.
    if(!new URLSearchParams(location.search).has('localSoundtrack')||e.source!==window.opener||e.data?.type!=='kritrna:local-audio'||!(e.data.audio instanceof Blob))return;
    loadTrack(new File([e.data.audio],'song_2026-09-12T162324.mp3',{type:'audio/mpeg'}));
   };
   window.addEventListener('wheel',user,{passive:true});window.addEventListener('touchstart',user,{passive:true});window.addEventListener('keydown',key);window.addEventListener('pointerdown',pointer);window.addEventListener('focusin',focus);window.addEventListener('scroll',scroll,{passive:true});window.addEventListener('resize',measure);window.addEventListener('message',receiver);document.addEventListener('visibilitychange',visibility);
   if(new URLSearchParams(location.search).has('localSoundtrack'))window.opener?.postMessage({type:'kritrna:audio-ready'},'*');
-  return()=>{cancelAnimationFrame(frame);rs.disconnect();if(scrollTimer)clearTimeout(scrollTimer);if(seekTimer.current)clearTimeout(seekTimer.current);audio.current?.pause();if(blob.current)URL.revokeObjectURL(blob.current);void ctx.current?.close().catch(()=>{});window.removeEventListener('wheel',user);window.removeEventListener('touchstart',user);window.removeEventListener('keydown',key);window.removeEventListener('pointerdown',pointer);window.removeEventListener('focusin',focus);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',measure);window.removeEventListener('message',receiver);document.removeEventListener('visibilitychange',visibility);};
- // Controls read runtime refs; this lifecycle is intentionally mounted once.
+  return()=>{cancelAnimationFrame(frame);rs.disconnect();if(scrollTimer)clearTimeout(scrollTimer);if(seekTimer.current)clearTimeout(seekTimer.current);media?.pause();if(media){media.onloadedmetadata=null;media.onerror=null;media.removeAttribute('src');media.load();}if(blob.current)URL.revokeObjectURL(blob.current);void ctx.current?.close().catch(()=>{});window.removeEventListener('wheel',user);window.removeEventListener('touchstart',user);window.removeEventListener('keydown',key);window.removeEventListener('pointerdown',pointer);window.removeEventListener('focusin',focus);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',measure);window.removeEventListener('message',receiver);document.removeEventListener('visibilitychange',visibility);};
+ // The lifecycle reads mutable playback refs rather than rerunning on animation frames.
  // eslint-disable-next-line react-hooks/exhaustive-deps
  },[changeMode,measure,seekAudio,selectChapter,stop]);
- useEffect(()=>{if(disabled&&runtime.current.mode==='guided'){audio.current?.pause();changeMode('paused');}},[disabled,changeMode]);
- const entry=<div className="journey-entry journey-ui"><div className="journey-entry-actions"><button className="editorial-button light-button" onClick={()=>void play()}>{loaded?'Play with sound':'Play silent preview'} <span aria-hidden="true">▷</span></button><button className="journey-text-button" onClick={()=>jump(1)}>Scroll to explore ↓</button></div><button className="journey-load" onClick={()=>file.current?.click()}>{loaded?'Change soundtrack':'Load your soundtrack'}</button>{notice&&<p className="journey-notice" role="status">{notice}</p>}</div>;
- return <div ref={root} className="journey-home" data-journey-build="mosaic-v1" data-mode={mode}><MosaicReveal root={root} replay={replay}/>{children}{host&&createPortal(entry,host)}<audio ref={audio} preload="none" onEnded={()=>{runtime.current.ended=true;stop();}}/><input ref={file} className="journey-file" type="file" accept="audio/*,.mp3" aria-label="Load the four-minute journey soundtrack" onChange={e=>{const f=e.currentTarget.files?.[0];if(f)loadTrack(f);e.currentTarget.value='';}}/>{engaged&&<div className="journey-dock journey-ui" role="region" aria-label="Journey playback controls"><button onClick={()=>mode==='guided'?stop():void play()}>{mode==='guided'?'Pause':'Play journey'}</button><button onClick={()=>void toggleSound()} aria-pressed={sound}>{loaded?(sound?'Sound on':'Sound off'):'Load soundtrack'}</button><select aria-label="Journey chapter" value={chapter} onChange={e=>jump(Number(e.target.value))}>{CHAPTERS.map((c,i)=><option key={c.name} value={i}>{c.name}</option>)}</select><button className="journey-explore" onClick={()=>{changeMode('explore');}}>Explore freely</button><button className="journey-replay" aria-label="Replay mosaic opening" onClick={()=>{stop();window.scrollTo({top:0,behavior:'instant'});runtime.current.time=0;selectChapter(0);setReplay(v=>v+1);}}>↻</button></div>}</div>;
+ useEffect(()=>{if(disabled&&runtime.current.mode==='guided')stop();},[disabled,stop]);
+ const active=mode==='guided'||audioPlaying;
+ const entry=<div className="journey-entry journey-ui"><div className="journey-entry-actions"><button className="editorial-button light-button" onClick={()=>active?stop():void play()}>{active?'Pause journey':loaded?'Play with sound':'Play silent preview'} <span aria-hidden="true">▷</span></button><button className="journey-text-button" onClick={()=>jump(1)}>Scroll to explore ↓</button></div><button className="journey-load" onClick={()=>file.current?.click()}>{loaded?'Change soundtrack':'Load your soundtrack'}</button>{notice&&<p className="journey-notice" role="status">{notice}</p>}</div>;
+ return <div ref={root} className="journey-home" data-journey-build="mosaic-v1" data-mode={mode}><MosaicReveal root={root} replay={replay}/>{children}{host&&createPortal(entry,host)}<audio ref={audio} preload="none" onPlay={()=>setAudioPlaying(true)} onPause={()=>setAudioPlaying(false)} onEnded={()=>{runtime.current.ended=true;stop();}}/><input ref={file} className="journey-file" type="file" accept="audio/*,.mp3" aria-label="Load the four-minute journey soundtrack" onChange={e=>{const f=e.currentTarget.files?.[0];if(f)loadTrack(f);e.currentTarget.value='';}}/>{engaged&&<div className="journey-dock journey-ui" role="region" aria-label="Journey playback controls"><button onClick={()=>active?stop():void play()}>{active?'Pause':'Play journey'}</button><button onClick={()=>void toggleSound()} aria-pressed={sound}>{loaded?(sound?'Sound on':'Sound off'):'Load soundtrack'}</button><select aria-label="Journey chapter" value={chapter} onChange={e=>jump(Number(e.target.value))}>{CHAPTERS.map((c,i)=><option key={c.name} value={i}>{c.name}</option>)}</select><button className="journey-explore" onClick={()=>changeMode('explore')}>Explore freely</button><button className="journey-replay" aria-label="Replay mosaic opening" onClick={()=>{stop();window.scrollTo({top:0,behavior:'instant'});runtime.current.time=0;selectChapter(0);setReplay(v=>v+1);}}>↻</button></div>}</div>;
 }
