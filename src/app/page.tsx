@@ -24,7 +24,7 @@ export default function Home(){return <div className="editorial-home">
       <div className="hero-copy"><div className="hero-kicker"><span/>INDIA-BUILT PRECISION TRANSLATION THERAPEUTICS</div>
         <h1>Reading through<br/><em>silence.</em></h1>
         <p className="hero-promise">Restoring the protein.</p>
-        <p className="hero-description">A new possibility for genetic diseases.<br/>Engineered at the level of translation.</p>
+        <p className="hero-description">Engineering suppressor tRNA therapeutics.<br/>A new possibility for genetic diseases.</p>
         <div className="hero-actions"><Link className="editorial-button light-button" href="/science">Explore our science <Arrow/></Link><Link className="text-link" href="/partners">Build with us <Arrow/></Link></div>
       </div>
       <MolecularHero/>
@@ -32,7 +32,7 @@ export default function Home(){return <div className="editorial-home">
     <div className="wrap hero-baseline"><a href="#the-possibility" className="scroll-cue"><span aria-hidden="true">↓</span> SCROLL TO DISCOVER</a><span>MOLECULAR BIOLOGY <i/> COMPUTATIONAL INTELLIGENCE <i/> HUMAN POSSIBILITY</span><span className="hero-edition">KRITRNA / 01</span></div>
   </header>
   <section id="the-possibility" className="manifesto-section"><div className="wrap">
-    <div className="section-index"><span>01 / THE POSSIBILITY</span><span>SMALL MOLECULE. PROFOUND PURPOSE.</span></div>
+    <div className="section-index"><span>01 / THE POSSIBILITY</span><span>MOLECULAR PRECISION. HUMAN POSSIBILITY.</span></div>
     <div className="manifesto-layout"><Reveal><h2 className="display-heading">The message<br/>is interrupted.<br/><em>The possibility<br/>is not.</em></h2></Reveal><div className="manifesto-copy"><Reveal><span className="micro accent-text">ENGINEERING THE LANGUAGE OF LIFE</span><p className="large-body">KritRNA is building a suppressor tRNA therapeutics platform for rare genetic diseases caused by premature stop codons.</p><p>We combine molecular biology, evidence-led programme selection and computational translation science to identify where restoring full-length protein can create the strongest therapeutic opportunity.</p><Link href="/problem" className="underline-link">Understand the molecular challenge <Arrow/></Link></Reveal><div className="mission-footnote"><span className="status-dot"/> DISCOVERY-LED. EVIDENCE-GUIDED. INDIA-BUILT.</div></div></div>
   </div></section>
   <section className="mechanism-section" id="mechanism"><div className="wrap">

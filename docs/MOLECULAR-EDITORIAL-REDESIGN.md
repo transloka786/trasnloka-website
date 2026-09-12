@@ -1,6 +1,6 @@
 # KritRNA — Molecular Editorial redesign
 
-Preview branch: `design/molecular-editorial-2026-09`. Base: main at fbc4862e7a198a39df666bff6113fb9aae1ba81a. Do not merge before founder review.
+Preview branch: `design/molecular-editorial-2026-09`. Base: main at fbc4862e7a198a39df666bff6113fb9aae1ba81a. PR #6. Do not merge before founder review.
 
 ## Design
 Midnight teal, warm ivory, muted sage and lilac; existing Fraunces / IBM Plex Sans / JetBrains Mono / Noto Serif Devanagari retained. Custom tRNA-inspired canvas sculpture, not an atomic model. The sculpture is procedural, not a copied competitor asset. No new production package dependencies.
@@ -16,10 +16,12 @@ India programme rendering imports the same PROGRAMS array as the homepage/pipeli
 Canvas caps device pixel ratio at 1.6 and drawing at approximately 30 fps. Animation is suspended off screen and when the tab is hidden. Static fallback for no canvas/JavaScript. Explicit pause button with session persistence and OS reduced-motion support. Native scrolling is preserved. Reveal enhancement only hides below-fold content after JavaScript initialises; server-rendered copy is visible without JavaScript. Dropdowns support click/keyboard, Escape and outside-click closure; mobile menu keeps all destinations.
 
 ## Scientific boundaries
-The molecular artwork and translation comparison are labelled conceptual. No therapeutic efficacy, validated AI accuracy, partner endorsement, clinical readiness or numerical programme-progress claims were added. Existing research stages and next milestones come from the shared content library. The UGA comparison does not imply universal native-stop specificity. Public category claims remain distinct from KritRNA-specific results.
+The molecular artwork and translation comparison are labelled conceptual. No therapeutic efficacy, validated AI accuracy, partner endorsement, clinical readiness or numerical programme-progress claims were added. Existing research stages and next milestones come from the shared content library. The UGA comparison does not imply universal native-stop specificity. Public category claims remain distinct from KritRNA-specific results. The hero explicitly names suppressor tRNA therapeutics. tRNA is not described as a small-molecule therapeutic.
 
-## Validation status at initial commit
-Source inspection completed. Full Next.js compilation, hydration, live-font rendering, all-route browser QA and contact/chat integration tests have NOT yet been completed for this branch. The local shell cannot resolve GitHub to clone the full repository. Existing GitHub production-build CI should run when a pull request is created. Check actual check-run and deployment outcomes before merge; a successful source write alone is not a successful deployment.
+## Verified build record
+The initial implementation commit `03f796b47ac84a329eb04453dbc3df4125657f60` passed the GitHub Actions `Website production build` workflow, run 141 / 34694138486. Vercel reported the deployment READY and posted the actual preview URL on PR #6. A later copy-only update changes the hero description and a section label; check the latest commit's checks too.
+
+Full visual inspection of the deployed preview, cross-device browser QA and form/chat delivery integration tests have NOT been completed in this session. The local shell cannot resolve GitHub to clone the full repository; the browsing tool could not open the Vercel preview. A successful build is not proof of visual or integration-test success.
 
 ## Review gates
 1. Review desktop/mobile appearance using actual Vercel preview, real brand assets and fonts.
