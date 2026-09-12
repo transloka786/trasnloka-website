@@ -1,140 +1,73 @@
 'use client';
-import {useCallback,useEffect,useRef,useState,type ReactNode} from 'react';
-import {createPortal} from 'react-dom';
+import {useEffect,useRef,type ReactNode} from 'react';
 import {useExperienceMotion} from './Experience';
 import MosaicReveal from './MosaicReveal';
+import '../app/ambient.css';
 
-const DURATION=240.039;
-const CHAPTERS=[
- {name:'Sunrise',start:0,end:30,selector:'.editorial-hero'},
- {name:'First Steps',start:30,end:90,selector:'.manifesto-section'},
- {name:'Discovery',start:90,end:150,selector:'.dependencies-section'},
- {name:'Horizon',start:150,end:210,selector:'.brand-origin'},
- {name:'Reflection',start:210,end:DURATION,selector:'.evidence-editorial'}
-];
-const CUES:[number,string][]=[
- [0,'.editorial-hero'],[25,'.editorial-hero'],[30,'.manifesto-section'],[39,'.manifesto-section'],
- [43,'.reading-intro'],[49,'.translation-observatory'],[78,'.translation-observatory'],[86,'.science-callout'],
- [90,'.dependencies-section'],[102,'.dependencies-section'],[107,'.platform-intro'],[116,'.engine-spread'],
- [129,'.capability-rail'],[136,'.programmes-section'],[145,'.programmes-section'],[150,'.brand-origin'],
- [174,'.brand-origin'],[180,'.people-section'],[204,'.people-section'],[210,'.evidence-editorial'],
- [222,'.evidence-editorial'],[228,'.audience-section'],[237,'.closing-section'],[DURATION,'.closing-section']
-];
-type Mode='explore'|'guided'|'paused';
-const clamp=(v:number,min:number,max:number)=>Math.min(max,Math.max(min,v));
-const chapterAt=(t:number)=>Math.max(0,CHAPTERS.findIndex(c=>t>=c.start&&t<c.end));
-
+const END=240.039;
+// Timing stays internal. No soundtrack names, file chooser or playback dashboard.
+const CHAPTERS=[{start:0,end:30,selector:'.editorial-hero'},{start:30,end:90,selector:'.manifesto-section'},{start:90,end:150,selector:'.dependencies-section'},{start:150,end:210,selector:'.brand-origin'},{start:210,end:END,selector:'.evidence-editorial'}];
+const CUES:[number,string][]=[[0,'.editorial-hero'],[25,'.editorial-hero'],[30,'.manifesto-section'],[39,'.manifesto-section'],[43,'.reading-intro'],[49,'.translation-observatory'],[78,'.translation-observatory'],[86,'.science-callout'],[90,'.dependencies-section'],[102,'.dependencies-section'],[107,'.platform-intro'],[116,'.engine-spread'],[129,'.capability-rail'],[136,'.programmes-section'],[145,'.programmes-section'],[150,'.brand-origin'],[174,'.brand-origin'],[180,'.people-section'],[204,'.people-section'],[210,'.evidence-editorial'],[222,'.evidence-editorial'],[228,'.audience-section'],[237,'.closing-section'],[END,'.closing-section']];
+const clamp=(n:number,a:number,b:number)=>Math.max(a,Math.min(b,n));
 export default function JourneyExperience({children}:{children:ReactNode}){
- const root=useRef<HTMLDivElement>(null),audio=useRef<HTMLAudioElement>(null),file=useRef<HTMLInputElement>(null);
- const disabled=useExperienceMotion();
- const [host,setHost]=useState<HTMLElement|null>(null),[mode,setMode]=useState<Mode>('explore');
- const [chapter,setChapter]=useState(0),[engaged,setEngaged]=useState(false),[replay,setReplay]=useState(0);
- const [loaded,setLoaded]=useState(false),[sound,setSound]=useState(false),[notice,setNotice]=useState(''),[audioPlaying,setAudioPlaying]=useState(false);
- const runtime=useRef({mode:'explore' as Mode,time:0,chapter:0,sound:false,loaded:false,disabled:true,ended:false});
- const blob=useRef(''),seekTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
- const ctx=useRef<AudioContext|null>(null),analyser=useRef<AnalyserNode|null>(null);
- const points=useRef<{time:number;y:number}[]>([]),anchors=useRef<number[]>([]);
- runtime.current.disabled=disabled;
- const changeMode=useCallback((next:Mode)=>{runtime.current.mode=next;setMode(next);},[]);
- const selectChapter=useCallback((i:number)=>{runtime.current.chapter=i;setChapter(i);},[]);
- const stop=useCallback(()=>{if(seekTimer.current){clearTimeout(seekTimer.current);seekTimer.current=null;}audio.current?.pause();changeMode('paused');},[changeMode]);
- const measure=useCallback(()=>{
-  const nav=document.querySelector('.nav')?.getBoundingClientRect().height||68;
-  const maximum=Math.max(0,document.documentElement.scrollHeight-innerHeight);
-  const y=(selector:string)=>{const e=root.current?.querySelector(selector);return e?clamp(e.getBoundingClientRect().top+scrollY-nav-20,0,maximum):0;};
-  points.current=CUES.map(([time,selector])=>({time,y:y(selector)}));anchors.current=CHAPTERS.map(c=>y(c.selector));
- },[]);
- const animateAudio=()=>{
-  try{if(!ctx.current){ctx.current=new AudioContext();const source=ctx.current.createMediaElementSource(audio.current!);analyser.current=ctx.current.createAnalyser();analyser.current.fftSize=256;source.connect(analyser.current);analyser.current.connect(ctx.current.destination);}void ctx.current.resume().catch(()=>{});}catch{/* Native HTML audio remains the fallback. */}
- };
- const play=async()=>{
-  const r=runtime.current,a=audio.current;if(!a)return;
-  measure();setEngaged(true);setNotice('');
-  if(r.ended||r.time>=DURATION-.15){r.time=0;r.ended=false;selectChapter(0);}
-  if(r.loaded){
-   animateAudio();a.muted=!r.sound;a.volume=.5;
-   if(Math.abs(a.currentTime-r.time)>.2)a.currentTime=Math.min(r.time,a.duration||DURATION);
-   try{await a.play();}catch{setNotice('Playback was blocked. Press Play again, or explore without sound.');changeMode('paused');return;}
-  }
-  changeMode(r.disabled?'explore':'guided');
- };
- const toggleSound=async()=>{
-  const r=runtime.current,a=audio.current;if(!r.loaded){file.current?.click();return;}
-  r.sound=!r.sound;setSound(r.sound);if(!a)return;a.muted=!r.sound;
-  if(r.sound){animateAudio();if(r.mode==='explore'){a.currentTime=CHAPTERS[r.chapter].start;try{await a.play();}catch{setNotice('Press Play to start the soundtrack.');}}}
- };
- const seekAudio=useCallback((t:number)=>{
-  const a=audio.current,r=runtime.current;if(!a||!r.loaded)return;
-  if(seekTimer.current)clearTimeout(seekTimer.current);a.volume=.12;
-  seekTimer.current=setTimeout(()=>{seekTimer.current=null;const media=audio.current;if(!media)return;media.currentTime=Math.min(t,media.duration||DURATION);media.volume=.5;if(runtime.current.sound&&runtime.current.mode!=='paused')void media.play().catch(()=>setNotice('Press Play to resume the soundtrack.'));},150);
- },[]);
- const jump=(i:number)=>{
-  measure();const r=runtime.current;r.time=CHAPTERS[i].start;r.ended=false;selectChapter(i);setEngaged(true);changeMode('explore');seekAudio(r.time);
-  window.scrollTo({top:anchors.current[i]||0,behavior:disabled?'instant':'smooth'});
- };
- const loadTrack=(chosen:File)=>{
-  if(chosen.size>30*1024*1024||!(/\.(mp3|wav|m4a|ogg|aac|webm)$/i.test(chosen.name)||chosen.type.startsWith('audio/'))){setNotice('Choose an audio file smaller than 30 MB.');return;}
-  stop();const a=audio.current;if(!a)return;
-  if(blob.current)URL.revokeObjectURL(blob.current);blob.current=URL.createObjectURL(chosen);
-  runtime.current.loaded=false;setLoaded(false);a.src=blob.current;a.load();
-  a.onloadedmetadata=()=>{
-   if(!Number.isFinite(a.duration)||a.duration<235||a.duration>245){setNotice('The chapter map expects the supplied four-minute soundtrack. Choose that MP3.');return;}
-   runtime.current.loaded=true;runtime.current.sound=true;runtime.current.time=CHAPTERS[runtime.current.chapter].start;
-   a.currentTime=runtime.current.time;a.muted=false;a.volume=.5;setLoaded(true);setSound(true);setNotice('Soundtrack ready. Press Play with sound. The file stays on your device.');
-  };
-  a.onerror=()=>setNotice('This audio file could not be decoded. Try the supplied MP3.');
- };
+ const root=useRef<HTMLDivElement>(null),audio=useRef<HTMLAudioElement>(null),disabled=useExperienceMotion();
+ const state=useRef({disabled:true,ready:false,mode:'explore',chapter:0,manual:false,muted:false,ended:false,available:false,attempting:false,blocked:false});
+ state.current.disabled=disabled;
+ const stopRef=useRef<()=>void>(()=>{});
  useEffect(()=>{
-  const area=root.current,media=audio.current;if(!area)return;
-  setHost(area.querySelector<HTMLElement>('.hero-copy'));measure();
-  const rs=new ResizeObserver(measure);rs.observe(area);
-  CHAPTERS.forEach((c,i)=>{const e=area.querySelector<HTMLElement>(c.selector);if(e){e.dataset.journeyChapter=String(i);e.id=e.id||'journey-'+c.name.toLowerCase().replace(/\s/g,'-');}});
-  let last=0,displayAt=0,frame=0,scrollTimer:ReturnType<typeof setTimeout>|null=null,lastEmitted=-1;
-  const samples=new Uint8Array(128);
-  const tick=(now:number)=>{
-   const r=runtime.current,a=audio.current,dt=last?Math.min(.1,(now-last)/1000):0;last=now;
-   if(r.mode==='guided'){
-    r.time=r.loaded&&a?a.currentTime:Math.min(DURATION,r.time+dt);
-    const p=points.current;let j=0;while(j<p.length-2&&r.time>=p[j+1].time)j++;
-    if(p[j]&&p[j+1]&&!r.disabled){const f=clamp((r.time-p[j].time)/(p[j+1].time-p[j].time),0,1),e=f*f*(3-2*f);window.scrollTo({top:p[j].y+(p[j+1].y-p[j].y)*e,behavior:'instant'});}
-    const i=r.time>=210?4:chapterAt(r.time);if(i!==r.chapter)selectChapter(i);
-    if(r.time>=Math.min(DURATION,a?.duration||DURATION)-.08){r.ended=true;changeMode('paused');a?.pause();}
-   }else if(r.mode==='explore'&&r.loaded&&a&&!a.paused&&a.currentTime>=CHAPTERS[r.chapter].end-.12){a.pause();}
-   if(now-displayAt>100){displayAt=now;
-    if(r.mode==='guided'&&Math.abs(r.time-lastEmitted)>.09){window.dispatchEvent(new CustomEvent('kritrna:journey',{detail:{time:r.time,mode:r.mode}}));lastEmitted=r.time;}
-    let power=0;if(analyser.current&&r.sound&&a&&!a.paused){analyser.current.getByteTimeDomainData(samples);let sum=0;for(const v of samples)sum+=(v-128)*(v-128);power=clamp(Math.sqrt(sum/samples.length)/38,0,1);}
-    area.style.setProperty('--journey-energy',String(power));area.dataset.journeyMode=r.mode;
+  const el=root.current,a=audio.current;if(!el||!a)return;
+  let disposed=false,raf=0,last=0,scrollTimer:ReturnType<typeof setTimeout>|undefined,seekTimer:ReturnType<typeof setTimeout>|undefined;
+  let points:{time:number;y:number}[]=[],anchors:number[]=[],ctx:AudioContext|null=null,analyser:AnalyserNode|null=null;
+  const samples=new Uint8Array(256),abort=new AbortController();
+  a.volume=.36;
+  const mark=()=>{el.dataset.mode=state.current.mode;el.dataset.audio=state.current.available?(state.current.blocked?'awaiting-interaction':a.paused?'paused':'playing'):'unavailable';};
+  const measure=()=>{const nav=document.querySelector('.nav')?.getBoundingClientRect().height||68,max=Math.max(0,document.documentElement.scrollHeight-innerHeight);const y=(selector:string)=>{const node=el.querySelector(selector);return node?clamp(node.getBoundingClientRect().top+scrollY-nav-20,0,max):0;};points=CUES.map(([time,selector])=>({time,y:y(selector)}));anchors=CHAPTERS.map(c=>y(c.selector));};
+  const attachMeter=async()=>{try{if(ctx||disposed)return;const candidate=new AudioContext();await candidate.resume();if(disposed||candidate.state!=='running'){await candidate.close();return;}ctx=candidate;analyser=ctx.createAnalyser();analyser.fftSize=512;const source=ctx.createMediaElementSource(a);source.connect(analyser);analyser.connect(ctx.destination);}catch{/* Native audio remains available if a meter cannot start. */}};
+  const attempt=()=>{
+   const s=state.current;if(disposed||document.hidden||!s.available||s.muted||s.ended||s.attempting)return;
+   s.attempting=true;
+   void a.play().then(()=>{if(disposed){a.pause();return;}s.blocked=false;s.mode=!s.manual&&!s.disabled?'guided':'explore';mark();}).catch(()=>{s.blocked=true;s.mode='explore';mark();}).finally(()=>{s.attempting=false;});
+  };
+  const stop=()=>{state.current.muted=true;state.current.mode='paused';if(seekTimer)clearTimeout(seekTimer);a.pause();mark();};stopRef.current=stop;
+  const user=()=>{state.current.manual=true;state.current.mode=state.current.muted?'paused':'explore';mark();};
+  const gesture=(event:Event)=>{
+   const target=event.target as HTMLElement|null;
+   if(target?.closest('input,textarea,select,[contenteditable=true]')){user();return;}
+   if(target?.closest('a,button,summary'))user();
+   if(event.type==='keydown'){
+    const key=(event as KeyboardEvent).key;
+    if(key==='Escape'){stop();return;}
+    if(key.toLowerCase()==='m'&&!(event as KeyboardEvent).ctrlKey&&!(event as KeyboardEvent).metaKey){state.current.muted=!state.current.muted;if(state.current.muted){a.pause();state.current.mode='paused';mark();return;}}
+    if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(key))user();
    }
-   frame=requestAnimationFrame(tick);
+   attempt();if(!state.current.muted&&state.current.available)void attachMeter();
   };
-  frame=requestAnimationFrame(tick);
-  const user=()=>{if(runtime.current.mode==='guided')changeMode('explore');setEngaged(true);};
-  const key=(e:KeyboardEvent)=>{if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key)&&!(e.target as HTMLElement)?.closest('input,textarea,select,.journey-ui'))user();};
-  const pointer=(e:PointerEvent)=>{
-   const target=e.target as HTMLElement;if(target.closest('.journey-ui'))return;
-   if(target.closest('a,button,input,textarea,select,summary')){if(runtime.current.mode==='guided')stop();}
-   else if(e.clientX>=document.documentElement.clientWidth-20)user();
+  const scroll=()=>{if(state.current.mode==='guided')return;if(scrollTimer)clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>{
+   const s=state.current;let index=0;anchors.forEach((y,i)=>{if(scrollY+innerHeight*.22>=y)index=i;});
+   if(index!==s.chapter){s.chapter=index;s.ended=false;if(s.available){if(seekTimer)clearTimeout(seekTimer);a.volume=.08;seekTimer=setTimeout(()=>{if(disposed)return;a.currentTime=Math.min(CHAPTERS[index].start,a.duration||END);a.volume=.36;attempt();},120);}}
+  },180);};
+  const tick=(now:number)=>{
+   raf=0;if(disposed||document.hidden)return;raf=requestAnimationFrame(tick);if(now-last<50)return;last=now;
+   const s=state.current,t=a.currentTime;
+   if(!a.paused&&s.mode==='guided'&&!s.disabled){
+    let i=0;while(i<points.length-2&&t>=points[i+1].time)i++;if(points[i]&&points[i+1]){const fraction=clamp((t-points[i].time)/(points[i+1].time-points[i].time),0,1),ease=fraction*fraction*(3-2*fraction);window.scrollTo({top:points[i].y+(points[i+1].y-points[i].y)*ease,behavior:'instant'});}
+    s.chapter=t>=210?4:t>=150?3:t>=90?2:t>=30?1:0;
+    window.dispatchEvent(new CustomEvent('kritrna:journey',{detail:{time:t,mode:'guided'}}));
+   }else if(!a.paused&&s.mode==='explore'&&t>=CHAPTERS[s.chapter].end-.08){a.pause();mark();}
+   let power=0;if(analyser&&!a.paused&&!s.disabled){analyser.getByteTimeDomainData(samples);let sum=0;for(const v of samples)sum+=(v-128)*(v-128);power=clamp(Math.sqrt(sum/samples.length)/38,0,1);}el.style.setProperty('--journey-energy',String(power));
   };
-  const focus=(e:FocusEvent)=>{if((e.target as HTMLElement)?.closest('input,textarea,select')&&!(e.target as HTMLElement)?.closest('.journey-ui')&&runtime.current.mode==='guided')stop();};
-  const scroll=()=>{
-   if(runtime.current.mode==='guided')return;if(scrollY>60)setEngaged(true);
-   if(scrollTimer)clearTimeout(scrollTimer);
-   scrollTimer=setTimeout(()=>{const r=runtime.current;if(r.mode==='guided')return;let i=0;anchors.current.forEach((y,n)=>{if(scrollY+innerHeight*.24>=y)i=n;});if(i!==r.chapter){selectChapter(i);r.time=CHAPTERS[i].start;if(r.sound&&r.mode==='explore')seekAudio(r.time);}},180);
-  };
-  const visibility=()=>{if(document.hidden)stop();};
-  const receiver=(e:MessageEvent)=>{
-   // Accept local review audio only from the window that explicitly opened this preview.
-   if(!new URLSearchParams(location.search).has('localSoundtrack')||e.source!==window.opener||e.data?.type!=='kritrna:local-audio'||!(e.data.audio instanceof Blob))return;
-   loadTrack(new File([e.data.audio],'song_2026-09-12T162324.mp3',{type:'audio/mpeg'}));
-  };
-  window.addEventListener('wheel',user,{passive:true});window.addEventListener('touchstart',user,{passive:true});window.addEventListener('keydown',key);window.addEventListener('pointerdown',pointer);window.addEventListener('focusin',focus);window.addEventListener('scroll',scroll,{passive:true});window.addEventListener('resize',measure);window.addEventListener('message',receiver);document.addEventListener('visibilitychange',visibility);
-  if(new URLSearchParams(location.search).has('localSoundtrack'))window.opener?.postMessage({type:'kritrna:audio-ready'},'*');
-  return()=>{cancelAnimationFrame(frame);rs.disconnect();if(scrollTimer)clearTimeout(scrollTimer);if(seekTimer.current)clearTimeout(seekTimer.current);media?.pause();if(media){media.onloadedmetadata=null;media.onerror=null;media.removeAttribute('src');media.load();}if(blob.current)URL.revokeObjectURL(blob.current);void ctx.current?.close().catch(()=>{});window.removeEventListener('wheel',user);window.removeEventListener('touchstart',user);window.removeEventListener('keydown',key);window.removeEventListener('pointerdown',pointer);window.removeEventListener('focusin',focus);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',measure);window.removeEventListener('message',receiver);document.removeEventListener('visibilitychange',visibility);};
- // The lifecycle reads mutable playback refs rather than rerunning on animation frames.
- // eslint-disable-next-line react-hooks/exhaustive-deps
- },[changeMode,measure,seekAudio,selectChapter,stop]);
- useEffect(()=>{if(disabled&&runtime.current.mode==='guided')stop();},[disabled,stop]);
- const active=mode==='guided'||audioPlaying;
- const entry=<div className="journey-entry journey-ui"><div className="journey-entry-actions"><button className="editorial-button light-button" onClick={()=>active?stop():void play()}>{active?'Pause journey':loaded?'Play with sound':'Play silent preview'} <span aria-hidden="true">▷</span></button><button className="journey-text-button" onClick={()=>jump(1)}>Scroll to explore ↓</button></div><button className="journey-load" onClick={()=>file.current?.click()}>{loaded?'Change soundtrack':'Load your soundtrack'}</button>{notice&&<p className="journey-notice" role="status">{notice}</p>}</div>;
- return <div ref={root} className="journey-home" data-journey-build="mosaic-v1" data-mode={mode}><MosaicReveal root={root} replay={replay}/>{children}{host&&createPortal(entry,host)}<audio ref={audio} preload="none" onPlay={()=>setAudioPlaying(true)} onPause={()=>setAudioPlaying(false)} onEnded={()=>{runtime.current.ended=true;stop();}}/><input ref={file} className="journey-file" type="file" accept="audio/*,.mp3" aria-label="Load the four-minute journey soundtrack" onChange={e=>{const f=e.currentTarget.files?.[0];if(f)loadTrack(f);e.currentTarget.value='';}}/>{engaged&&<div className="journey-dock journey-ui" role="region" aria-label="Journey playback controls"><button onClick={()=>active?stop():void play()}>{active?'Pause':'Play journey'}</button><button onClick={()=>void toggleSound()} aria-pressed={sound}>{loaded?(sound?'Sound on':'Sound off'):'Load soundtrack'}</button><select aria-label="Journey chapter" value={chapter} onChange={e=>jump(Number(e.target.value))}>{CHAPTERS.map((c,i)=><option key={c.name} value={i}>{c.name}</option>)}</select><button className="journey-explore" onClick={()=>changeMode('explore')}>Explore freely</button><button className="journey-replay" aria-label="Replay mosaic opening" onClick={()=>{stop();window.scrollTo({top:0,behavior:'instant'});runtime.current.time=0;selectChapter(0);setReplay(v=>v+1);}}>↻</button></div>}</div>;
+  const visibility=()=>{if(document.hidden){a.pause();cancelAnimationFrame(raf);raf=0;mark();}else{if(!raf)raf=requestAnimationFrame(tick);attempt();}};
+  const ended=()=>{state.current.ended=true;state.current.mode='explore';mark();};
+  const error=()=>{state.current.available=false;state.current.mode='explore';mark();};
+  const ro=new ResizeObserver(measure);ro.observe(el);measure();
+  // Only advertise a media source that the deployment actually contains.
+  void fetch('/audio/score.json',{signal:abort.signal,cache:'no-store'}).then(r=>r.ok?r.json():null).then((asset:{available?:boolean;src?:string}|null)=>{
+   if(disposed||!asset?.available||!asset.src?.startsWith('/audio/')){mark();return;}
+   state.current.available=true;a.src=asset.src;a.load();attempt();mark();
+  }).catch(()=>{if(!disposed)mark();});
+  window.addEventListener('pointerup',gesture,{passive:true});window.addEventListener('keydown',gesture);window.addEventListener('wheel',user,{passive:true});window.addEventListener('touchmove',user,{passive:true});window.addEventListener('scroll',scroll,{passive:true});window.addEventListener('resize',measure);document.addEventListener('visibilitychange',visibility);a.addEventListener('ended',ended);a.addEventListener('error',error);raf=requestAnimationFrame(tick);
+  return()=>{disposed=true;abort.abort();cancelAnimationFrame(raf);ro.disconnect();if(scrollTimer)clearTimeout(scrollTimer);if(seekTimer)clearTimeout(seekTimer);window.removeEventListener('pointerup',gesture);window.removeEventListener('keydown',gesture);window.removeEventListener('wheel',user);window.removeEventListener('touchmove',user);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',measure);document.removeEventListener('visibilitychange',visibility);a.removeEventListener('ended',ended);a.removeEventListener('error',error);a.pause();a.removeAttribute('src');a.load();void ctx?.close().catch(()=>{});};
+ },[]);
+ useEffect(()=>{if(!disabled)state.current.ready=true;else if(state.current.ready)stopRef.current();},[disabled]);
+ return <div ref={root} className="journey-home" data-journey-build="mosaic-v2" data-audio="checking"><MosaicReveal root={root}/>{children}<audio ref={audio} preload="metadata" playsInline aria-label="Background instrumental soundtrack"/><span className="ambient-accessibility-note">Press M to mute the background soundtrack. Escape pauses it. The motion pause control also stops the soundtrack.</span></div>;
 }

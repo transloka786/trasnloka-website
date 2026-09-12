@@ -1,0 +1,23 @@
+/* Persistent, pointer-reactive mosaic. No soundtrack interface. */
+.journey-home[data-journey-build=mosaic-v2] .editorial-hero{position:relative;isolation:isolate;background:#080c10}
+.journey-home[data-journey-build=mosaic-v2] .ambient-mosaic-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.85;mask-image:linear-gradient(180deg,transparent 0%,#000 9%,#000 83%,transparent 100%);-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 9%,#000 83%,transparent 100%)}
+.journey-home[data-journey-build=mosaic-v2] .hero-composition{position:relative;z-index:1;padding-top:clamp(35px,6svh,85px);padding-bottom:clamp(40px,7svh,90px)}
+.journey-home[data-journey-build=mosaic-v2] .hero-copy{position:relative;z-index:2}
+.journey-home[data-journey-build=mosaic-v2] .hero-actions{margin-top:34px!important}
+.journey-home[data-journey-build=mosaic-v2] .hero-description{max-width:40ch}
+.journey-home[data-journey-build=mosaic-v2] .hero-grain{pointer-events:none;z-index:0}
+.journey-home[data-journey-build=mosaic-v2] .molecular-stage-noir{animation:none}
+.journey-home[data-journey-build=mosaic-v2] .molecule-halo{opacity:calc(.6 + var(--journey-energy)*.24)}
+.journey-home[data-journey-build=mosaic-v2] .journey-entry,.journey-home[data-journey-build=mosaic-v2] .journey-dock,.journey-home[data-journey-build=mosaic-v2] input[type=file]{display:none!important}
+.ambient-accessibility-note{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:600px){
+ .journey-home[data-journey-build=mosaic-v2] .hero-composition{padding-top:34px;padding-bottom:28px;gap:12px}
+ .journey-home[data-journey-build=mosaic-v2] .hero-copy h1{font-size:clamp(3.45rem,14.5vw,5.3rem)}
+ .journey-home[data-journey-build=mosaic-v2] .molecular-stage-noir{height:clamp(235px,34svh,335px)}
+ .journey-home[data-journey-build=mosaic-v2] .ambient-mosaic-field{opacity:.65}
+ body:has(.journey-home[data-journey-build=mosaic-v2]) .trna-chat-launcher{bottom:22px}
+ body:has(.journey-home[data-journey-build=mosaic-v2]) .motion-control{bottom:24px}
+}
+@media(prefers-reduced-motion:reduce){.ambient-mosaic-field{display:none!important}.journey-home[data-journey-build=mosaic-v2] .hero-composition{filter:none!important;mask-image:none!important;-webkit-mask-image:none!important}}
+html[data-motion=off] .ambient-mosaic-field{display:none!important}
+@media(forced-colors:active){.ambient-mosaic-field{display:none!important}}
