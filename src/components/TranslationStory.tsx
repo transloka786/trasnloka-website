@@ -1,20 +1,11 @@
 'use client';
-import {useState} from 'react';
+import {useId,useState} from 'react';
 import Link from 'next/link';
-const CODONS=['AUG','GCU','UGA','GAC','UUC','UAA'];
-export default function TranslationStory(){
-  const [readthrough,setReadthrough]=useState(false);
-  return <div className={`translation-lab${readthrough?' is-reading':''}`}>
-    <div className="lab-heading"><span className="micro">TRANSLATION / INTERACTIVE SCHEMATIC</span><span className="lab-state">{readthrough?'02 · A route to continuation':'01 · An early stop'}</span></div>
-    <div className="lab-controls" role="group" aria-label="Compare translation mechanisms"><button type="button" aria-pressed={!readthrough} onClick={()=>setReadthrough(false)}>Premature stop</button><button type="button" aria-pressed={readthrough} onClick={()=>setReadthrough(true)}>With suppressor tRNA <span aria-hidden="true">↗</span></button></div>
-    <div className="translation-scene" aria-hidden="true">
-      <div className="protein-strand"><span/><span/><span/>{readthrough&&<><span/><span/><span/><span/><span/></>}</div>
-      <div className="ribosome-sculpt"><div/><div/></div><span className="ribosome-caption">RIBOSOME</span>
-      <div className="suppressor-adaptor"><span className="amino-acid"/><svg viewBox="0 0 60 100"><path d="M26 6V32H12Q0 32 5 45Q10 55 24 48V71Q12 83 30 95Q48 83 36 71V48Q50 55 55 45Q60 32 48 32H34V6" fill="none" stroke="currentColor" strokeWidth="5" strokeLinejoin="round"/></svg></div>
-      <div className="mrna-track">{CODONS.map((codon,i)=><span className={i===2?'premature-codon':i===5?'native-codon':''} key={i}>{codon}</span>)}</div>
-      <div className="track-labels"><span>mRNA · 5′ → 3′</span><span>Premature stop</span><span>Native stop</span></div>
-    </div>
-    <div className="lab-result" aria-live="polite"><span className="result-dot"/><p>{readthrough?'An engineered tRNA can deliver an amino acid at a selected premature stop, allowing translation to continue toward full-length protein.':'A premature stop can interrupt translation before the protein is complete. The message may also be reduced by nonsense-mediated decay.'}</p></div>
-    <p className="lab-note">Illustrative UGA-targeted mechanism, not experimental data. Protein function, delivery and native-stop specificity require testing. <Link href="/science">Explore the science ↗</Link></p>
-  </div>;
-}
+import MolecularScene from './MolecularScene';
+const chapters=[
+ {title:'Normal translation',kicker:'01 / THE MESSAGE IS READ',body:'A ribosome reads mRNA in three-letter codons. Aminoacyl-tRNAs deliver amino acids; the growing chain is extended until release factors recognise a normal stop.',detail:'The highlighted CAG is a sense codon. The ribosome moves along the message from 5′ to 3′.'},
+ {title:'A premature stop',kicker:'02 / ONE MUTATION, TWO FAILURES',body:'Here, an illustrative CAG-to-UAG change replaces an amino-acid codon with a premature stop. Release factors can end translation early. Nonsense-mediated decay may also reduce the amount of message available.',detail:'Message decay is context-dependent and is not shown as an inevitable consequence of every premature stop.'},
+ {title:'Suppressor tRNA',kicker:'03 / AN OPPORTUNITY TO CONTINUE',body:'An engineered suppressor tRNA can recognise a selected premature stop and carry an amino acid into the ribosome. If it succeeds in competing with termination, the protein chain can continue.',detail:'The molecular poses are a teaching schematic, not a candidate sequence, therapeutic result or exact decoding-cycle simulation.'},
+ {title:'Beyond readthrough',kicker:'04 / THE FULL PROTEIN STILL HAS TO WORK',body:'Translation can proceed downstream towards a full-length protein. The development question is whether that protein is correctly made, functional and produced in the right cells, with acceptable effects at normal stop codons.',detail:'Native-stop safety, transcript survival, delivery and protein function require experimental measurement. The native stop shown is UAA.'}
+];
+export default function TranslationStory(){const [step,setStep]=useState(0),id=useId(),chapter=chapters[step];return <div className="translation-observatory"><div className="observatory-top"><span className="micro">INSIDE THE TRANSLATION MACHINERY</span><span>Explore four chapters</span></div><MolecularScene kind="translation" step={step} label={chapter.title}/><div className="translation-chapters" role="group" aria-label="Translation story chapters">{chapters.map((c,i)=><button key={c.title} type="button" aria-pressed={step===i} aria-controls={id} onClick={()=>setStep(i)}><span>0{i+1}</span>{c.title}</button>)}</div><div className="translation-explanation" id={id} aria-live="polite"><span className="micro">{chapter.kicker}</span><h3>{chapter.title}</h3><p>{chapter.body}</p><p className="scene-note">{chapter.detail}</p></div><Link className="underline-link" href="/science">Read the science in more detail ↗</Link></div>;}
