@@ -21,6 +21,14 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: 1
       - run: npx playwright install --with-deps chromium webkit
+      - name: Start an audio output for Linux WebKit
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y pulseaudio
+          pulseaudio --start --exit-idle-time=-1
+          pactl load-module module-null-sink sink_name=ci_output
+          pactl set-default-sink ci_output
+          pactl info
       - name: WebKit and Chromium regression
         run: |
           npm run start > /tmp/mobile-next.log 2>&1 &
