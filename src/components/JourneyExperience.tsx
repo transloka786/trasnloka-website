@@ -19,7 +19,7 @@ export default function JourneyExperience({children}:{children:ReactNode}){
   let disposed=false,raf=0,last=0,scrollTimer:ReturnType<typeof setTimeout>|undefined,seekTimer:ReturnType<typeof setTimeout>|undefined;
   let points:{time:number;y:number}[]=[],anchors:number[]=[],ctx:AudioContext|null=null,analyser:AnalyserNode|null=null;
   const samples=new Uint8Array(256),abort=new AbortController();
-  a.volume=.36;
+  a.volume=.36;a.defaultMuted=false;a.muted=false;
   const mark=()=>{el.dataset.mode=state.current.mode;el.dataset.audio=state.current.available?(state.current.blocked?'awaiting-interaction':a.paused?'paused':'playing'):'unavailable';};
   const measure=()=>{const nav=document.querySelector('.nav')?.getBoundingClientRect().height||68,max=Math.max(0,document.documentElement.scrollHeight-innerHeight);const y=(selector:string)=>{const node=el.querySelector(selector);return node?clamp(node.getBoundingClientRect().top+scrollY-nav-20,0,max):0;};points=CUES.map(([time,selector])=>({time,y:y(selector)}));anchors=CHAPTERS.map(c=>y(c.selector));};
   const attachMeter=async()=>{try{if(ctx||disposed)return;const candidate=new AudioContext();await candidate.resume();if(disposed||candidate.state!=='running'){await candidate.close();return;}ctx=candidate;analyser=ctx.createAnalyser();analyser.fftSize=512;const source=ctx.createMediaElementSource(a);source.connect(analyser);analyser.connect(ctx.destination);}catch{/* Native audio remains available if a meter cannot start. */}};
@@ -30,7 +30,7 @@ export default function JourneyExperience({children}:{children:ReactNode}){
   };
   const attempt=()=>{
    const s=state.current;if(disposed||document.hidden||!s.available||s.muted||s.ended||s.attempting||!seekPastIntro())return;
-   s.attempting=true;
+   a.muted=false;s.attempting=true;
    void a.play().then(()=>{if(disposed){a.pause();return;}s.blocked=false;s.mode=!s.manual&&!s.disabled?'guided':'explore';mark();}).catch(()=>{s.blocked=true;s.mode='explore';mark();}).finally(()=>{s.attempting=false;});
   };
   // Wait for metadata before the initial seek, including on iPhone/WebKit.
@@ -47,6 +47,8 @@ export default function JourneyExperience({children}:{children:ReactNode}){
     if(key.toLowerCase()==='m'&&!(event as KeyboardEvent).ctrlKey&&!(event as KeyboardEvent).metaKey){state.current.muted=!state.current.muted;if(state.current.muted){a.pause();state.current.mode='paused';mark();return;}}
     if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(key))user();
    }
+   // Keep the media element and application mute state aligned within a trusted interaction.
+   if(!state.current.muted)a.muted=false;
    attempt();if(!state.current.muted&&state.current.available)void attachMeter();
   };
   const scroll=()=>{if(state.current.mode==='guided')return;if(scrollTimer)clearTimeout(scrollTimer);scrollTimer=setTimeout(()=>{
