@@ -4,10 +4,10 @@ import {useExperienceMotion} from './Experience';
 import MosaicReveal from './MosaicReveal';
 import '../app/ambient.css';
 
-const END=240.039;
-// Timing stays internal. No soundtrack names, file chooser or playback dashboard.
-const CHAPTERS=[{start:0,end:30,selector:'.editorial-hero'},{start:30,end:90,selector:'.manifesto-section'},{start:90,end:150,selector:'.dependencies-section'},{start:150,end:210,selector:'.brand-origin'},{start:210,end:END,selector:'.evidence-editorial'}];
-const CUES:[number,string][]=[[0,'.editorial-hero'],[25,'.editorial-hero'],[30,'.manifesto-section'],[39,'.manifesto-section'],[43,'.reading-intro'],[49,'.translation-observatory'],[78,'.translation-observatory'],[86,'.science-callout'],[90,'.dependencies-section'],[102,'.dependencies-section'],[107,'.platform-intro'],[116,'.engine-spread'],[129,'.capability-rail'],[136,'.programmes-section'],[145,'.programmes-section'],[150,'.brand-origin'],[174,'.brand-origin'],[180,'.people-section'],[204,'.people-section'],[210,'.evidence-editorial'],[222,'.evidence-editorial'],[228,'.audience-section'],[237,'.closing-section'],[END,'.closing-section']];
+const START=10,END=240.039;
+// Original recording preserved. Skip its first 10s; existing cues retain musical alignment.
+const CHAPTERS=[{start:START,end:30,selector:'.editorial-hero'},{start:30,end:90,selector:'.manifesto-section'},{start:90,end:150,selector:'.dependencies-section'},{start:150,end:210,selector:'.brand-origin'},{start:210,end:END,selector:'.evidence-editorial'}];
+const CUES:[number,string][]=[[START,'.editorial-hero'],[25,'.editorial-hero'],[30,'.manifesto-section'],[39,'.manifesto-section'],[43,'.reading-intro'],[49,'.translation-observatory'],[78,'.translation-observatory'],[86,'.science-callout'],[90,'.dependencies-section'],[102,'.dependencies-section'],[107,'.platform-intro'],[116,'.engine-spread'],[129,'.capability-rail'],[136,'.programmes-section'],[145,'.programmes-section'],[150,'.brand-origin'],[174,'.brand-origin'],[180,'.people-section'],[204,'.people-section'],[210,'.evidence-editorial'],[222,'.evidence-editorial'],[228,'.audience-section'],[237,'.closing-section'],[END,'.closing-section']];
 const clamp=(n:number,a:number,b:number)=>Math.max(a,Math.min(b,n));
 export default function JourneyExperience({children}:{children:ReactNode}){
  const root=useRef<HTMLDivElement>(null),audio=useRef<HTMLAudioElement>(null),disabled=useExperienceMotion();
@@ -23,11 +23,18 @@ export default function JourneyExperience({children}:{children:ReactNode}){
   const mark=()=>{el.dataset.mode=state.current.mode;el.dataset.audio=state.current.available?(state.current.blocked?'awaiting-interaction':a.paused?'paused':'playing'):'unavailable';};
   const measure=()=>{const nav=document.querySelector('.nav')?.getBoundingClientRect().height||68,max=Math.max(0,document.documentElement.scrollHeight-innerHeight);const y=(selector:string)=>{const node=el.querySelector(selector);return node?clamp(node.getBoundingClientRect().top+scrollY-nav-20,0,max):0;};points=CUES.map(([time,selector])=>({time,y:y(selector)}));anchors=CHAPTERS.map(c=>y(c.selector));};
   const attachMeter=async()=>{try{if(ctx||disposed)return;const candidate=new AudioContext();await candidate.resume();if(disposed||candidate.state!=='running'){await candidate.close();return;}ctx=candidate;analyser=ctx.createAnalyser();analyser.fftSize=512;const source=ctx.createMediaElementSource(a);source.connect(analyser);analyser.connect(ctx.destination);}catch{/* Native audio remains available if a meter cannot start. */}};
+  const seekPastIntro=()=>{
+   if(a.readyState<1)return false;
+   try{if(a.currentTime<START)a.currentTime=Math.min(START,Number.isFinite(a.duration)?a.duration:END);return true;}
+   catch{return false;}
+  };
   const attempt=()=>{
-   const s=state.current;if(disposed||document.hidden||!s.available||s.muted||s.ended||s.attempting)return;
+   const s=state.current;if(disposed||document.hidden||!s.available||s.muted||s.ended||s.attempting||!seekPastIntro())return;
    s.attempting=true;
    void a.play().then(()=>{if(disposed){a.pause();return;}s.blocked=false;s.mode=!s.manual&&!s.disabled?'guided':'explore';mark();}).catch(()=>{s.blocked=true;s.mode='explore';mark();}).finally(()=>{s.attempting=false;});
   };
+  // Wait for metadata before the initial seek, including on iPhone/WebKit.
+  const metadata=()=>{if(!disposed){seekPastIntro();attempt();}};
   const stop=()=>{state.current.muted=true;state.current.mode='paused';if(seekTimer)clearTimeout(seekTimer);a.pause();mark();};stopRef.current=stop;
   const user=()=>{state.current.manual=true;state.current.mode=state.current.muted?'paused':'explore';mark();};
   const gesture=(event:Event)=>{
@@ -60,14 +67,15 @@ export default function JourneyExperience({children}:{children:ReactNode}){
   const ended=()=>{state.current.ended=true;state.current.mode='explore';mark();};
   const error=()=>{state.current.available=false;state.current.mode='explore';mark();};
   const ro=new ResizeObserver(measure);ro.observe(el);measure();
+  a.addEventListener('loadedmetadata',metadata);
   // Only advertise a media source that the deployment actually contains.
   void fetch('/audio/score.json',{signal:abort.signal,cache:'no-store'}).then(r=>r.ok?r.json():null).then((asset:{available?:boolean;src?:string}|null)=>{
    if(disposed||!asset?.available||!asset.src?.startsWith('/audio/')){mark();return;}
    state.current.available=true;a.src=asset.src;a.load();attempt();mark();
   }).catch(()=>{if(!disposed)mark();});
   window.addEventListener('pointerup',gesture,{passive:true});window.addEventListener('keydown',gesture);window.addEventListener('wheel',user,{passive:true});window.addEventListener('touchmove',user,{passive:true});window.addEventListener('scroll',scroll,{passive:true});window.addEventListener('resize',measure);document.addEventListener('visibilitychange',visibility);a.addEventListener('ended',ended);a.addEventListener('error',error);raf=requestAnimationFrame(tick);
-  return()=>{disposed=true;abort.abort();cancelAnimationFrame(raf);ro.disconnect();if(scrollTimer)clearTimeout(scrollTimer);if(seekTimer)clearTimeout(seekTimer);window.removeEventListener('pointerup',gesture);window.removeEventListener('keydown',gesture);window.removeEventListener('wheel',user);window.removeEventListener('touchmove',user);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',measure);document.removeEventListener('visibilitychange',visibility);a.removeEventListener('ended',ended);a.removeEventListener('error',error);a.pause();a.removeAttribute('src');a.load();void ctx?.close().catch(()=>{});};
+  return()=>{disposed=true;abort.abort();cancelAnimationFrame(raf);ro.disconnect();if(scrollTimer)clearTimeout(scrollTimer);if(seekTimer)clearTimeout(seekTimer);window.removeEventListener('pointerup',gesture);window.removeEventListener('keydown',gesture);window.removeEventListener('wheel',user);window.removeEventListener('touchmove',user);window.removeEventListener('scroll',scroll);window.removeEventListener('resize',measure);document.removeEventListener('visibilitychange',visibility);a.removeEventListener('loadedmetadata',metadata);a.removeEventListener('ended',ended);a.removeEventListener('error',error);a.pause();a.removeAttribute('src');a.load();void ctx?.close().catch(()=>{});};
  },[]);
  useEffect(()=>{if(!disabled)state.current.ready=true;else if(state.current.ready)stopRef.current();},[disabled]);
- return <div ref={root} className="journey-home" data-journey-build="mosaic-v2" data-audio="checking"><MosaicReveal root={root}/>{children}<audio ref={audio} preload="metadata" playsInline aria-label="Background instrumental soundtrack"/><span className="ambient-accessibility-note">Press M to mute the background soundtrack. Escape pauses it. The motion pause control also stops the soundtrack.</span></div>;
+ return <div ref={root} className="journey-home" data-journey-build="mosaic-v2" data-mobile-fix="unmasked-v1" data-audio-start={START} data-audio="checking"><MosaicReveal root={root}/>{children}<audio ref={audio} preload="metadata" playsInline aria-label="Background instrumental soundtrack"/><span className="ambient-accessibility-note">Press M to mute the background soundtrack. Escape pauses it. The motion pause control also stops the soundtrack.</span></div>;
 }
