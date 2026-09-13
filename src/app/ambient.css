@@ -18,6 +18,13 @@
  body:has(.journey-home[data-journey-build=mosaic-v2]) .trna-chat-launcher{bottom:22px}
  body:has(.journey-home[data-journey-build=mosaic-v2]) .motion-control{bottom:24px}
 }
+/* Fail open before hydration: an iOS filter/mask failure cannot hide the actual page. */
+@media(max-width:1024px),(any-pointer:coarse),(hover:none){
+ .journey-home[data-journey-build=mosaic-v2] .hero-composition{filter:none!important;-webkit-filter:none!important;mask:none!important;-webkit-mask:none!important;opacity:1!important;visibility:visible!important}
+}
+@supports(-webkit-touch-callout:none){
+ .journey-home[data-journey-build=mosaic-v2] .hero-composition{filter:none!important;-webkit-filter:none!important;mask:none!important;-webkit-mask:none!important;opacity:1!important;visibility:visible!important}
+}
 @media(prefers-reduced-motion:reduce){.ambient-mosaic-field{display:none!important}.journey-home[data-journey-build=mosaic-v2] .hero-composition{filter:none!important;mask-image:none!important;-webkit-mask-image:none!important}}
 html[data-motion=off] .ambient-mosaic-field{display:none!important}
 @media(forced-colors:active){.ambient-mosaic-field{display:none!important}}
