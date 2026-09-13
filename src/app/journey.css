@@ -1,0 +1,108 @@
+/* Founder review: cinematic journey. No generated backgrounds in this pass. */
+:root{--journey-surface:#11191f;--journey-paper:#f4ead5}
+.nav .brand{color:#f4ead5!important;letter-spacing:-.04em}
+.nav .brand>span{color:#f4ead5}
+.nav .brand img{box-sizing:content-box;background:#ded7c9;padding:6px;border:1px solid #f4ead555;border-radius:8px;object-fit:contain;mix-blend-mode:normal;width:34px;height:40px}
+.brand-monument img{box-sizing:content-box;object-fit:contain;background:#ded7c9;border-radius:24px;padding:26px;max-width:calc(100% - 52px)}
+/* Remove ornamental micro-copy explicitly; retain and enlarge real labels. */
+.hero-kicker,.hero-baseline,.molecule-coordinate,.molecule-label-top,.mission-footnote,.hero-edition,.dependency-number,.programme-count,.audience-row>.micro,.capability-rail article>.micro{display:none!important}
+.section-index>span{display:none!important}.section-index:not(:has(a)){display:none!important}.section-index:has(a){justify-content:flex-end;margin-bottom:34px}
+.micro,.eyebrow,.scene-note,.section-index>a,.science-sources,.platform-boundary,.origin-principles,.gene-tag,.engine-output dt,.engine-output dd,.portrait-label{font-size:14px!important;line-height:1.7!important;letter-spacing:.025em!important}
+.micro,.eyebrow{text-transform:none}.section-index>a{font-family:var(--sans)}
+.noir-scene figcaption{font-size:14px!important;line-height:1.65!important}
+.hero-description,.manifesto-copy p:not(.large-body),.engine-panel p,.dependency-list p,.programme-detail p,.people-copy>p,.failure-pair p,.reading-intro p:not(.large-body){font-size:17px!important;line-height:1.85!important}
+.hero-copy .hero-actions{margin-top:20px;gap:26px}
+.hero-copy .hero-actions .editorial-button{padding:0;border:0;color:#d3d8cf;background:none;font-weight:400;font-size:15px}
+.hero-copy .hero-actions .text-link{font-size:15px}
+.journey-home{--journey-energy:0;position:relative;isolation:isolate}
+.journey-home .editorial-hero{min-height:calc(100svh - 68px);overflow:hidden}
+.journey-home .hero-composition{min-height:calc(100svh - 68px);padding-top:48px;padding-bottom:70px;display:grid;grid-template-columns:1.12fr 1fr;gap:24px}
+.journey-home .hero-copy{display:flex;flex-direction:column;align-items:flex-start}
+.journey-home .hero-copy h1{font-size:clamp(4rem,8vw,7.5rem)}
+.journey-home .hero-copy .hero-actions{order:6;flex-wrap:wrap}
+.journey-home .hero-description{max-width:42ch}
+.journey-home .molecular-stage-noir{height:clamp(360px,60svh,600px);margin:0;animation:journey-drift 7s ease-in-out infinite}
+.journey-home .molecule-halo{opacity:calc(.5 + var(--journey-energy)*.28)}
+.journey-filter{position:absolute;inset:0;width:0;height:0;pointer-events:none}
+.journey-entry{order:5;margin-top:32px;width:100%}
+.journey-entry-actions{display:flex;align-items:center;gap:25px;flex-wrap:wrap}
+.journey-entry button{cursor:pointer;font-family:var(--sans)}
+.journey-entry .editorial-button{border:0;gap:25px;font-size:16px;padding:17px 24px;border-radius:3px}
+.journey-text-button,.journey-load{border:0;background:none;color:#eae8e2;font-size:15px;line-height:1.5;padding:9px 0}
+.journey-text-button:hover,.journey-load:hover{color:#b8d4ca}
+.journey-load{margin-top:12px;color:#b7c1bf;text-decoration:underline;text-underline-offset:5px}
+.journey-notice{font-size:14px!important;color:#bdccc5;max-width:48ch;margin-top:10px;line-height:1.7!important}
+.journey-file{position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-100px}
+.journey-dock{position:fixed;bottom:19px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:5px;max-width:calc(100vw - 30px);padding:8px;background:rgba(22,30,35,.97);border:1px solid #cad8d139;border-radius:48px;backdrop-filter:blur(18px);box-shadow:0 9px 45px #0006;z-index:90}
+.journey-dock button,.journey-dock select{font-family:var(--sans);font-size:14px;font-weight:500;min-height:42px;padding:9px 14px;color:#eae8e2;border:0;border-radius:30px;background:transparent;cursor:pointer;white-space:nowrap}
+.journey-dock select{max-width:155px;background:#27333b;color:#f4ead5}
+.journey-dock button:first-child{background:#e5dece;color:#11191d}
+.journey-dock button:hover{background:#35433f;color:#fff}.journey-dock button:first-child:hover{background:#c4d9cb;color:#101820}
+.journey-dock button:focus-visible,.journey-dock select:focus-visible{outline:2px solid #e4d4b5;outline-offset:3px}
+.journey-dock .journey-replay{font-size:23px;padding:5px 12px}
+.journey-home section{scroll-margin-top:88px}
+@keyframes journey-drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+html[data-motion=off] .journey-home .molecular-stage-noir{animation:none}
+/* The live site's two-lobed glyph, with its original proportions. */
+.restored-ribosome{position:relative;width:72px;height:62px}
+.ribosome-lower{position:absolute;left:3px;bottom:3px;width:58px;height:40px;border-radius:52% 48% 46% 54% / 58% 54% 46% 42%;border:1.5px solid #78c8d0;background:radial-gradient(circle at 38% 30%,#269bbd99,#16607755 68%,#12364355);box-shadow:0 0 22px #00a4cf35}
+.ribosome-upper{position:absolute;left:12.5px;top:3px;width:39px;height:30px;border-radius:54% 46% 52% 48% / 58% 54% 46% 42%;border:1.5px solid #97d5d4;background:radial-gradient(circle at 40% 32%,#6bdcff99,#21617866 70%,#14344855);box-shadow:0 0 16px #6bdcff28}
+.ribosome-channel{position:absolute;left:12px;top:31px;width:40px;height:2px;border-radius:2px;background:#f4ead5b8;box-shadow:0 0 7px #f4ead533}
+.translation-observatory.restored-translation{background:linear-gradient(140deg,#132028,#0b141b);padding:30px}
+.restored-translation .restored-translation-scene{height:300px!important;max-width:1050px;margin:0 auto 24px}
+.translation-message{position:absolute;top:51%;left:4%;right:4%;height:38px}
+.translation-message-line{position:absolute;left:0;right:0;top:50%;height:2px;background:#cad8cf4d}
+.translation-codon{position:absolute;top:0;transform:translateX(-50%);font-family:var(--mono);font-size:15px;line-height:38px;background:#1b2b33;border:1px solid #78959066;border-radius:5px;padding:0 9px;z-index:1;color:#d9e4df}
+.target-codon{border-color:#d291b4;background:#492b40;color:#f5c8e0}.native-stop{background:#2f3b36;border-color:#a7c9b2}
+.message-direction{position:absolute;top:-28px;font-size:15px;color:#a5bdbd;left:0}.message-end{left:auto;right:0}
+.ribosome-carrier{position:absolute;top:51%;width:72px;height:62px;transform:translate(-50%,-25%) scale(2);transform-origin:center center;z-index:3;pointer-events:none}
+.translation-protein{position:absolute;top:76%;height:7px;left:8%;border-radius:5px;background:linear-gradient(90deg,#385f58,#b2d4b9);max-width:80%}
+.protein-stopped{background:linear-gradient(90deg,#385f58,#ce91b3)}
+.suppressor-arrival{position:absolute;top:7%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:15px;color:#d9accb;font-size:15px;z-index:4}
+.suppressor-arrival svg{width:42px;height:62px}
+.restored-translation .translation-chapters{gap:10px}
+.restored-translation .translation-chapters button{font-size:15px;padding:14px 12px;min-height:54px}
+.restored-translation .translation-explanation{padding-top:27px;min-height:0}
+.restored-translation .translation-explanation h3{font-size:2.2rem}
+.restored-translation .translation-explanation p{font-size:17px;line-height:1.85}
+.restored-translation .translation-explanation .scene-note{margin-top:16px;font-size:14px!important;line-height:1.7}
+.restored-translation>.underline-link{margin-top:22px;font-size:15px}
+/* Source-level pipeline classes: no light disease-card state remains. */
+.pipeline-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+.pipeline-stage{padding:0;border:1px solid #a6bdb530;border-radius:12px;background:#11191f;overflow:hidden;height:100%}
+.pipeline-stage header{padding:22px;border-bottom:1px solid #a6bdb530;min-height:166px}
+.pipeline-stage header h2{font-size:26px}.pipeline-stage header p{font-size:15px;color:#b8c2c2;margin-top:12px;line-height:1.7}
+.pipeline-stage-body{padding:12px;display:flex;flex-direction:column;gap:14px;min-height:320px}
+.pipeline-programme{padding:22px 18px;border:1px solid #a6bdb538;border-left:3px solid var(--programme-accent);border-radius:8px;background:#17222a;color:#ece8dc}
+.pipeline-programme:hover,.pipeline-programme:focus-within{background:#1c2a32;border-color:#b8cdc45e}
+.pipeline-programme h3{font-size:24px;line-height:1.15}.pipeline-programme .programme-gene{font-size:15px;color:var(--programme-accent);margin-top:9px;line-height:1.6}
+.pipeline-programme>p{font-size:16px;line-height:1.8;color:#c0cbc8;margin-top:16px}
+.pipeline-programme dl{margin-top:19px;padding-top:16px;border-top:1px solid #9cadab36}
+.pipeline-programme dt{font-size:14px;color:#afbeba;margin-top:15px}.pipeline-programme dd{font-size:16px;color:#e4e5da;line-height:1.7;margin-top:5px}
+.pipeline-programme .research-status{font-size:14px;color:#c4d9be;margin-top:12px;display:block}
+.pipeline-future{padding:20px;border:1px dashed #9badab48;border-radius:7px;color:#b6c4c0;font-size:15px;line-height:1.8}
+@media(max-width:1100px){.pipeline-board{grid-template-columns:repeat(2,minmax(0,1fr))}.journey-home .hero-composition{gap:10px}.journey-dock .journey-explore{display:none}}
+@media(max-width:850px){.journey-home .hero-copy h1{font-size:clamp(3.5rem,8.8vw,5.5rem)}.journey-home .hero-composition{grid-template-columns:1.2fr 1fr}.journey-entry-actions{gap:12px}.journey-entry .editorial-button{font-size:15px;padding:15px 18px}.journey-home .molecular-stage-noir{height:440px}.restored-translation .translation-chapters{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+ .journey-home .hero-composition{display:flex;flex-direction:column;align-items:stretch;gap:18px;padding:40px 24px 40px;min-height:calc(100svh - 68px)}
+ .journey-home .hero-copy h1{font-size:clamp(3.8rem,14.8vw,5.5rem)}.journey-home .hero-promise{font-size:1.9rem;margin-top:20px}
+ .journey-home .hero-description{font-size:16px!important;margin-top:20px}
+ .journey-home .molecular-stage-noir{height:340px;margin:0;width:100%}
+ .journey-entry{margin-top:25px}.journey-entry-actions{gap:15px}.journey-entry .editorial-button{font-size:15px;padding:14px 17px}.journey-text-button{font-size:14px}
+ .journey-home .hero-actions{gap:22px;margin-top:16px}.journey-home .hero-actions a{font-size:14px!important}
+ .journey-dock{left:10px;right:10px;bottom:12px;max-width:none;transform:none;border-radius:19px;padding:7px;display:grid;grid-template-columns:1fr 1fr 1.12fr 30px;gap:3px}
+ .journey-dock button,.journey-dock select{padding:8px 5px;font-size:14px;white-space:normal;line-height:1.4;min-width:0;border-radius:12px}.journey-dock select{width:100%;max-width:none}.journey-dock .journey-replay{padding:0;font-size:23px}
+ body:has(.journey-home) .trna-chat-launcher{bottom:101px}
+ body:has(.journey-home) .motion-control{bottom:105px;left:10px;font-size:12px;padding:9px 11px}
+ .translation-observatory.restored-translation{padding:20px 16px;margin:0 -5px}
+ .restored-translation .restored-translation-scene{height:265px!important;margin-bottom:15px}
+ .ribosome-carrier{transform:translate(-50%,-25%) scale(1.45)}
+ .translation-codon{font-size:12px;padding:0 3px;line-height:30px}.translation-message{height:30px;left:2%;right:2%}
+ .restored-translation .translation-chapters button{font-size:14px;padding:12px 10px}
+ .restored-translation .translation-explanation p{font-size:16px}.restored-translation .translation-explanation h3{font-size:1.9rem}
+ .suppressor-arrival{font-size:14px;gap:9px;left:45%}.suppressor-arrival svg{width:34px;height:52px}
+ .pipeline-board{grid-template-columns:1fr}.pipeline-stage header{min-height:0}.pipeline-stage-body{min-height:0}.pipeline-future{margin:5px}
+ .brand-monument img{max-width:calc(100% - 36px);padding:18px;border-radius:15px}
+}
+@media(prefers-reduced-motion:reduce){.journey-home .molecular-stage-noir{animation:none}.journey-home .hero-composition{filter:none!important;mask-image:none!important;-webkit-mask-image:none!important}}
+@media(forced-colors:active){.journey-home .hero-composition{filter:none!important;mask-image:none!important;-webkit-mask-image:none!important}.journey-dock,.pipeline-programme{border:1px solid CanvasText}.nav .brand img{background:Canvas}}

@@ -1,0 +1,2 @@
+import MolecularScene from './MolecularScene';
+export default function MolecularHero(){return <div className="molecular-stage molecular-stage-noir"><div className="molecule-halo" aria-hidden="true"/><div className="molecule-coordinate">THE MOLECULE AT THE HEART OF OUR MISSION</div><MolecularScene kind="trna" label="A single RNA chain folded into the three-dimensional tRNA adaptor"/><div className="molecule-label molecule-label-top">One strand. A remarkable fold.</div></div>;}

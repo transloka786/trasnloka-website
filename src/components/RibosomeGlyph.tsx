@@ -1,0 +1,1 @@
+export default function RibosomeGlyph(){return <div className="restored-ribosome" aria-hidden="true"><div className="ribosome-lower"/><div className="ribosome-upper"/><div className="ribosome-channel"/></div>;}
