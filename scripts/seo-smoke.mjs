@@ -4,6 +4,9 @@ const base=process.env.TEST_BASE_URL||'http://127.0.0.1:3000',origin='https://ww
 await mkdir('seo-artifacts',{recursive:true});
 const report={routes:[],failures:[],discovery:{},liveAudit:[],screenshots:[]};
 const assert=(ok,message)=>{if(!ok)report.failures.push(message);};
+// Next serializes an origin root without a trailing slash; these are the same URL.
+// Preserve full path/query/hash comparisons so a homepage canonical on an interior page still fails.
+const sameUrl=(a,b)=>{try{return Boolean(a&&b)&&new URL(a).href===new URL(b).href;}catch{return false;}};
 const browser=await chromium.launch({headless:true});
 try{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:1280,height:900}});
@@ -18,8 +21,8 @@ try{
   const title=await page.title(),description=await page.locator('meta[name="description"]').getAttribute('content');
   const og=await page.locator('meta[property="og:url"]').getAttribute('content');
   const robots=await page.locator('meta[name="robots"]').getAttribute('content');
-  assert(response?.status()===200,path+': HTTP 200');assert(canonicals.length===1&&canonicals[0]===url,path+': one self canonical');
-  assert(og===url,path+': route-specific Open Graph URL');assert(Boolean(description)&&description.length>35,path+': meaningful description');
+  assert(response?.status()===200,path+': HTTP 200');assert(canonicals.length===1&&sameUrl(canonicals[0],url),path+': one self canonical');
+  assert(sameUrl(og,url),path+': route-specific Open Graph URL');assert(Boolean(description)&&description.length>35,path+': meaningful description');
   assert(title&&title!=='KritRNA'&&!titles.has(title),path+': distinct title');titles.add(title);
   assert(!robots?.includes('noindex'),path+': indexable production metadata');assert(!response?.headers()['x-robots-tag']?.includes('noindex'),path+': no production noindex header');
   const h1=await page.locator('h1').count();assert(h1===1,path+': one H1');
