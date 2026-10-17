@@ -20,6 +20,8 @@ for(const test of tests){
   await page.addInitScript(()=>{window.__audioEvents=[];for(const name of ['loadedmetadata','seeking','seeked','playing','pause','volumechange','error'])document.addEventListener(name,e=>{if(e.target instanceof HTMLAudioElement)window.__audioEvents.push({event:name,time:e.target.currentTime,muted:e.target.muted,ready:e.target.readyState,at:performance.now()});},true);});
   row.errors=[];page.on('pageerror',e=>row.errors.push(e.message));
   await page.goto(base,{waitUntil:'domcontentloaded',timeout:60000});
+  // Complete the privacy choice before testing unrelated layout/audio controls.
+  await page.getByRole('region',{name:'Website privacy choices'}).getByRole('button',{name:'Reject optional',exact:true}).click();
   await page.waitForFunction(()=>!!document.querySelector('audio')?.getAttribute('src'));
   // Safari can defer metadata until a trusted gesture. Do not require preload before tapping.
   if(test.mobile)await page.touchscreen.tap(test.viewport.width-16,130);else await page.mouse.click(test.viewport.width-16,130);

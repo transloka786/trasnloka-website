@@ -4,6 +4,8 @@ import './globals.css';
 import './editorial.css';
 import './noir.css';
 import './journey.css';
+import './privacy-controls.css';
+import PrivacyControls from '@/components/PrivacyControls';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
@@ -24,4 +26,4 @@ const graph={'@context':'https://schema.org','@graph':[
  {'@type':'Person',name:TEAM.lead.name,jobTitle:TEAM.lead.role,worksFor:{'@id':`${SITE.url}/#organization`},url:`${SITE.url}/team`},
  {'@type':'Person',name:TEAM.outreach.name,jobTitle:TEAM.outreach.role,worksFor:{'@id':`${SITE.url}/#organization`},url:`${SITE.url}/team`}
 ]};
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable} ${devanagari.variable}`}><head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(graph)}}/></head><body><Experience><a className="skip-link" href="#main-content">Skip to main content</a><Nav/><Breadcrumbs/><main id="main-content" tabIndex={-1}>{children}</main><Footer/><Chatbot/><Analytics/></Experience></body></html>;}
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable} ${devanagari.variable}`}><head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(graph)}}/></head><body><Experience><a className="skip-link" href="#main-content">Skip to main content</a><Nav/><Breadcrumbs/><main id="main-content" tabIndex={-1}>{children}</main><Footer/><Chatbot/><Analytics/><PrivacyControls/></Experience></body></html>;}
