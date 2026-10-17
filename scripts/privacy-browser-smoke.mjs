@@ -6,7 +6,7 @@ await mkdir('privacy-artifacts',{recursive:true});
 try {
   for(const width of [1440,390]) {
     const context=await browser.newContext({viewport:{width,height:900}});
-    const page=await context.newPage();const requests=[],errors=[];
+    const page=await context.newPage();page.setDefaultTimeout(15000);const requests=[],errors=[];
     page.on('request',req=>{if(new URL(req.url()).pathname==='/api/analytics')requests.push(req);});
     page.on('pageerror',error=>errors.push(error.message));
     await page.goto(`${base}/contact`,{waitUntil:'networkidle'});
@@ -23,8 +23,10 @@ try {
     await expect(page.getByRole('checkbox',{name:'Optional analytics'})).not.toBeChecked();
     await page.screenshot({path:`privacy-artifacts/settings-${width}.png`});
     await page.getByRole('checkbox',{name:'Optional analytics'}).check();
-    const accepted=page.waitForRequest(req=>new URL(req.url()).pathname==='/api/analytics');
-    await page.getByRole('button',{name:'Save settings'}).click();await accepted;
+    const saveResponse=page.waitForResponse(res=>new URL(res.url()).pathname==='/api/privacy/preferences');
+    await page.getByRole('button',{name:'Save settings'}).click();
+    const saved=await saveResponse; if(!saved.ok())throw new Error(`Preference save failed: ${saved.status()} ${await saved.text()}`);
+    await expect.poll(()=>requests.length).toBeGreaterThan(0);
     await page.getByRole('button',{name:'Privacy settings',exact:true}).click();
     await page.getByRole('dialog').getByRole('button',{name:'Reject optional',exact:true}).click();
     const count=requests.length;

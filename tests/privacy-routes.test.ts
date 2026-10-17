@@ -7,7 +7,7 @@ import { POST as login } from '../src/app/api/reporting/session/route';
 import { POST as subscribe } from '../src/app/api/newsletter/route';
 import { POST as confirm, GET as legacyConfirm } from '../src/app/api/newsletter/confirm/route';
 import { POST as unsubscribe } from '../src/app/api/newsletter/unsubscribe/route';
-import { CONSENT_COOKIE, CONSENT_MAX_AGE, encodePreference, parsePreference } from '../src/lib/privacy';
+import { CONSENT_COOKIE, CONSENT_MAX_AGE, encodePreference, parsePreference, sameOrigin } from '../src/lib/privacy';
 
 const originalFetch=globalThis.fetch;
 const writes: {url:string;body:any}[]=[];
@@ -85,4 +85,10 @@ test('malformed preference and missing reporting configuration fail closed',asyn
   assert.equal((await preferences(request('/api/privacy/preferences',{analytics:'yes'}))).status,400);
   const key=process.env.REPORTING_SUPABASE_SERVICE_ROLE_KEY;delete process.env.REPORTING_SUPABASE_SERVICE_ROLE_KEY;
   try {await analytics(request('/api/analytics',{event:'page_view',path:'/'},optIn()));assert.equal(writes.length,0);assert.equal((await subscribe(request('/api/newsletter',{email:'p@example.test',consent:true}))).status,503);}finally{process.env.REPORTING_SUPABASE_SERVICE_ROLE_KEY=key;}
+});
+
+test('origin validation respects HTTP Host when Next uses an internal listener URL',()=>{
+  assert.equal(sameOrigin(new Request('http://localhost:3000/api/privacy/preferences',{headers:{host:'127.0.0.1:3000',origin:'http://127.0.0.1:3000'}})),true);
+  assert.equal(sameOrigin(new Request('https://internal.test/api/privacy/preferences',{headers:{host:'www.hellokritrna.com',origin:'https://attacker.test','x-forwarded-host':'attacker.test'}})),false);
+  assert.equal(sameOrigin(new Request('https://example.test/api/privacy/preferences',{headers:{host:'example.test',origin:'null'}})),false);
 });

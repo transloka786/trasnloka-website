@@ -14,7 +14,17 @@ export function parsePreference(value?: string | null, now = Date.now()): Prefer
 export function cookieValue(header: string, name = CONSENT_COOKIE) {
   return header.split(';').map(part => part.trim()).find(part => part.startsWith(`${name}=`))?.slice(name.length + 1);
 }
-export function sameOrigin(req: Request) { return req.headers.get('origin') === new URL(req.url).origin; }
+export function sameOrigin(req: Request) {
+  // Next's internal request URL can use the listening hostname. Compare the
+  // browser Origin to the HTTP Host, never to an arbitrary forwarded host.
+  const origin = req.headers.get('origin');
+  if (!origin) return false;
+  try {
+    const supplied = new URL(origin), internal = new URL(req.url);
+    return origin === supplied.origin && supplied.protocol === internal.protocol
+      && supplied.host === (req.headers.get('host') || internal.host);
+  } catch { return false; }
+}
 // Never collect dynamic paths, URL queries, search text, admin or token pages.
 export const PUBLIC_PATHS = new Set([
   '/', '/about', '/ask', '/careers', '/community', '/contact', '/disclaimer', '/evidence', '/explorer', '/faq',
