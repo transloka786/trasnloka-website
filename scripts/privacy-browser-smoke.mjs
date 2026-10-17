@@ -1,12 +1,13 @@
 import { chromium, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 const base=process.env.TEST_BASE_URL || 'http://127.0.0.1:3000';
+let activePage;
 const browser=await chromium.launch({headless:true,args:['--disable-dev-shm-usage']});
 await mkdir('privacy-artifacts',{recursive:true});
 try {
   for(const width of [1440,390]) {
     const context=await browser.newContext({viewport:{width,height:900}});
-    const page=await context.newPage();page.setDefaultTimeout(15000);const requests=[],errors=[];
+    const page=await context.newPage();activePage=page;page.setDefaultTimeout(15000);const requests=[],errors=[];
     page.on('request',req=>{if(new URL(req.url()).pathname==='/api/analytics')requests.push(req);});
     page.on('pageerror',error=>errors.push(error.message));
     await page.goto(`${base}/contact`,{waitUntil:'networkidle'});
@@ -32,12 +33,13 @@ try {
     const count=requests.length;
     await page.reload({waitUntil:'networkidle'});
     if(requests.length!==count)throw new Error('Analytics continued after withdrawal');
-    await page.goto(`${base}/admin/website`,{waitUntil:'networkidle'});
+    await page.goto(`${base}/admin/website`,{waitUntil:'domcontentloaded'});
     await expect(page.getByRole('heading',{name:'Website reporting'})).toBeVisible();
+    await expect(page.getByRole('heading',{name:'Reporting is not active yet'})).toBeVisible();
     if(requests.length!==count)throw new Error('Admin page was tracked');
     const report=await page.request.get(`${base}/api/reporting/summary`);if(report.status()!==401)throw new Error('Unauthenticated reports were accessible');
     await page.screenshot({path:`privacy-artifacts/dashboard-${width}.png`,fullPage:true});
-    await page.goto(`${base}/newsletter/confirm#token=${'a'.repeat(64)}`,{waitUntil:'networkidle'});
+    await page.goto(`${base}/newsletter/confirm#token=${'a'.repeat(64)}`,{waitUntil:'domcontentloaded'});
     await expect(page.getByRole('button',{name:'Confirm subscription',exact:true})).toBeVisible();
     if(page.url().includes('token'))throw new Error('Confirmation token was not cleared from history');
     if(requests.length!==count)throw new Error('Newsletter token page was tracked');
@@ -46,4 +48,7 @@ try {
     await context.close();
   }
   console.log('Privacy browser checks passed: first visit, reject, accept, withdraw, mobile layout, restricted reports, token pages.');
+}catch(error){
+  if(activePage&&!activePage.isClosed()){await activePage.screenshot({path:'privacy-artifacts/failure.png',fullPage:true}).catch(()=>{});console.error('Visible page at failure:',await activePage.locator('body').innerText().catch(()=>''));}
+  throw error;
 }finally{await browser.close();}
