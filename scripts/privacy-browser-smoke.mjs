@@ -14,6 +14,13 @@ try {
     await expect(page.getByRole('region',{name:'Website privacy choices'})).toBeVisible();
     if(requests.length)throw new Error('Analytics ran before consent');
     if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1))throw new Error(`Overflow at ${width}`);
+    for(const button of await page.getByRole('region',{name:'Website privacy choices'}).getByRole('button').all()) {
+      const unobstructed=await button.evaluate(element=>{
+        const box=element.getBoundingClientRect();
+        return [[8,8],[box.width-8,8],[8,box.height-8],[box.width-8,box.height-8]].every(([x,y])=>element.contains(document.elementFromPoint(box.left+x,box.top+y)));
+      });
+      if(!unobstructed)throw new Error(`Privacy button is covered at ${width}: ${await button.innerText()}`);
+    }
     await page.screenshot({path:`privacy-artifacts/banner-${width}.png`});
     await page.getByRole('button',{name:'Reject optional',exact:true}).click();
     await page.reload({waitUntil:'networkidle'});
