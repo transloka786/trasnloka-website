@@ -8,7 +8,9 @@ const assert=(value,message)=>{if(!value)report.failures.push(message);};
 try{
  for(const width of [1440,768,390]){
   const page=await browser.newPage({viewport:{width,height:width===390?844:1000}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base,{waitUntil:'networkidle',timeout:60000});await page.waitForTimeout(4200);
+  await page.goto(base,{waitUntil:'networkidle',timeout:60000});
+  // Complete the privacy choice before testing unrelated layout/audio controls.
+  await page.getByRole('region',{name:'Website privacy choices'}).getByRole('button',{name:'Reject optional',exact:true}).click();await page.waitForTimeout(4200);
   const hero=page.locator('.editorial-hero');
   assert(await page.locator('[data-journey-build="mosaic-v2"]').count()===1,`${width}: ambient build marker`);
   const initial=Number(await hero.getAttribute('data-mosaic-frame'));
