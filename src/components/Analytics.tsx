@@ -1,21 +1,31 @@
 'use client';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-
+import { CLICK_LABELS, PUBLIC_PATHS, sourceBucket } from '@/lib/privacy';
+import { currentPreference, PRIVACY_CHANGE, sendAnalytics } from '@/lib/analytics-client';
 export default function Analytics() {
   const pathname = usePathname();
   useEffect(() => {
-    const body = JSON.stringify({ event: 'page_view', path: pathname, referrer: document.referrer ? new URL(document.referrer).hostname : '' });
-    if (!navigator.sendBeacon?.('/api/analytics', new Blob([body], { type: 'application/json' }))) void fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true });
+    if (!PUBLIC_PATHS.has(pathname)) return;
+    let counted = false;
+    const pageView = () => {
+      if (counted || !currentPreference()?.analytics) return;
+      counted = true;
+      sendAnalytics({ event: 'page_view', path: pathname, source: sourceBucket(document.referrer) });
+    };
+    pageView();
+    window.addEventListener(PRIVACY_CHANGE, pageView);
+    document.addEventListener('visibilitychange', pageView);
+    return () => { window.removeEventListener(PRIVACY_CHANGE, pageView); document.removeEventListener('visibilitychange', pageView); };
   }, [pathname]);
   useEffect(() => {
-    const handler = (event: MouseEvent) => {
-      const target = (event.target as HTMLElement).closest<HTMLElement>('[data-analytics]');
-      if (!target) return;
-      void fetch('/api/analytics', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event: target.dataset.analyticsEvent || 'cta_click', label: target.dataset.analytics, path: window.location.pathname }), keepalive: true });
+    const click = (event: MouseEvent) => {
+      if (!(event.target instanceof Element) || !PUBLIC_PATHS.has(window.location.pathname)) return;
+      const label = event.target.closest<HTMLElement>('[data-analytics]')?.dataset.analytics;
+      if (label && CLICK_LABELS.has(label)) sendAnalytics({ event: 'cta_click', label, path: window.location.pathname });
     };
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
+    document.addEventListener('click', click);
+    return () => document.removeEventListener('click', click);
   }, []);
   return null;
 }

@@ -67,8 +67,8 @@ export default function ApplyForm({ preset }: { preset?: string }) {
       </div>
       <input name="website" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: -9999 }} aria-hidden />
       {err && <div style={{ color: '#ff6f9c', fontSize: '.85rem', marginBottom: 12 }}>{err}</div>}
-      <button type="submit" disabled={busy} style={{ width: '100%', background: 'var(--cream)', color: 'var(--ink)', border: 'none', padding: 15, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: '.85rem', letterSpacing: '.03em', cursor: 'pointer' }}>{busy ? 'Sending…' : 'Submit application'}</button>
-      <p style={{ fontSize: '.76rem', color: 'rgba(244,234,213,.4)', textAlign: 'center', marginTop: 14 }}>By submitting you consent to Transloka Bio Pvt. Ltd. storing this for recruitment. See our Privacy page.</p>
+      <button type="submit" disabled={busy} data-analytics="careers" style={{ width: '100%', background: 'var(--cream)', color: 'var(--ink)', border: 'none', padding: 15, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: '.85rem', letterSpacing: '.03em', cursor: 'pointer' }}>{busy ? 'Sending…' : 'Submit application'}</button>
+      <p style={{ fontSize: '.76rem', color: 'rgba(244,234,213,.4)', textAlign: 'center', marginTop: 14 }}>By submitting you consent to Transloka Bio Pvt. Ltd. storing this for recruitment. <a href="/privacy">Privacy &amp; data use</a>.</p>
     </form>
   );
 }

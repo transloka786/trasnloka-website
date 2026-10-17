@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { SITE } from '@/lib/content';
+import { PrivacySettingsButton } from '@/components/PrivacyControls';
 
 export const metadata: Metadata = {
   title: 'Privacy & Data Use Policy',
   description: 'How Transloka Bio Private Limited collects, uses, protects and retains personal data submitted through the KritRNA website.',
 };
 
-const EFFECTIVE_DATE = '11 July 2026';
+const EFFECTIVE_DATE = '17 October 2026';
 
 export default function PrivacyPage() {
   return (
@@ -14,7 +15,7 @@ export default function PrivacyPage() {
       <div className="wrap" style={{ maxWidth: 860 }}>
         <div className="eyebrow">Legal</div>
         <h1 className="h1">Privacy &amp; Data Use Policy</h1>
-        <p className="lead" style={{ marginTop: 18 }}>This policy explains how {SITE.legal} processes information submitted through the KritRNA website.</p>
+        <p className="lead" style={{ marginTop: 18 }}>This policy explains how {SITE.legal} processes website enquiries, subscriptions, assistant interactions and optional usage analytics.</p>
         <p style={{ fontFamily: 'var(--mono)', fontSize: '.75rem', color: 'var(--ink-mute)', marginTop: 14 }}>Effective and last updated: {EFFECTIVE_DATE}</p>
 
         <div className="prose" style={{ marginTop: 38 }}>
@@ -33,7 +34,7 @@ export default function PrivacyPage() {
             <li><strong>Career applications:</strong> contact details, CV or résumé, links, written answers and work samples.</li>
             <li><strong>Newsletter subscriptions:</strong> email address and confirmation status.</li>
             <li><strong>Assistant interactions:</strong> questions submitted and generated responses.</li>
-            <li><strong>Technical information:</strong> limited server, security, rate-limit and privacy-preserving usage data required to operate and protect the site.</li>
+            <li><strong>Technical information:</strong> hosting and security logs, and IP addresses used for short-lived abuse limits. Optional usage analytics is described separately below.</li>
           </ul>
           <p>We do not knowingly request government identifiers, biometric information, payment-card information or patient medical records through this site.</p>
 
@@ -47,10 +48,13 @@ export default function PrivacyPage() {
           <p>Patients, families and clinicians must not send medical records, genetic reports, diagnostic information or other sensitive health data through public forms, the assistant or ordinary email. If such information is sent despite this warning, we will restrict access, use it only to respond appropriately and erase it when no longer necessary, subject to legal requirements.</p>
 
           <h2>7. Cookies and analytics</h2>
-          <p>The site is designed to use first-party, privacy-preserving and cookieless analytics. We do not deploy advertising cookies, behavioural trackers or cross-site profiling. Strictly necessary technical storage may be used where required for security or core functionality.</p>
+          <p>Optional analytics is off until you accept it. When enabled, we collect fixed public page names, dates and times, broad referral categories (such as LinkedIn or Google), and clicks on selected enquiry, careers and newsletter buttons. We do not collect names, email addresses, form contents, search terms, URL query strings, medical information or persistent visitor identifiers in analytics. These counts are not counts of unique people. We do not use advertising cookies, session replay, fingerprinting or cross-site profiling in this reporting system.</p>
+          <p>The essential <code>kritrna_privacy</code> cookie remembers your yes/no analytics choice, decision time and policy version for 180 days. This preference is not used to build a visitor profile. The choice is recorded in the reporting database when that service is active. Rejecting analytics leaves browsing, enquiries and subscriptions available. <PrivacySettingsButton /> lets you withdraw or change your choice. Withdrawal stops future optional collection; it does not erase previously collected records.</p>
+          <p>The <code>kritrna-motion</code> session-storage setting remembers motion preferences for the current browser session. Authorised company users who sign in to reporting receive an essential, HTTP-only <code>kritrna_reporting_session</code> cookie lasting up to one hour. It is not used for public analytics.</p>
+          <p>We separately count successfully delivered enquiries and email-confirmed subscriptions for company operations, regardless of analytics choice. These daily totals contain no identities or browsing history and are not joined to optional analytics records.</p>
 
           <h2>8. Service providers</h2>
-          <p>We may use infrastructure and service providers for website hosting and content delivery, database and file storage, transactional email, the on-site AI assistant, security monitoring and internal productivity. These providers process information on our behalf for defined purposes. Depending on final production configuration, providers may include Vercel, Supabase, Resend, OpenAI and Google Workspace or Gmail.</p>
+          <p>We may use infrastructure and service providers for website hosting and content delivery, database and file storage, transactional email, the on-site AI assistant, security monitoring and internal productivity. These providers process information on our behalf for defined purposes. The website uses Vercel for hosting, Google Workspace SMTP for email delivery, and OpenAI for the assistant when configured. Supabase provides reporting, newsletter storage and authorised reporting-account authentication when activated; any existing recruitment storage is configured separately. The assistant may send submitted questions and recent conversation context to OpenAI to generate an answer. Public forms and the assistant are not channels for patient information.</p>
 
           <h2>9. International processing</h2>
           <p>Some providers may process information outside India. Where that occurs, we use providers and contractual arrangements intended to maintain protections consistent with this policy and applicable Indian restrictions on cross-border processing.</p>
@@ -59,7 +63,8 @@ export default function PrivacyPage() {
           <ul>
             <li>Enquiries are retained while being handled and for a reasonable record-keeping period.</li>
             <li>Recruitment data is retained for the recruitment process and a limited future-opportunity period unless earlier deletion is requested.</li>
-            <li>Newsletter data is retained until unsubscribe or withdrawal.</li>
+            <li>Optional analytics events are retained for 90 days; consent-choice records for 180 days. Daily operational counts are retained for 12 months. Scheduled cleanup runs daily, so deletion may occur up to one day after these periods.</li>
+            <li>Newsletter confirmation links expire after 24 hours. Expired, unconfirmed registrations are removed during daily cleanup. Active subscription emails are retained until unsubscribe. Unsubscribing removes the email from the active record immediately; a non-email token record is kept for up to 30 days to make repeat unsubscribe requests work.</li>
             <li>Security and operational logs are retained only for a proportionate period.</li>
           </ul>
           <p>Information is erased or anonymised when its purpose is complete unless legal, audit, security or dispute requirements justify continued retention.</p>
@@ -68,7 +73,7 @@ export default function PrivacyPage() {
           <p>We use access controls, server-side credentials, rate limits, secure providers, security headers, controlled repositories and operational monitoring. No transmission or storage system is completely secure, so absolute security cannot be guaranteed.</p>
 
           <h2>12. Your requests</h2>
-          <p>Subject to applicable law, you may request access, correction, completion, updating, erasure, withdrawal of consent or grievance redressal. Send the request to <a href={`mailto:${SITE.adminEmail}`}>{SITE.adminEmail}</a> with sufficient detail for verification. Do not impersonate another person or provide false particulars.</p>
+          <p>Subject to applicable law, you may request access, correction, completion, updating, erasure, withdrawal of consent or grievance redressal. Send an access, correction or deletion request to <a href={`mailto:${SITE.email}?subject=Privacy%20request`}>{SITE.email}</a>, or use the <a href="/contact">contact form</a> and state “Privacy request”. Include the email address used in your enquiry or subscription and enough detail to locate the record. We may verify control of that address before acting. Do not send identity documents or medical records in the initial request. Do not impersonate another person or provide false particulars.</p>
 
           <h2>13. Children</h2>
           <p>The site is intended for a general adult audience and is not directed at children. We do not knowingly collect information from a person under 18 without appropriate parent or lawful-guardian involvement. Contact us if you believe a child has submitted information improperly.</p>
@@ -88,7 +93,7 @@ export default function PrivacyPage() {
           <h2>18. Governing law and contact</h2>
           <p>This policy is governed by Indian law. Subject to statutory rights and regulatory forums, courts at Gautam Budh Nagar, Uttar Pradesh have jurisdiction. Contact: {SITE.legal}, {SITE.location}; <a href={`mailto:${SITE.adminEmail}`}>{SITE.adminEmail}</a>.</p>
 
-          <div className="callout">This public policy reflects the intended website implementation and is not a substitute for legal advice. Final production publication should be reviewed by the company’s legal or company-secretarial adviser, particularly after the complete registered-office address and grievance designation are confirmed.</div>
+
         </div>
       </div>
     </section>

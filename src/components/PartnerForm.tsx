@@ -26,9 +26,10 @@ export default function PartnerForm({ preset = 'General', investor = false }: { 
     {investor && <div className="two"><div className="field"><label htmlFor="stage">Typical investment stage</label><input id="stage" name="stage" placeholder="Pre-seed, seed…" /></div><div className="field"><label htmlFor="checkRange">Typical cheque range</label><input id="checkRange" name="checkRange" placeholder="Optional" /></div></div>}
     <div className="field"><label htmlFor="partnerMessage">Message <span className="req">*</span></label><textarea id="partnerMessage" name="message" required minLength={10} placeholder="Describe the collaboration, capability or request." /></div>
     <div className="field consent"><label><input type="checkbox" required name="consent" value="yes" /> I consent to Transloka Bio using these details to respond.</label></div>
+    <p className="form-note">We use these details to handle your enquiry, not to subscribe you to updates. Do not include medical or genetic records. <a href="/privacy">Privacy &amp; data use</a>.</p>
     <input name="website" tabIndex={-1} autoComplete="off" className="hp" aria-hidden />
     {state === 'error' && <p className="form-error" role="alert">{message}</p>}
-    <button className="btn btn-solid" type="submit" disabled={state === 'busy'} data-analytics={investor ? 'Investor material request' : `Partner form: ${type}`} data-analytics-event="form_submit">{state === 'busy' ? 'Sending…' : investor ? 'Request investor material' : 'Send enquiry'}</button>
+    <button className="btn btn-solid" type="submit" disabled={state === 'busy'} data-analytics={investor ? 'investor' : 'partner'}>{state === 'busy' ? 'Sending…' : investor ? 'Request investor material' : 'Send enquiry'}</button>
     {investor && <p className="form-note">The deck is not sent automatically. The founders review requests before sharing confidential material.</p>}
   </form>;
 }

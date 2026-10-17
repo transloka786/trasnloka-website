@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { emailConfigured, missingEmailVariables } from '@/lib/email';
 import { supabaseConfigured } from '@/lib/supabase';
+import { reportingConfigured } from '@/lib/reporting';
+import { reportingAdmins } from '@/lib/reporting-auth';
 import { KNOWLEDGE } from '@/lib/chatKnowledge';
 
 export const dynamic = 'force-dynamic';
@@ -14,8 +16,10 @@ export function GET() {
       generalContact: emailConfigured ? 'configured' : 'not_configured',
       careersContact: emailConfigured ? 'configured' : 'not_configured',
       recruitmentStorage: supabaseConfigured ? 'configured' : 'attachment_fallback',
-      newsletter: emailConfigured && supabaseConfigured ? 'configured' : 'not_configured',
-      analytics: supabaseConfigured ? 'configured' : 'console_only',
+      newsletter: emailConfigured && reportingConfigured() ? 'configuration_present_not_connectivity_tested' : 'not_configured',
+      analytics: reportingConfigured() ? 'consent_gated_configuration_present' : 'not_configured',
+      websiteReporting: reportingConfigured() && reportingAdmins().length ? 'configuration_present_not_connectivity_tested' : 'not_configured',
+      privacyChoices: 'enabled',
       monitoring: emailConfigured ? 'runtime_alerts_enabled' : 'not_configured',
       chatbot: 'configured_with_local_fallback',
       chatbotOpenAI: chatbotKeyConfigured ? 'configured' : 'fallback_only',
