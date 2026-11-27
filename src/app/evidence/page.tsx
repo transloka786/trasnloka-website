@@ -1,7 +1,34 @@
-import type {Metadata} from 'next';
-import Link from 'next/link';
-import Reveal from '@/components/Reveal';
-import {DEPENDENCIES,PUBLIC_RESEARCH} from '@/lib/publicStory';
-export const metadata:Metadata={title:'Evidence',description:'How KritRNA connects scientific rationale, experimental questions and programme decisions.'};
-const decisions=[['Landscape intelligence','Understand selected premature stops at the gene, transcript and disease-mechanism level. Biological relevance matters more than a raw count of variants.','/problem'],['Programme selection','Consider mutation context, protein-restoration logic, delivery, relevant experimental models and the development question a programme can answer.','/pipeline'],['Candidate choice','Develop an explainable shortlist with supporting evidence, uncertainty and clear next experiments.','/platform'],['India-originated capability','Connect scientific ownership and locally relevant priorities with globally rigorous evidence generation.','/india']];
-export default function Evidence(){return <div className="noir-about"><section className="page-hero"><div className="wrap"><Reveal><div className="eyebrow">EVIDENCE AT KRITRNA</div><h1 className="h1">A stronger decision<br/><em>starts with a clearer question.</em></h1><p className="lead">Our public evidence story explains the scientific rationale, the questions that shape our programmes and how experiments should inform the next choice. Published knowledge and company-generated evidence are kept distinct.</p></Reveal></div></section><section><div className="wrap"><div className="sec-head"><span className="micro">FROM POSSIBILITY TO PRIORITY</span><h2 className="h2">Evidence becomes useful when it informs a decision.</h2></div><div className="standard-grid">{decisions.map(([title,text,href])=><Reveal key={title}><article><h3>{title}</h3><p>{text}</p><Link href={href} className="underline-link">Explore this perspective ↗</Link></article></Reveal>)}</div></div></section><section className="ink-sec"><div className="wrap"><div className="sec-head"><span className="micro">FOUR CONNECTED DEPENDENCIES</span><h2 className="h2">Consider the same candidate in the same biological context.</h2><p>Charging, termination competition, message survival and delivery shape the therapeutic question. Protein function, normal-stop fidelity and cellular response are assessed alongside activity.</p></div><div className="system-layer-list">{DEPENDENCIES.map(([n,title,question,text])=><Reveal key={n}><article><span className="micro">{n} / {title}</span><h3>{question}</h3><p>{text}</p></article></Reveal>)}</div></div></section><section><div className="wrap public-engine-detail"><Reveal><span className="micro">THE PUBLIC EVIDENCE STANDARD</span><h2 className="display-heading smaller">Know what is measured.<br/><em>Name what comes next.</em></h2></Reveal><div className="public-question-list">{[['Measured','A result supported by an attributable dataset, publication or experiment, with the relevant biological context.'],['Inferred','An interpretation drawn from evidence and clearly distinguished from direct measurement.'],['To be tested','A scientific question translated into an experiment or development milestone.']].map(([title,text])=><Reveal key={title}><article><h3>{title}</h3><p>{text}</p></article></Reveal>)}</div></div></section><section><div className="wrap"><Reveal><span className="micro">PUBLISHED SCIENTIFIC FOUNDATION</span><h2 className="h2" style={{marginTop:22,maxWidth:'30ch'}}>{PUBLIC_RESEARCH.title}</h2><p className="section-lead">{PUBLIC_RESEARCH.venue}. {PUBLIC_RESEARCH.note}</p><a href={PUBLIC_RESEARCH.href} className="underline-link" target="_blank" rel="noreferrer">Examine the publication ↗</a></Reveal></div></section><section className="page-bottom-cta"><div className="wrap"><Reveal><h2 className="display-heading smaller">Create the next layer<br/><em>of evidence with us.</em></h2><p>We welcome scientific, assay, CRO, disease-model and delivery collaborators who can help turn compelling molecular questions into reproducible results.</p><Link className="underline-link" href="/partners">Explore collaboration ↗</Link></Reveal></div></section></div>;}
+import { Intro } from "@/components/Editorial";
+import { sources } from "@/lib/editorial";
+export const metadata = {
+  title: "Founder publications",
+  description: "Academic publications from before Transloka Bio.",
+  alternates: { canonical: "/evidence" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"Founder publications"}>
+        Academic publications from before Transloka Bio.
+      </Intro>
+      <div className="body">
+        <p>
+          These papers are part of Dr. Nikhil Bharti’s publication record. They
+          do not establish results for KritRNA. His former university does not
+          endorse KritRNA or transfer ownership of university intellectual
+          property.
+        </p>
+        {sources
+          .filter((s) => ["publication", "paper"].includes(s[0]))
+          .map(([id, title, venue, href]) => (
+            <article className="directory-row" key={id}>
+              <h2>
+                <a href={href}>{title}</a>
+              </h2>
+              <p className="row-meta">{venue}</p>
+            </article>
+          ))}
+      </div>
+    </>
+  );
+}

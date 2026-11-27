@@ -1,11 +1,23 @@
-import type {Metadata} from 'next';
-import type {CSSProperties} from 'react';
-import Reveal from '@/components/Reveal';
-import {PROGRAMS,REACH} from '@/lib/content';
-export const metadata:Metadata={title:'Research Programs',description:'KritRNA’s initial research focus: selected premature-stop contexts in HBB, DMD and TP53, displayed through evidence-gated research stages.'};
-const STAGES=[{name:'Discovery',note:'Target context, candidate design and assay definition'},{name:'Lead optimisation',note:'Iterative sequence, activity and selectivity refinement'},{name:'Preclinical',note:'Disease-model efficacy, delivery and safety evidence'},{name:'IND-enabling',note:'Regulatory-grade development package'}];
-export default function PipelinePage(){return <div className="pipeline-page">
- <section style={{borderTop:'none'}}><div className="wrap"><Reveal><h1 className="h1">Three initial programmes.<br/><em>One platform thesis.</em></h1><p className="lead" style={{marginTop:24}}>KritRNA’s initial focus is selected premature-stop contexts in <strong>HBB, DMD and TP53</strong>. Together, they test the platform across hematology, neuromuscular disease and cancer biology.</p></Reveal></div></section>
- <section style={{paddingTop:0,borderTop:'none'}}><div className="wrap"><div className="pipeline-board">{STAGES.map((stage,index)=><Reveal key={stage.name} delay={index*.05}><section className="pipeline-stage"><header><h2>{stage.name}</h2><p>{stage.note}</p></header><div className="pipeline-stage-body">{index===0?PROGRAMS.map(program=><article className="pipeline-programme" key={program.name} style={{'--programme-accent':program.accent} as CSSProperties}><h3>{program.name}</h3><div className="programme-gene">{program.gene} · {program.area}</div><span className="research-status">Active research</span><p>{program.goal}</p><dl><dt>Current milestone</dt><dd>{program.stage}</dd><dt>Next evidence gate</dt><dd>{program.next}</dd></dl></article>):<div className="pipeline-future">Programmes enter this stage only after the preceding evidence gate is met.</div>}</div></section></Reveal>)}</div></div></section>
- <section><div className="wrap"><Reveal><div className="sec-head"><h2 className="h2">One platform, multiple disease classes.</h2><p>The same translation-level strategy may be applied across different genes and disease areas. Each programme still requires its own sequence design, amino-acid choice, delivery strategy, safety analysis and experimental model.</p></div></Reveal><div className="grid cols-3">{REACH.map((area,i)=><Reveal key={area.area} delay={i*.05}><div className="cell"><div style={{width:8,height:8,borderRadius:'50%',background:area.c,marginBottom:12}}/><h3 style={{fontSize:'1.3rem'}}>{area.area}</h3><p>{area.ex}</p></div></Reveal>)}</div></div></section>
- </div>;}
+import { Intro } from "@/components/Editorial";
+import { Programmes, Reference } from "@/components/Editorial";
+export const metadata = {
+  title: "Research programmes",
+  description:
+    "HBB leads our early preclinical research, followed by DMD and TP53.",
+  alternates: { canonical: "/pipeline" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"Research programmes"}>
+        HBB leads our early preclinical research, followed by DMD and TP53.
+      </Intro>
+      <div className="body">
+        <Programmes />
+        <h2>Future research</h2>
+        <p>Clotting-factor disorders are a possible future area of study.</p>
+        <Reference id="hbb" label="Gene references" />
+      </div>
+    </>
+  );
+}

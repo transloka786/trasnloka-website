@@ -1,11 +1,38 @@
-import type {Metadata} from 'next';
-import Link from 'next/link';
-import Reveal from '@/components/Reveal';
-import EngineShowcase from '@/components/EngineShowcase';
-import {STANDARDS,DEPENDENCIES} from '@/lib/publicStory';
-export const metadata:Metadata={title:'Our Platform',description:'KritRNA is developing two connected engines: candidate design and translation-system modelling, guided by experimental evidence.'};
-export default function Platform(){return <div className="noir-platform-page"><section className="page-hero"><div className="wrap"><Reveal><div className="eyebrow">THE KRITRNA PLATFORM</div><h1 className="h1">Selection is the question.<br/><em>Evidence is the way forward.</em></h1><p className="lead">For a selected premature stop, there can be many candidate designs and several reasons why a promising molecule may not work in a cell. KritRNA is developing a platform to help make candidate choice more informed, explainable and experimentally actionable.</p></Reveal></div></section><EngineShowcase/>
- <section><div className="wrap public-engine-detail"><Reveal><span className="micro">ENGINE 01 / CANDIDATE DESIGN</span><h2 className="display-heading smaller">A better shortlist.<br/><em>A clearer next experiment.</em></h2></Reveal><Reveal><p className="large-body">The intended starting point is a defined gene, nonsense mutation and protein-restoration goal. The intended destination is a scientifically reasoned shortlist of candidates for testing.</p><p>The engine is being developed to bring molecular suitability and biological context into the same conversation. It asks whether a candidate is plausible as a tRNA, whether its intended activity makes sense in the target context, and what evidence would strengthen or challenge that choice.</p><div className="public-question-list">{[['What a candidate report should explain','Why a design is worth testing, which observations support that decision and which questions remain open.'],['What ranking is meant to achieve','Prioritise experimental effort and make assumptions visible before resources are committed.'],['How the engine should improve','Use clearly attributed experimental outcomes to challenge earlier choices and inform the next round.']].map(([t,p])=><article key={t}><h3>{t}</h3><p>{p}</p></article>)}</div></Reveal></div></section>
- <section className="ink-sec"><div className="wrap"><div className="sec-head"><div className="eyebrow">CONNECTED BIOLOGY</div><h2 className="h2">The right molecule must work in the right context.</h2><p>These public biological questions explain why translation therapeutics needs an integrated approach. Safety and useful protein function run across all four.</p></div><div className="system-layer-list">{DEPENDENCIES.map(([n,t,q,p])=><Reveal key={n}><article><span className="micro">{n} / {t}</span><h3>{q}</h3><p>{p}</p></article></Reveal>)}</div></div></section>
- <section><div className="wrap"><div className="sec-head"><div className="eyebrow">BUILDING TOWARD GLOBAL SCIENTIFIC STANDARDS</div><h2 className="h2">Quality is built into how the work is judged.</h2><p>Our ambition is a platform that earns trust through prospective evidence, traceability and meaningful experimental choices. These are development standards, not a claim of completed validation.</p></div><div className="standard-grid">{STANDARDS.map(([title,text],i)=><Reveal key={title}><article><span className="micro">0{i+1}</span><h3>{title}</h3><p>{text}</p></article></Reveal>)}</div></div></section>
- <section className="page-bottom-cta"><div className="wrap"><Reveal><h2 className="display-heading smaller">The model proposes.<br/><em>The experiment decides.</em></h2><p>We are building a design–test–learn programme in which readthrough, full-length protein, protein function, transcript availability and cellular effects remain distinct questions. Scientific, assay, disease-model and delivery collaborations help turn those questions into evidence.</p><Link className="underline-link" href="/partners">Build the evidence with us ↗</Link><br/><Link className="underline-link" href="/small-world">Explore the translation-system perspective ↗</Link></Reveal></div></section></div>;}
+import { Intro } from "@/components/Editorial";
+
+export const metadata = {
+  title: "AI-guided design",
+  description:
+    "We are developing suppressor tRNA for nonsense-mutation diseases.",
+  alternates: { canonical: "/platform" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"AI-guided design"}>
+        We are developing suppressor tRNA for nonsense-mutation diseases.
+      </Intro>
+      <div className="body">
+        <article className="directory-row">
+          <h2>Our research goal</h2>
+          <div>
+            <p>
+              We aim to study whether translation can continue beyond a
+              premature stop in selected disease contexts.
+            </p>
+          </div>
+        </article>
+        <article className="directory-row">
+          <h2>What needs measuring</h2>
+          <div>
+            <p>
+              Protein function, delivery and safety are experimental questions.
+              Our programmes are at the discovery stage.{" "}
+              <a href="/pipeline">Explore the programmes</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </>
+  );
+}

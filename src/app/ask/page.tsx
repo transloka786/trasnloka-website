@@ -1,3 +1,20 @@
-import type { Metadata } from 'next'; import AskPageClient from '@/components/AskPageClient';
-export const metadata:Metadata={title:'Ask KritRNA',description:'A grounded assistant for approved public information about KritRNA science, programmes, careers and partnerships.'};
-export default function AskPage(){return <><section className="page-hero"><div className="wrap"><div className="eyebrow">Ask KritRNA</div><h1 className="h1">Ask the company.<br/><em>See the sources.</em></h1><p className="lead">The assistant is restricted to approved public information and selected scientific sources. It does not provide medical advice or interpret patient information.</p></div></section><section style={{paddingTop:0,borderTop:'none'}}><div className="wrap"><AskPageClient /></div></section></>}
+import { Intro } from "@/components/Editorial";
+import AskPageClient from "@/components/AskPageClient";
+export const metadata = {
+  title: "Ask KritRNA",
+  description:
+    "Ask about the company, its programmes or the science on this website.",
+  alternates: { canonical: "/ask" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"Ask KritRNA"}>
+        Ask about the company, its programmes or the science on this website.
+      </Intro>
+      <div className="body">
+        <AskPageClient />
+      </div>
+    </>
+  );
+}

@@ -1,3 +1,60 @@
-import type { Metadata } from 'next'; import NewsletterForm from '@/components/NewsletterForm'; import { UPDATES } from '@/content/siteContent';
-export const metadata:Metadata={title:'Updates',description:'Verified KritRNA company, scientific, hiring and milestone updates.'};
-export default function UpdatesPage(){return <><section className="page-hero"><div className="wrap"><div className="eyebrow">Updates</div><h1 className="h1">Verified progress,<br/><em>reported without inflation.</em></h1><p className="lead">Company updates are limited to approved facts: scientific architecture, hiring, grants, publications and evidence-gated milestones.</p></div></section><section><div className="wrap split-2 updates-layout"><div className="update-list">{UPDATES.map((item)=><article key={`${item.date}-${item.title}`}><div><span>{item.type}</span><time dateTime={item.date}>{item.date}</time></div><h2>{item.title}</h2><p>{item.summary}</p></article>)}</div><aside><h2 className="h2">Receive future updates</h2><p>Subscribe for material company and scientific updates. No promotional health claims and no patient targeting.</p><NewsletterForm /></aside></div></section></>}
+import Link from "next/link";
+import { Intro } from "@/components/Editorial";
+import { UpdatesList } from "@/components/UpdatesList";
+import NewsletterForm from "@/components/NewsletterForm";
+import { readUpdates, tags } from "@/lib/updates";
+export const metadata = {
+  title: "Updates",
+  description: "News from KritRNA and Anuvad.",
+};
+export default async function Updates({
+  searchParams,
+}: {
+  searchParams: Promise<{ tag?: string; subscription?: string }>;
+}) {
+  const { tag, subscription } = await searchParams,
+    entries = readUpdates();
+  const selected = tags.includes(tag || "") ? tag : undefined;
+  return (
+    <>
+      <Intro title="What we’re doing now">
+        Research, awareness and company announcements from KritRNA.
+      </Intro>
+      <div className="body">
+        {subscription && (
+          <p role="status">
+            {subscription === "confirmed"
+              ? "Your subscription is confirmed."
+              : "This confirmation link could not be used. Please subscribe again."}
+          </p>
+        )}
+        {entries.length > 0 && (
+          <>
+            <p>
+              Last updated <time>{entries[0].date}</time>
+            </p>
+            <nav aria-label="Filter announcements" className="filters">
+              {["All", ...tags].map((t) => (
+                <Link
+                  key={t}
+                  href={t === "All" ? "/updates" : "/updates?tag=" + t}
+                  aria-current={(selected || "All") === t ? "page" : undefined}
+                >
+                  {t}
+                </Link>
+              ))}
+            </nav>
+          </>
+        )}
+        <UpdatesList
+          entries={
+            selected ? entries.filter((e) => e.tag === selected) : entries
+          }
+        />
+        <a href="/updates/rss.xml">RSS feed</a>
+        <h2>Receive updates by email</h2>
+        <NewsletterForm />
+      </div>
+    </>
+  );
+}

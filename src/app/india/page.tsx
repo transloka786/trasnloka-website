@@ -1,8 +1,37 @@
-import type {Metadata} from 'next';
-import Link from 'next/link';
-import Reveal from '@/components/Reveal';
-import BrandOrigin from '@/components/BrandOrigin';
-import {PROGRAMS} from '@/lib/content';
-export const metadata:Metadata={title:'Built from India',description:'KritRNA’s India-first purpose: scientific ownership, relevant research priorities, collaboration and access-aware biotechnology development.'};
-const pillars=[['Disease relevance','Begin with well-defined nonsense-mutation contexts and disease-relevant experimental questions. β-thalassemia is an India-priority research focus.'],['Scientific ownership','Build original scientific capability, candidate-development knowledge and evidence from India while engaging with the global research community.'],['Validation relationships','Work towards formal collaborations with research laboratories, CROs, clinicians and disease-model specialists who can help generate rigorous evidence.'],['Access-aware development','Consider the realities of patients, healthcare systems and research infrastructure as part of programme and development decisions.']];
-export default function India(){return <div className="noir-about"><section className="page-hero"><div className="wrap"><Reveal><div className="eyebrow">INDIA-FIRST. GLOBALLY MINDED.</div><h1 className="h1">Built in India.<br/><em>Designed for global science.</em></h1><p className="lead">India-first means building scientific ownership, evidence generation and development capability here. It is a starting point for original biotechnology with a global scientific outlook.</p></Reveal></div></section><BrandOrigin about/><section><div className="wrap"><div className="sec-head"><span className="micro">WHERE PURPOSE BECOMES PRACTICE</span><h2 className="h2">Connect the need, the science and the work.</h2></div><div className="principle-spread">{pillars.map(([t,p],i)=><Reveal key={t}><article><span className="micro">0{i+1}</span><h3>{t}</h3><p>{p}</p></article></Reveal>)}</div></div></section><section className="ink-sec"><div className="wrap"><div className="sec-head"><span className="micro">INITIAL RESEARCH PRIORITIES</span><h2 className="h2">HBB. DMD. TP53.</h2><p>Three initial programmes, each with distinct mutation, protein-restoration, delivery and experimental questions.</p></div><div className="public-question-list">{PROGRAMS.map(p=><Reveal key={p.gene}><article><span className="micro">{p.gene} / {p.area}</span><h3>{p.name}</h3><p>{p.goal}</p><p>Current milestone: {p.stage}. Next: {p.next}.</p></article></Reveal>)}</div></div></section><section><div className="wrap"><div className="sec-head"><span className="micro">EXECUTION PATHWAY</span><h2 className="h2">Define. Design. Validate. Learn.</h2></div><div className="standard-grid">{[['Define a relevant question','Select a mutation and disease context with a clear experimental rationale.'],['Design candidate possibilities','Use the developing platform to support informed candidate selection.'],['Validate through collaboration','Challenge the candidate in appropriate assays and disease-relevant experimental systems.'],['Build evidence before expanding','Use reproducible molecular, protein-function and safety evidence to inform each next step.']].map(([t,p])=><Reveal key={t}><article><h3>{t}</h3><p>{p}</p></article></Reveal>)}</div><details className="landscape-notes"><summary>Broader scientific context: CFTR / cystic fibrosis <span aria-hidden="true">+</span></summary><p className="section-lead" style={{paddingBottom:24}}>CFTR nonsense mutations remain relevant to the wider suppressor-tRNA literature and the founder’s published research. They are scientific background here, rather than one of KritRNA’s current initial programmes.</p></details></div></section><section className="page-bottom-cta"><div className="wrap"><Reveal><h2 className="display-heading smaller">Build the capability.<br/><em>Build it together.</em></h2><p>We welcome structured conversations with research laboratories, CROs, clinicians, hospitals, incubators, patient organisations and aligned investors. These are early research programmes, not a treatment or patient-enrolment pathway.</p><Link className="underline-link" href="/partners">Discuss an India-based collaboration ↗</Link></Reveal></div></section></div>;}
+import { Intro } from "@/components/Editorial";
+
+export const metadata = {
+  title: "Research in India",
+  description: "Transloka Bio is based in Noida, Uttar Pradesh.",
+  alternates: { canonical: "/india" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"Research in India"}>
+        Transloka Bio is based in Noida, Uttar Pradesh.
+      </Intro>
+      <div className="body">
+        <article className="directory-row">
+          <h2>Research focus</h2>
+          <div>
+            <p>
+              Our lead research programme focuses on HBB and β-thalassemia.{" "}
+              <a href="/pipeline">Read the programme goals</a>.
+            </p>
+          </div>
+        </article>
+        <article className="directory-row">
+          <h2>Public information</h2>
+          <div>
+            <p>
+              The Ministry of Health and Family Welfare publishes India’s
+              rare-disease policy and official resources.{" "}
+              <a href="/references#policy">Find the policy</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </>
+  );
+}

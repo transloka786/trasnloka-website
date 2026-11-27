@@ -1,27 +1,77 @@
-import type {Metadata} from 'next';
-import {Cormorant_Garamond,Manrope,JetBrains_Mono,Noto_Serif_Devanagari} from 'next/font/google';
-import './globals.css';
-import './editorial.css';
-import './noir.css';
-import './journey.css';
-import Nav from '@/components/Nav';
-import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
-import Experience from '@/components/Experience';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import Analytics from '@/components/Analytics';
-import {SITE,TEAM} from '@/lib/content';
-const display=Cormorant_Garamond({subsets:['latin'],variable:'--font-display',weight:['400','500','600'],style:['normal','italic'],display:'swap'});
-const sans=Manrope({subsets:['latin'],variable:'--font-body',display:'swap'});
-const mono=JetBrains_Mono({subsets:['latin'],variable:'--font-jetbrains',display:'swap'});
-const devanagari=Noto_Serif_Devanagari({subsets:['devanagari'],variable:'--font-devanagari',weight:['400','600'],display:'swap'});
-const description='KritRNA is developing India-originated suppressor-tRNA therapeutics and computational translation systems for selected nonsense-mutation contexts in HBB, DMD and TP53.';
-const og=`/api/og?title=${encodeURIComponent('KritRNA — Reading Through Silence')}&subtitle=${encodeURIComponent(description)}`;
-export const metadata:Metadata={metadataBase:new URL(SITE.url),title:{default:'KritRNA — Suppressor tRNA Therapeutics',template:'%s — KritRNA'},description,keywords:['suppressor tRNA','tRNA therapeutics','nonsense mutation','premature stop codon','rare disease India','HBB','DMD','TP53','translation biology'],authors:[{name:SITE.legal}],icons:{icon:'/favicon.png'},alternates:{canonical:SITE.url},openGraph:{type:'website',locale:'en_IN',url:SITE.url,siteName:'KritRNA',title:'KritRNA — Reading Through Silence',description,images:[{url:og,width:1200,height:630,alt:'KritRNA social preview'}]},twitter:{card:'summary_large_image',title:'KritRNA — Reading Through Silence',description,images:[og]},robots:{index:true,follow:true}};
-const graph={'@context':'https://schema.org','@graph':[
- {'@type':'Organization','@id':`${SITE.url}/#organization`,name:`KritRNA — ${SITE.legal}`,legalName:SITE.legal,url:SITE.url,logo:`${SITE.url}/logo.png`,email:SITE.email,address:{'@type':'PostalAddress',addressLocality:'Noida',addressRegion:'Uttar Pradesh',addressCountry:'IN'}},
- {'@type':'WebSite','@id':`${SITE.url}/#website`,url:SITE.url,name:'KritRNA',publisher:{'@id':`${SITE.url}/#organization`},potentialAction:{'@type':'SearchAction',target:`${SITE.url}/search?q={search_term_string}`,'query-input':'required name=search_term_string'}},
- {'@type':'Person',name:TEAM.lead.name,jobTitle:TEAM.lead.role,worksFor:{'@id':`${SITE.url}/#organization`},url:`${SITE.url}/team`},
- {'@type':'Person',name:TEAM.outreach.name,jobTitle:TEAM.outreach.role,worksFor:{'@id':`${SITE.url}/#organization`},url:`${SITE.url}/team`}
-]};
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en" className={`${display.variable} ${sans.variable} ${mono.variable} ${devanagari.variable}`}><head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(graph)}}/></head><body><Experience><a className="skip-link" href="#main-content">Skip to main content</a><Nav/><Breadcrumbs/><main id="main-content" tabIndex={-1}>{children}</main><Footer/><Chatbot/><Analytics/></Experience></body></html>;}
+import type { Metadata } from "next";
+import Link from "next/link";
+import Menu from "@/components/Menu";
+import Analytics from "@/components/Analytics";
+import { SITE } from "@/lib/content";
+import { groups } from "@/lib/editorial";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
+  title: { default: "KritRNA | Translation biology", template: "%s | KritRNA" },
+  description: "KritRNA researches suppressor tRNA in Noida, India.",
+  icons: { icon: "/favicon.png" },
+  openGraph: { siteName: "KritRNA", type: "website", images: ["/api/og"] },
+};
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const org = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "KritRNA",
+    legalName: SITE.legal,
+    url: SITE.url,
+    logo: SITE.url + "/kritrna-mark.png",
+    email: SITE.email,
+  };
+  return (
+    <html lang="en">
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }}
+        />
+        <a className="skip" href="#main">
+          Skip to content
+        </a>
+        <Menu />
+        <main id="main">{children}</main>
+        <footer>
+          <div className="foot-brand">KritRNA™</div>
+          <div className="foot-links">
+            {groups.map((g) => (
+              <Link key={g.path} href={g.path}>
+                {g.name}
+              </Link>
+            ))}
+            <Link href="/search">Search</Link>
+            <Link href="/ask">Ask KritRNA</Link>
+          </div>
+          <div className="foot-details">
+            <p>
+              {SITE.legal}
+              <br />
+              CIN {SITE.cin}
+              <br />
+              {SITE.location}
+            </p>
+            <p>
+              <a href={"mailto:" + SITE.email}>{SITE.email}</a>
+              <br />
+              <a href={"mailto:" + SITE.careersEmail}>{SITE.careersEmail}</a>
+              <br />
+              <a href="tel:+918595898238">{SITE.phone}</a>
+            </p>
+            <p>
+              {["privacy", "terms", "disclaimer", "references"].map((x) => (
+                <Link key={x} href={"/" + x}>
+                  {x[0].toUpperCase() + x.slice(1)}{" "}
+                </Link>
+              ))}
+            </p>
+          </div>
+        </footer>
+        <Analytics />
+      </body>
+    </html>
+  );
+}

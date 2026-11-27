@@ -1,15 +1,39 @@
-import type { Metadata } from 'next';
+import { Intro } from "@/components/Editorial";
 
-export const metadata:Metadata={title:'Impact',description:'The long-term impact of an India-first suppressor tRNA platform across disease areas.'};
-
-const IMPACT=[
-  ['One platform across disease boundaries','A platform organised around premature termination can generate reusable scientific knowledge across otherwise fragmented disease programmes.'],
-  ['India-owned scientific capability','Build company-owned computational, experimental and translational capability from the Indian biotechnology ecosystem.'],
-  ['Compounding experimental intelligence','Every well-designed experiment can improve future candidate selection, assay strategy and programme prioritisation.'],
-  ['Access-aware development from the beginning','Consider diagnosis, delivery, infrastructure and affordability while the technology is being built—not after it is finished.'],
-];
-
-export default function ImpactPage(){return <>
-  <section className="page-hero"><div className="wrap"><div className="eyebrow">Impact</div><h1 className="h1">A new translation platform.<br/><em>Built to reach across diseases.</em></h1><p className="lead">KritRNA’s long-term ambition is to transform a shared molecular failure into a family of programmable therapeutic opportunities—while creating durable scientific ownership and biotechnology capability from India.</p></div></section>
-  <section><div className="wrap"><div className="grid cols-2">{IMPACT.map(([title,text],i)=><article className="cell" key={title} style={{borderTop:`4px solid ${i%2?'var(--cyan)':'var(--magenta)'}`}}><h2>{title}</h2><p>{text}</p></article>)}</div></div></section>
-</>}
+export const metadata = {
+  title: "What we aim to change",
+  description:
+    "Our goal is to investigate a shared biological question across nonsense-mutation diseases.",
+  alternates: { canonical: "/impact" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"What we aim to change"}>
+        Our goal is to investigate a shared biological question across
+        nonsense-mutation diseases.
+      </Intro>
+      <div className="body">
+        <article className="directory-row">
+          <h2>Research</h2>
+          <div>
+            <p>
+              Can cells make a functional protein when translation would
+              otherwise stop early?{" "}
+              <a href="/science">Learn about the science</a>.
+            </p>
+          </div>
+        </article>
+        <article className="directory-row">
+          <h2>Understanding</h2>
+          <div>
+            <p>
+              Anuvad makes rare-disease concepts easier for families and
+              communities to discuss. <a href="/awareness">Visit Anuvad</a>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </>
+  );
+}

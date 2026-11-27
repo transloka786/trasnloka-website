@@ -1,11 +1,74 @@
-import type {Metadata} from 'next';
-import Link from 'next/link';
-import Reveal from '@/components/Reveal';
-import MolecularScene from '@/components/MolecularScene';
-export const metadata:Metadata={title:'Translation Systems',description:'Engine 02 is KritRNA’s developing systems perspective on translation: the message, ribosome, cellular response and useful protein output.'};
-const layers=[['Message availability','A candidate depends on an mRNA transcript being present and accessible to translation. Transcript production, processing and surveillance can influence that starting point.'],['Ribosome behaviour','Decoding occurs in a moving molecular system. Local sequence context, pausing and interactions with other ribosomes can shape the outcome.'],['Termination and continuation','At a stop codon, the balance between termination and suppressor-tRNA activity matters. The relevant question is productive continuation in the selected context.'],['Quality control and cellular response','Cells monitor messages, stalled ribosomes and proteins. These responses can affect both candidate performance and the interpretation of an experiment.'],['Protein production and function','A longer protein is not automatically a useful one. The amount, identity, stability and function of the restored protein remain important experimental endpoints.'],['Feedback into candidate choice','The purpose of systems thinking is to identify dependencies and design better experiments, then return what is learned to the next candidate decision.']];
-export default function Systems(){return <div className="noir-system-page"><section className="page-hero"><div className="wrap"><Reveal><div className="eyebrow">ENGINE 02 / TRANSLATION SMALL-WORLD</div><h1 className="h1">One molecule enters<br/><em>a connected world.</em></h1><p className="lead">Translation is not a single reaction. It links the availability of a message with ribosome behaviour, termination, surveillance, cellular state and the production of useful protein. KritRNA’s second engine is being developed to study candidate choices in that wider context.</p></Reveal></div></section>
- <section className="system-observatory"><div className="wrap system-layout"><Reveal><h2 className="display-heading smaller">Think beyond<br/><em>the sequence.</em></h2><p>We call this our translation small-world perspective: closely connected molecular processes can transmit the consequences of a local intervention through the wider system.</p><p>The visual is an intentionally irregular, depth-resolved illustration of interconnected biology. It communicates the idea of systems thinking without exposing a proprietary network or displaying simulated therapeutic performance.</p></Reveal><MolecularScene kind="network" label="Illustrative biological network with irregular clusters and three-dimensional depth"/></div></section>
- <section className="ink-sec"><div className="wrap"><div className="section-index"><span>THE BIOLOGICAL QUESTIONS</span><span>FROM THE MESSAGE TO THE PROTEIN</span></div><div className="system-layer-list">{layers.map(([title,text],i)=><Reveal key={title}><article><span className="micro">0{i+1}</span><h3>{title}</h3><p>{text}</p></article></Reveal>)}</div></div></section>
- <section><div className="wrap public-engine-detail"><Reveal><span className="micro">WHAT THE MODEL IS FOR</span><h2 className="display-heading smaller">Make dependencies visible.<br/><em>Make experiments count.</em></h2></Reveal><Reveal><p className="large-body">The intended output is a set of testable hypotheses: which biological dependencies may matter, where a candidate could encounter a bottleneck, and which measurements would most usefully challenge that expectation.</p><p>Engine 01 and Engine 02 are complementary. Candidate design asks what to build. Systems thinking asks what to examine around it. Experiments then determine which interpretations survive and how the next choices should change.</p><p>Different assays measure different outcomes. A readthrough signal, a full-length protein measurement and a functional rescue result are related observations—not interchangeable proof. Preserving their context is part of the platform’s intended scientific discipline.</p></Reveal></div></section>
- <section className="page-bottom-cta"><div className="wrap"><Reveal><h2 className="display-heading smaller">Built to be questioned.<br/><em>Developed through evidence.</em></h2><p>Engine 02 is an architecture under development. Our goal is a useful scientific decision system, calibrated against experiments and clear about uncertainty.</p><Link href="/platform" className="underline-link">Return to the connected platform ↗</Link><br/><Link href="/partners" className="underline-link">Discuss a scientific collaboration ↗</Link></Reveal></div></section></div>;}
+import { Intro } from "@/components/Editorial";
+
+export const metadata = {
+  title: "Translation in context",
+  description:
+    "A set of biology questions about what happens while a cell makes a protein.",
+  alternates: { canonical: "/small-world" },
+};
+export default function Page() {
+  return (
+    <>
+      <Intro title={"Translation in context"}>
+        A set of biology questions about what happens while a cell makes a
+        protein.
+      </Intro>
+      <div className="body">
+        <figure className="biology-network">
+          <svg
+            viewBox="0 0 600 215"
+            role="img"
+            aria-label="The ribosome reads a message, receives transfer RNA and builds a protein"
+          >
+            <g stroke="currentColor" strokeWidth="2" fill="none">
+              <path d="M115 48L270 106 115 168M315 106H492" />
+              <circle cx="285" cy="107" r="46" />
+            </g>
+            <g fontFamily="monospace" fontSize="18" fill="currentColor">
+              <text x="25" y="42">
+                Message
+              </text>
+              <text x="25" y="184">
+                tRNA
+              </text>
+              <text x="285" y="112" textAnchor="middle" fontSize="14">
+                Ribosome
+              </text>
+              <text x="500" y="112">
+                Protein
+              </text>
+            </g>
+          </svg>
+          <figcaption className="small">
+            Translation biology, illustrative, not model output.
+          </figcaption>
+        </figure>
+        <article className="directory-row">
+          <h2>Message availability</h2>
+          <div>
+            <p>How much messenger RNA remains available to the ribosome?</p>
+          </div>
+        </article>
+        <article className="directory-row">
+          <h2>Termination</h2>
+          <div>
+            <p>What happens when the ribosome encounters a premature stop?</p>
+          </div>
+        </article>
+        <article className="directory-row">
+          <h2>Quality control</h2>
+          <div>
+            <p>How does the cell respond to an interrupted message?</p>
+          </div>
+        </article>
+        <article className="directory-row">
+          <h2>Protein function</h2>
+          <div>
+            <p>Can the resulting protein carry out its intended role?</p>
+          </div>
+        </article>
+        <a href="/references#translation">Background reading on translation</a>
+      </div>
+    </>
+  );
+}

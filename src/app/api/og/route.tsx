@@ -1,3 +1,27 @@
-import { ImageResponse } from 'next/og';
-export const runtime='edge';
-export async function GET(req:Request){const url=new URL(req.url);const title=(url.searchParams.get('title')||'KritRNA').slice(0,90);const subtitle=(url.searchParams.get('subtitle')||'Engineering the Language of Life.').slice(0,180);return new ImageResponse(<div style={{width:'1200px',height:'630px',display:'flex',flexDirection:'column',justifyContent:'space-between',padding:'70px 78px',background:'#0d0d0d',color:'#f4ead5',fontFamily:'serif',backgroundImage:'radial-gradient(circle at 82% 38%, rgba(0,164,207,.2), transparent 26%),radial-gradient(circle at 70% 70%, rgba(233,30,99,.18), transparent 24%)'}}><div style={{display:'flex',fontFamily:'monospace',letterSpacing:'8px',fontSize:24}}>TRANSLOKA BIO</div><div><div style={{fontSize:84,lineHeight:1.02,maxWidth:940}}>{title}</div><div style={{fontSize:30,lineHeight:1.35,maxWidth:900,marginTop:28,color:'#d8ccb5'}}>{subtitle}</div></div><div style={{display:'flex',justifyContent:'space-between',fontFamily:'monospace',fontSize:22}}><span>Reading through silence, restoring the protein.</span><span style={{color:'#00a4cf'}}>hellokritrna.com</span></div></div>,{width:1200,height:630})}
+import { ImageResponse } from "next/og";
+export const runtime = "edge";
+export function GET() {
+  return new ImageResponse(
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        width: "100%",
+        height: "100%",
+        padding: 68,
+        background: "#f4ead5",
+        color: "#0d0d0d",
+        fontFamily: "sans-serif",
+        borderBottom: "20px solid #e91e63",
+      }}
+    >
+      <div style={{ fontSize: 37 }}>KritRNA™</div>
+      <div style={{ fontSize: 105, letterSpacing: -6 }}>
+        Reading through silence.
+      </div>
+      <div style={{ fontSize: 28 }}>Transloka Bio Pvt. Ltd.</div>
+    </div>,
+    { width: 1200, height: 630 },
+  );
+}
