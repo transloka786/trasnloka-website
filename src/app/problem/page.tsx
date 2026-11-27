@@ -8,7 +8,7 @@ export const metadata:Metadata={
 
 const DIFFERENCES=[
   ['No permanent DNA edit','Suppressor tRNAs act during translation on the mRNA message rather than permanently changing the genome.'],
-  ['Designed for the selected stop','Candidates can be engineered around the stop codon, intended amino acid and local sequence context.'],
+  ['Designed for the selected stop','We study whether translation can continue beyond a premature stop.'],
   ['Uses the cell’s own transcript','The objective is to restore full-length protein from endogenous mRNA already produced by the cell.'],
   ['A platform across diseases','Because the same molecular failure occurs in different genes, learning can compound across multiple programmes.'],
 ];

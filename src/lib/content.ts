@@ -42,41 +42,27 @@ export const TEAM = {
   lead: {
     name: 'Dr. Nikhil Bharti',
     role: 'Scientific Co-Founder & Director · CSO / CTO',
-    bio: 'Molecular biologist focused on translation regulation and tRNA biology. Leads scientific strategy, platform architecture and experimental-validation planning.',
+    bio: 'Molecular biologist focused on translation regulation and tRNA biology. Leads scientific strategy, research direction and experimental-validation planning.',
     photo: '/team/nikhil.png',
   },
   outreach: {
     name: 'Pragati Bhaisora',
-    role: 'Co-Founder & Director · Outreach & Awareness Strategist',
-    bio: 'Leads rare-disease outreach, awareness, stakeholder communication and patient-community engagement, with equal co-founder responsibility for building KritRNA.',
+    role: 'Co-Founder & Director, Business Development and Awareness',
+    bio: 'Pragati leads business development, partnerships and Anuvad by KritRNA, our rare-disease awareness initiative.',
     photo: '/team/pragati.png',
   },
-  build: [
-    { name: 'Additional AI / ML developer', note: 'Computational-development role currently under discussion; appointment not yet announced.' },
-  ],
-  advisory: [
-    { name: 'Sandeep M. Eswarappa', note: 'Scientific-advisor onboarding and paperwork underway.' },
-    { name: 'Additional scientific advisors', note: 'Approached; names will be announced only after formal confirmation.' },
-    { name: 'LNJP Hospital — Genetics Department', note: 'Clinical-advisory discussions initiated; individual clinicians will be named after formal confirmation.' },
-  ],
 };
 
 export const PUBS = [
   { year: '2024', venue: 'Nature Communications', title: 'Translation velocity and suppressor-tRNA efficacy', topic: 'First-author research on translation dynamics and suppressor-tRNA performance. Full bibliographic details are being cross-checked before final publication.', role: 'First author', doi: null as string | null, pubmed: 'https://pubmed.ncbi.nlm.nih.gov/?term=Nikhil+Bharti%5BAuthor%5D', c: 'var(--magenta)' },
   { year: '2023', venue: 'Nature', title: 'Engineered tRNAs suppress nonsense mutations in cells and in vivo', topic: 'Peer-reviewed study of engineered suppressor tRNAs in cellular and in-vivo models.', role: 'Co-author', doi: 'https://doi.org/10.1038/s41586-023-06133-1', pubmed: 'https://pubmed.ncbi.nlm.nih.gov/37258671/', c: 'var(--violet)' },
-  { year: '2023', venue: 'Journal of Biological Chemistry', title: 'tRNA biology and translation regulation', topic: 'Co-authored work in tRNA biology and translational regulation. Full bibliographic details are being cross-checked before final publication.', role: 'Co-author', doi: null as string | null, pubmed: 'https://pubmed.ncbi.nlm.nih.gov/?term=Nikhil+Bharti%5BAuthor%5D', c: 'var(--cyan)' },
 ];
 
-export const ROLES = [
-  { code: 'Engine 01 — Founding ML Engineer', title: 'Founding ML Engineer', tag: 'Build the model that learns to read through silence.', accent: 'cyan', chips: ['Noida / Remote', 'Full-time', 'Paid trial task', 'Founding equity'], own: ['The ML backbone of Engine 01 — readthrough-efficiency prediction in sequence context', 'The active-learning loop that turns each wet-lab round into a better model', 'Scoring and Pareto-ranking that decide which candidate sequences reach the bench'], warnLabel: 'You will not enjoy this role if', warn: 'you need a settled codebase, clean labelled data, and someone else to define the problem. Here you define it.', jd: '/jd/founding-ml-engineer.pdf' },
-  { code: 'Corpus 01 — TB-INT-2026-01', title: 'Research & Data Curation Intern', tag: 'Build the corpus that teaches Engine 01 to read biology.', accent: 'forest', chips: ['Noida / Hybrid', '6 months', 'Paid trial task', 'PPO pathway'], own: ['tRNA databases, nonsense-mutation records and readthrough literature — made machine-readable', 'The curation standards the whole platform’s data quality rests on', 'Turning messy primary literature into structured, defensible datasets'], warnLabel: 'You will not enjoy this role if', warn: 'you need someone to tell you which paper matters, or you cannot defend a data point when challenged.', jd: '/jd/research-data-curation-intern.pdf' },
-  { code: 'Ledger 02 — TB-INT-2026-02', title: 'Operations & Accounts Intern', tag: 'Science needs a spine. Books, POs, GST, compliance — yours.', accent: 'ochre', chips: ['Noida / On-site', '6 months', 'Paid trial task', 'PPO pathway'], own: ['Bookkeeping, purchase orders, GST and ROC filings', 'The operational systems a small founding team runs on', 'Vendor coordination and compliance calendars'], warnLabel: 'You will be good at this if', warn: 'your numbers reconcile, and you sleep better when they do.', jd: '/jd/operations-accounts-intern.pdf' },
-  { code: 'Signal 03 — Social Media Intern', title: 'Social Media Intern', tag: 'Make hard science legible without making it wrong.', accent: 'magenta', chips: ['Noida / Hybrid', '6 months', 'Paid trial task', 'PPO pathway'], own: ['The tRNA Chronicles series and explainer assets', 'Channel growth and voice — accurate, confident, never clickbait', 'Working directly with Pragati Bhaisora on outreach and awareness'], warnLabel: 'You will not enjoy this role if', warn: 'you would cut a scientific corner for engagement.', jd: '/jd/social-media-community-intern.pdf' },
-];
+export const ROLES: {title:string}[] = [];
 
 export const FAQ = [
-  { q: 'What is KritRNA?', a: 'KritRNA is the operating brand of Transloka Bio Pvt. Ltd. The name combines “Krit”—creation or something deliberately made—with RNA, the molecular language the company engineers. KritRNA is developing AI-guided suppressor-tRNA therapeutics and translation-system models.' },
-  { q: 'What is a premature termination codon or nonsense mutation?', a: 'A nonsense mutation changes a protein-coding sequence into an early stop codon — UAA, UAG or UGA in mRNA. Translation can terminate before the full protein has been produced.' },
+  { q: 'What is KritRNA?', a: 'KritRNA is the operating brand of Transloka Bio Pvt. Ltd. The name combines “Krit”—creation or something deliberately made—with RNA, the molecular language the company engineers. KritRNA is developing suppressor-tRNA therapeutics through AI-guided design.' },
+  { q: 'What is a premature termination codon or nonsense mutation?', a: 'A nonsense mutation changes a protein-coding sequence into an early stop codon. Translation can terminate before the full protein has been produced.' },
   { q: 'How does a suppressor tRNA work?', a: 'A suppressor tRNA is designed to recognise a selected stop codon and deliver an amino acid during translation, allowing the ribosome to continue toward a full-length protein.' },
   { q: 'Which diseases is KritRNA initially focusing on?', a: 'The initial research focus is selected nonsense-mutation contexts in HBB for β-thalassemia, DMD for Duchenne muscular dystrophy and TP53 for p53-deficient cancer.' },
   { q: 'What stage is the company at?', a: 'KritRNA is at an early preclinical research stage. The next major gate is experimental validation through appropriate wet-lab and CRO collaborations.' },

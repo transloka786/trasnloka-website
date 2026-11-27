@@ -13,7 +13,7 @@ const GREETING: Msg = {
 
 const SUGGESTIONS = [
   'How does a suppressor tRNA work?',
-  'What is the dual-engine platform?',
+  'Who leads KritRNA?',
   'Which diseases is KritRNA studying?',
 ];
 

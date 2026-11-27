@@ -23,6 +23,6 @@ export default function MolecularScene({kind='trna',step=0,label='Molecular visu
  return <figure className={`noir-scene noir-scene-${kind} ${className}`} aria-label={label} data-scene={kind} data-renderer={status}>
   <div ref={host} className="webgl-host" aria-hidden="true"/>
   {status!=='ready'&&<div className="scene-fallback"><span className="micro">{kind==='trna'?'ONE RNA STRAND · A FOLDED ADAPTOR':kind==='network'?'BIOLOGY IS CONNECTED':'THE MOLECULAR STORY'}</span><p>{kind==='trna'?'A single RNA backbone folds into stems and loops. One end carries an amino acid; the other reads the message.':kind==='network'?'Message availability, translation, quality control and protein output influence one another.':'Use the chapters below to follow normal translation, premature termination and suppressor-tRNA readthrough.'}</p></div>}
-  <figcaption>{kind==='trna'?(reference?'Public reference tRNA · 1EHZ, yeast phenylalanine tRNA. Not a KritRNA candidate.':'Single-strand tRNA · folded schematic, not candidate geometry.'):kind==='network'?'Illustrative 3D network · not proprietary topology or model output.':'Simplified 3D cutaway · educational, not an atomic ribosome model.'}</figcaption>
+  <figcaption>{kind==='trna'?(reference?'Reference tRNA, PDB 1EHZ: educational, not candidate geometry':'Folded tRNA: educational, not candidate geometry'):kind==='network'?'Illustrative 3D network · not proprietary topology or model output.':'Simplified 3D cutaway · educational, not an atomic ribosome model.'}</figcaption>
  </figure>;
 }
