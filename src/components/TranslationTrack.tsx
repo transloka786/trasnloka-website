@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-const CODONS = ['GCU', 'AAG', 'CUG', 'UUC', 'GGA', 'UAG', 'AUC', 'CAG', 'GAU', 'UUC'];
+const CODONS = ['•', '•', '•', '•', '•', 'Stop', '•', '•', '•', 'End'];
 const STOP = 5;
 
 function RibosomeGlyph() {

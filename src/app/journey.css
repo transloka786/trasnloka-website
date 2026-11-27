@@ -106,3 +106,7 @@ html[data-motion=off] .journey-home .molecular-stage-noir{animation:none}
 }
 @media(prefers-reduced-motion:reduce){.journey-home .molecular-stage-noir{animation:none}.journey-home .hero-composition{filter:none!important;mask-image:none!important;-webkit-mask-image:none!important}}
 @media(forced-colors:active){.journey-home .hero-composition{filter:none!important;mask-image:none!important;-webkit-mask-image:none!important}.journey-dock,.pipeline-programme{border:1px solid CanvasText}.nav .brand img{background:Canvas}}
+
+@font-face{font-family:KritGeist;src:url('/type/geist-latin-variable.woff2') format('woff2');font-weight:100 900;font-display:swap}
+.nav,.breadcrumbs,.editorial-button,.underline-link,.gene-tag,.translation-chapters button,.programme-detail dt{font-family:KritGeist,var(--sans)}
+.update-content{padding-block:36px}.update-content figure svg{width:100%;max-width:620px}.update-content details{margin:1em 0}.update-content summary{cursor:pointer}

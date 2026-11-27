@@ -1,15 +1,12 @@
-export const UPDATES = [
-  { date: '2026-07-11', type: 'Website', title: 'Public scientific architecture expanded', summary: 'Science, India-first, investor and translation small-world pages now present KritRNA’s platform, evidence and development strategy.' },
-  { date: '2026-07-11', type: 'Platform', title: 'Research programmes published', summary: 'HBB, DMD and TP53 programmes are shown through explicit development milestones.' },
-  { date: '2026-07-11', type: 'Hiring', title: 'Founding roles and internships', summary: 'Current roles cover machine learning, research-data curation, operations and scientific communications.' },
-];
+
 
 export const SEARCH_INDEX = [
   { href:'/', title:'Home', section:'Overview', description:'KritRNA overview, suppressor tRNA solution, audience pathways, India-first strategy and current programmes.', keywords:'home company suppressor trna rare disease cancer' },
   { href:'/problem', title:'The shared molecular problem', section:'Science', description:'How premature stop codons interrupt protein production and why suppressor tRNA offers a distinct programmable solution.', keywords:'problem nonsense mutation gene therapy readthrough solution' },
   { href:'/science', title:'Suppressor tRNA science', section:'Science', description:'One molecular failure across many diseases and the promise of programmable suppressor tRNA therapeutics.', keywords:'science suppressor trna nmd aminoacylation promise' },
-  { href:'/platform', title:'Dual-engine platform', section:'Technology', description:'Candidate design, translation-system modelling and the design-test-learn loop.', keywords:'platform ai engine machine learning' },
-  { href:'/small-world', title:'Translation small-world engine', section:'Technology', description:'Ribosome traffic, collision, ISR, NMD and systems modelling.', keywords:'small world ribosome isr network' },
+  {href:'/platform',title:'AI-guided design',section:'Science',description:'Our public research approach.',keywords:'platform research'},
+  {href:'/small-world',title:'Translation biology',section:'Science',description:'Explore translation biology.',keywords:'translation biology'},
+  {href:'/awareness',title:'Anuvad by KritRNA',section:'Learn',description:'Rare-disease awareness.',keywords:'awareness families'},
   { href:'/pipeline', title:'Research programmes', section:'Pipeline', description:'HBB, DMD and TP53 research programmes across hematology, neuromuscular disease and oncology.', keywords:'pipeline hbb dmd tp53 p53 cancer' },
   { href:'/india', title:'India-first strategy', section:'Company', description:'Rare-disease ecosystem, validation pathways and India-based scientific ownership.', keywords:'india policy centres excellence' },
   { href:'/partners', title:'Partner with KritRNA', section:'Connect', description:'Pathways for CROs, hospitals, laboratories, patient organisations, pharma and incubators.', keywords:'partner cro hospital patient organisation' },

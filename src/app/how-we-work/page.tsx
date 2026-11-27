@@ -10,8 +10,7 @@ const COMPANY = [
   ['Patients set the direction', 'Patient need creates urgency, but sustainable work is essential. A depleted team cannot produce trustworthy science.'],
   ['The data is the boss', 'Experiments outrank narratives. Data quality, provenance and experimental design are first-class work.'],
   ['First-principles thinking', 'We reason from molecular biology, translation mechanics and evidence rather than copying fashionable playbooks.'],
-  ['Confidentiality protects the platform', 'Novel sequences, scoring logic and Engine 01 details remain controlled until the appropriate IP step is complete.'],
-  ['Frugal by conviction', 'We prefer non-dilutive funding and evidence-gated spending so runway and scientific independence compound.'],
+  ['Confidentiality protects the platform', 'We keep unpublished research confidential.'],
   ['Own the outcome', 'At founding stage, responsibility is measured by results rather than narrow task boundaries.'],
 ];
 
@@ -45,7 +44,7 @@ export default function HowWeWorkPage() {
 
       <section className="ink-sec">
         <div className="wrap">
-          <div className="sec-head"><div className="eyebrow">The work</div><h2 className="h2">Frontier biology without frontier theatrics</h2><p>We are building engineered suppressor-tRNA systems for selected nonsense-mutation contexts, supported by two computational engines and an eventual wet-lab data flywheel.</p></div>
+          <div className="sec-head"><div className="eyebrow">The work</div><h2 className="h2">Frontier biology without frontier theatrics</h2><p>We are building engineered suppressor-tRNA systems for selected nonsense-mutation contexts through AI-guided design.</p></div>
           <div className="grid cols-3">{COMPANY.map(([title, text]) => <article className="cell" key={title}><h3>{title}</h3><p>{text}</p></article>)}</div>
         </div>
       </section>

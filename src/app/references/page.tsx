@@ -6,6 +6,7 @@ export const metadata: Metadata = {
 };
 
 const REFERENCES = [
+  { area: 'Genetics education', title: 'Types of gene variants', citation: 'MedlinePlus Genetics.', href: 'https://medlineplus.gov/genetics/understanding/mutationsanddisorders/possiblemutations/' },
   {
     area: 'Suppressor-tRNA evidence',
     title: 'Engineered tRNAs suppress nonsense mutations in cells and in vivo',
@@ -19,5 +20,5 @@ const REFERENCES = [
 ];
 
 export default function ReferencesPage() {
-  return <><section className="page-hero"><div className="wrap"><div className="eyebrow">Reference library</div><h1 className="h1">Scientific claims connected<br/><em>to evidence.</em></h1><p className="lead">This library lists persistent external sources used across the public website.</p></div></section><section><div className="wrap"><div className="update-list">{REFERENCES.map((reference,index)=><article key={reference.href}><div><span>{reference.area}</span><span>{String(index+1).padStart(2,'0')}</span></div><h2><a href={reference.href} target="_blank" rel="noopener noreferrer">{reference.title} ↗</a></h2><p>{reference.citation}</p></article>)}</div></div></section></>;
+  return <><section className="page-hero"><div className="wrap"><div className="eyebrow">Reference library</div><h1 className="h1">Scientific claims connected<br/><em>to evidence.</em></h1><p className="lead">This library lists persistent external sources used across the public website.</p></div></section><section><div className="wrap"><div className="update-list">{REFERENCES.map((reference,index)=><article id={reference.area === "Genetics education" ? "variants" : reference.area === "India policy context" ? "policy" : undefined} key={reference.href}><div><span>{reference.area}</span><span>{String(index+1).padStart(2,'0')}</span></div><h2><a href={reference.href} target="_blank" rel="noopener noreferrer">{reference.title} ↗</a></h2><p>{reference.citation}</p></article>)}</div></div></section></>;
 }

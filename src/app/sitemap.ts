@@ -1,8 +1,9 @@
+import {readUpdates} from '@/lib/updates';
 import type { MetadataRoute } from 'next';
 import { SITE } from '@/lib/content';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/problem', '/science', '/platform', '/small-world', '/pipeline', '/india', '/evidence', '/about', '/how-we-work', '/impact', '/partners', '/community', '/investors', '/updates', '/team', '/careers', '/resources', '/explorer', '/glossary', '/references', '/ask', '/search', '/faq', '/contact', '/privacy', '/terms', '/disclaimer'];
+  const routes = [...readUpdates().map(entry=>'/updates/'+entry.slug), '/awareness', '/careers/research-data-curation-intern', '', '/problem', '/science', '/platform', '/small-world', '/pipeline', '/india', '/evidence', '/about', '/how-we-work', '/impact', '/partners', '/community', '/investors', '/updates', '/team', '/careers', '/resources', '/explorer', '/glossary', '/references', '/ask', '/search', '/faq', '/contact', '/privacy', '/terms', '/disclaimer'];
   const now = new Date();
   return routes.map((route) => ({
     url: `${SITE.url}${route}`,
